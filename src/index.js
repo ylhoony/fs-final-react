@@ -1,8 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { createStore } from 'redux';
+
 import App from './App';
+
+import 'uikit/distcss/uikit.min.css';
+import './index.css';
+
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// const store = createStore();
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root'));
 registerServiceWorker();
