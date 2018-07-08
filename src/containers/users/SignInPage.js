@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actions } from '../../actions/index';
 
 class SignInPage extends Component {
   constructor() {
@@ -7,11 +10,8 @@ class SignInPage extends Component {
 
     this.state = {
       user: {
-        first_name: '',
-        last_name: '',
         email: '',
         password: '',
-        password_confirmation: ''
       }
     }
   }
@@ -24,19 +24,10 @@ class SignInPage extends Component {
     })
   }
 
-  handleFormSubmit = (e) => {
+  handleSignIn = async e => {
     e.preventDefault();
-    fetch('/api/v1/sign_in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-    }).then(res => res.json())
-      .then(authToken => {
-        console.log(authToken);
-      })
-      .catch(err => console.log(err));
+    await this.props.actions.signIn(this.state)
+    this.props.history.push('/dashboard');
   }
 
   render() {
@@ -45,7 +36,7 @@ class SignInPage extends Component {
         <main className="uk-card">
           <p>Sign in</p>
 
-          <form onSubmit={(event) => this.handleFormSubmit(event)}>
+          <form onSubmit={(event) => this.handleSignIn(event)}>
             <div>
               <label htmlFor='email'>Email</label>
               <input
@@ -75,4 +66,10 @@ class SignInPage extends Component {
   }
 }
 
-export default SignInPage;
+function mapDispatchToProps(dispatch) {  
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(SignInPage));
