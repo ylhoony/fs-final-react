@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { actions } from './actions/index';
 
 import Header from './containers/Header';
-import SignUpPage from './containers/users/SignUpPage';
-import SignInPage from './containers/users/SignInPage';
-import DashboardPage from './containers/DashboardPage';
+import Main from './containers/Main';
+import Footer from './containers/Footer';
 
 // import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-
-  componentDidMount() {
-    this.props.actions.authUser();
-  }
+class App extends React.Component {
 
   render() {
     return (
@@ -25,10 +20,8 @@ class App extends Component {
         <BrowserRouter>
           <div>
             { this.props.user && <Header /> }
-            
-            <Route exact path='/signup' component={SignUpPage} />
-            <Route exact path='/signin' component={SignInPage} />
-            <Route exact path='/dashboard' component={DashboardPage} />
+            <Main />
+            <Footer />
           </div>
         </BrowserRouter>
       </div>
@@ -36,7 +29,7 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ user }) {  
+function mapStateToProps({ user }) {
   return { user };
 }
 
