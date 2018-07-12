@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions } from '../../actions/index';
 
-class SignUpPage extends Component {
+class SignUp extends Component {
   constructor() {
     super();
 
@@ -107,4 +107,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(SignUpPage));
+export default withRouter(connect(null, mapDispatchToProps)(SignUp));
