@@ -2,16 +2,11 @@ import axios from 'axios';
 import types from './types';
 
 export const authUser = () => async dispatch => {
-  try {
-    const res = await axios.get('/api/v1/current_user', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }})
-    dispatch({ type: types.AUTH_USER, payload: res.data })
-  } catch(err) {
-    console.error(err);
-    dispatch({ type: types.AUTH_USER, payload: '' });
-  }
+  const res = await axios.get('/api/v1/current_user', {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }})
+  dispatch({ type: types.AUTH_USER, payload: res.data })
 };
 
 export const signUp = (data) => {
