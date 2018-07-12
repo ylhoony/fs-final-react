@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions } from '../../actions/index';
 
-class SignInPage extends Component {
+class SignIn extends Component {
   constructor() {
     super();
 
@@ -44,6 +44,7 @@ class SignInPage extends Component {
                 name='email'
                 required
                 type='email'
+                value={this.state.email}
                 onChange={(event) => this.handleInputChange(event)}
               />
             </div>
@@ -54,6 +55,7 @@ class SignInPage extends Component {
                 name='password'
                 required
                 type='password'
+                value={this.state.password}
                 onChange={(event) => this.handleInputChange(event)}
               />
             </div>
@@ -72,4 +74,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(SignInPage));
+export default withRouter(connect(null, mapDispatchToProps)(SignIn));
