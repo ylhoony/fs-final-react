@@ -19,12 +19,6 @@ class Header extends Component {
           <div className='uk-navbar-left'>
             <ul className='uk-navbar-nav'>
               <li>
-                <a
-                  className='uk-navbar-toggle uk-navbar-toggle-icon'
-                  href='#'
-                />
-              </li>
-              <li>
                 <Link to='/' className='uk-text-muted'>
                   Home
                 </Link>
@@ -32,6 +26,36 @@ class Header extends Component {
               <li>
                 <Link to='/dashboard' className='uk-text-muted'>
                   Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to='/demand' className='uk-text-muted'>
+                  Demand
+                </Link>
+              </li>
+              <li>
+                <Link to='/supply' className='uk-text-muted'>
+                  Supply
+                </Link>
+              </li>
+              <li>
+                <Link to='/product' className='uk-text-muted'>
+                  Product
+                </Link>
+              </li>
+              <li>
+                <Link to='/logistics' className='uk-text-muted'>
+                  Logistics
+                </Link>
+              </li>
+              <li>
+                <Link to='/warehouse' className='uk-text-muted'>
+                  Warhouse
+                </Link>
+              </li>
+              <li>
+                <Link to='/setting' className='uk-text-muted'>
+                  Setting
                 </Link>
               </li>
             </ul>
