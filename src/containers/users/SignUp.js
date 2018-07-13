@@ -29,9 +29,15 @@ class SignUp extends Component {
     })
   }
 
-  handleFormSubmit = (e) => {
+  handleFormSubmit = async e => {
     e.preventDefault();
-    this.props.actions.signUp(this.state);
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      localStorage.removeItem('token');
+    }
+
+    await this.props.actions.signUp(this.state);
     this.props.history.push('/dashboard');
   }
 
