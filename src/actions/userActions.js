@@ -21,16 +21,11 @@ export const signUp = (data) => {
   }
 };
 
-export const signIn = (data) => {
-  return function(dispatch) {
-    axios
-      .post('/api/v1/sign_in', data)
-      .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        dispatch({ type: types.SIGN_IN_USER, payload: res.data.user });
-      })
-  }
-};
+export const signIn = (data) => async dispatch => {
+  const res = await axios.post('/api/v1/sign_in', data);
+  localStorage.setItem('token', res.data.token);
+  dispatch({ type: types.SIGN_IN_USER, payload: res.data.user });
+}
 
 
 export const signOut = () => {
