@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { actions } from '../actions/index';
+
+import Loading from '../components/Loading';
 
 class AuthenticatedRoutes extends Component {
   constructor(props) {
@@ -27,7 +29,7 @@ class AuthenticatedRoutes extends Component {
   render() {
 
     if (!this.props.user) {
-      <h1>Loading...</h1>
+      <Loading />
     }
 
     return (
