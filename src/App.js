@@ -21,7 +21,7 @@ class App extends React.Component {
           <div>
             { this.props.user && <Header /> }
             <Main />
-            <Footer />
+            { this.props.user && <Footer /> }
           </div>
         </BrowserRouter>
       </div>
