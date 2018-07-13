@@ -8,11 +8,9 @@ import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
 
-import 'uikit/dist/css/uikit.min.css';
+import 'normalize.css';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
-
-import 'uikit/dist/js/uikit.min';
-import 'uikit/dist/js/uikit-icons.min';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
