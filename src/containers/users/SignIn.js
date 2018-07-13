@@ -39,47 +39,44 @@ class SignIn extends Component {
 
   render() {
     return (
-      
       <React.Fragment>
-        {/* <section className="sign-in flex flex-center flex-center-vertical vh-100"> */}
-        <div className="sign-in flex flex-center flex-center-vertical vh-100">
-        <Segment padded>
-          <Form onSubmit={(event) => this.handleSignIn(event)}>
-            <header className="padding-bottom-lg">
-              <Header as='h2'>Sign in</Header>
-            </header>
-            <main className="padding-all-sm">
-              <Form.Field>
-                <label htmlFor="email">Email</label>
-                <input
-                  id='email'
-                  name='email'
-                  required
-                  type='email'
-                  value={this.state.email}
-                  onChange={(event) => this.handleInputChange(event)}
-                />
-              </Form.Field>
-              <Form.Field>
-                <label htmlFor='password'>Password</label>
-                <input
-                  id='password'
-                  name='password'
-                  required
-                  type='password'
-                  value={this.state.password}
-                  onChange={(event) => this.handleInputChange(event)}
-                />
-              </Form.Field>
-            </main>
-            <footer className="flex flex-space-between flex-center-vertical padding-all-md">
-              <List.Item href="/signup">Sign up</List.Item>
-              <Button type="submit" color="green" size="small">Sign in</Button>
-            </footer>
-          </Form>
-        </Segment>
-        </div>
-        {/* </section> */}
+        <section className="container-auth flex flex-center flex-middle vh-100">
+          <Segment padded>
+            <Form onSubmit={(event) => this.handleSignIn(event)}>
+              <header className="padding-bottom-lg">
+                <Header as='h2'>Sign in</Header>
+              </header>
+              <main className="padding-all-sm">
+                <Form.Field>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id='email'
+                    name='email'
+                    required
+                    type='email'
+                    value={this.state.email}
+                    onChange={(event) => this.handleInputChange(event)}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label htmlFor='password'>Password</label>
+                  <input
+                    id='password'
+                    name='password'
+                    required
+                    type='password'
+                    value={this.state.password}
+                    onChange={(event) => this.handleInputChange(event)}
+                  />
+                </Form.Field>
+              </main>
+              <footer className="flex flex-between flex-middle padding-all-md">
+                <List.Item href="/signup">Sign up</List.Item>
+                <Button type="submit" color="green" size="small">Sign in</Button>
+              </footer>
+            </Form>
+          </Segment>
+        </section>
       </React.Fragment>
     )
   }
