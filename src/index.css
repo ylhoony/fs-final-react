@@ -49,6 +49,15 @@ body {
   padding-bottom: 15px;
 }
 
+/* margin */
+.margin-remove {
+  margin: 0;
+}
+
+.margin-remove-top {
+  margin-top: 0;
+}
+
 
 /*  */
 .vh-100 {
