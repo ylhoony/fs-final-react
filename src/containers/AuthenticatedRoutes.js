@@ -17,7 +17,7 @@ class AuthenticatedRoutes extends Component {
     }
 
     try {
-      this.props.actions.authUser()
+      this.props.actions.authUser();
     } catch(err) {
         localStorage.removeItem('token');
         this.props.history.push('/signin');
