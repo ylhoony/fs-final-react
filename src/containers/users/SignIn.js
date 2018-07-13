@@ -33,7 +33,7 @@ class SignIn extends Component {
       localStorage.removeItem('token');
     }
   
-    const res = await this.props.actions.signIn(this.state);
+    await this.props.actions.signIn(this.state);
     this.props.history.push('/dashboard');
   }
 
