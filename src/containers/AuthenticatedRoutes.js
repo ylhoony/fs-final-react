@@ -8,10 +8,6 @@ import { actions } from '../actions/index';
 import Loading from '../components/Loading';
 
 class AuthenticatedRoutes extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -27,9 +23,8 @@ class AuthenticatedRoutes extends Component {
   }
 
   render() {
-
     if (!this.props.user) {
-      <Loading />
+      return <Loading />
     }
 
     return (
