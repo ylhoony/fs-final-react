@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Form, Header, List, Segment } from 'semantic-ui-react';
@@ -7,8 +7,8 @@ import { Button, Form, Header, List, Segment } from 'semantic-ui-react';
 import { actions } from '../../actions/index';
 
 class SignUp extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       user: {
