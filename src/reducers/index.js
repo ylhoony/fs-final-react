@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { companiesReducer } from './companiesReducer';
+import { accountsReducer } from './accountsReducer';
 import { countriesReducer } from './countriesReducer';
 import { userReducer } from './userReducer';
 
 export const rootReducer = combineReducers({
-  companies: companiesReducer,
+  accounts: accountsReducer,
   countries: countriesReducer,
   user: userReducer
 })
