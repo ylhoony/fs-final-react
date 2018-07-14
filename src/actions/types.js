@@ -5,7 +5,8 @@ const types = {
   SIGN_IN_USER: 'SIGN_IN_USER',
   SIGN_OUT_USER: 'SIGN_OUT_USER',
   // companies
-  CREATE_COMPANAY: 'CREATE_COMPANAY',
+  GET_ACCOUNTS: 'GET_ACCOUNTS',
+  CREATE_ACCOUNT: 'CREATE_ACCOUNT',
 }
 
 export default types;
