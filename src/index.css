@@ -63,7 +63,6 @@ body {
   margin-top: 0;
 }
 
-
 /*  */
 .vh-100 {
   height: 100vh;
@@ -75,6 +74,12 @@ body {
 }
 
 
+/* Footer */
+footer {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
 
 /* semantic-ui customization */
 header .ui.menu,
@@ -89,8 +94,11 @@ footer .ui.segment {
   border-radius: 0;
 }
 
-footer {
-  bottom: 0;
-  position: fixed;
-  width: 100%;
+.border-top-remove,
+.ui.segment.border-top-remove {
+  border-top: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
 }
