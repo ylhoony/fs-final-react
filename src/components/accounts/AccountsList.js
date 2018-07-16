@@ -5,9 +5,6 @@ import Account from './Account';
 import BreadcrumbDisplay from '../BreadcrumbDisplay';
 
 class AccountsList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   openAccountNew = () => {
     this.props.history.push('/accounts/new');
