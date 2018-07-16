@@ -9,6 +9,11 @@ body {
   padding: 0;
 }
 
+/* boarder */
+.radius-none {
+  border-radius: 0;
+}
+
 /* flexbox */
 .flex {
   display: flex;
@@ -69,3 +74,23 @@ body {
   width: 33%;
 }
 
+
+
+/* semantic-ui customization */
+header .ui.menu,
+.ui.menu .item>i.icon {
+  margin: 0;
+}
+
+header .ui.menu,
+main .ui.segments,
+main .ui.segment,
+footer .ui.segment {
+  border-radius: 0;
+}
+
+footer {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
