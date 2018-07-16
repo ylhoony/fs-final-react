@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dropdown, Icon, Input, Menu, Segment } from 'semantic-ui-react'
@@ -30,13 +30,19 @@ class Header extends Component {
     return (
       <React.Fragment>
         <header>
-          <Menu pointing className='margin-remove'>
-            <Menu.Item>
-              <Icon name='bars' />
-            </Menu.Item>
+          <Menu pointing>
+            <Menu.Item icon='bars' fitted='vertically' />
+              
             <Menu.Menu>
               <Dropdown item text={this.state.companySelected}>
                 <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Input icon='search' placeholder='Search...' />
+                    {/* <div className='ui transparent icon input'>
+                      <input className='prompt' type='text' placeholder='Search...' />
+                      <i className='search link icon' />
+                    </div> */}
+                  </Dropdown.Item>
                   <Dropdown.Item>English</Dropdown.Item>
                   <Dropdown.Item>Russian</Dropdown.Item>
                   <Dropdown.Item>Spanish</Dropdown.Item>
@@ -76,7 +82,7 @@ class Header extends Component {
             </Menu.Menu>
           </Menu>
 
-          <Menu pointing secondary className='margin-remove'>
+          <Menu pointing secondary className="padding-all-sm" >
             <Menu.Item
               href='/dashboard'
               name='dashboard'
@@ -119,9 +125,6 @@ class Header extends Component {
               active={this.state.activeItem === '/setting'}
               onClick={this.handleItemClick}
             />
-            <Menu.Menu position='right'>
-              <Menu.Item onClick={(event) => this.handleSignOut(event)}>Sign out</Menu.Item>
-            </Menu.Menu>
           </Menu>
         </header>
       </React.Fragment>
