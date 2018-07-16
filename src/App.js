@@ -35,7 +35,6 @@ class App extends Component {
           <Route exact path='/signin' component={SignIn} />
           <AuthenticatedRoutes>
             <Header />
-            <main className="padding-all-md">
               <Route exact path='/' component={Dashboard}/>
               <Route exact path='/dashboard' component={Dashboard} />
               <Route exact path='/demand' component={Demand} />
@@ -46,7 +45,6 @@ class App extends Component {
               <Route exact path='/setting' component={Setting} />
 
               <Route path='/accounts' component={AccountsPage} />
-            </main>
             <Footer />
           </AuthenticatedRoutes>
         </Switch>
