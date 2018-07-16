@@ -5,14 +5,14 @@ const BreadcrumbDisplay = ({ breadcrumbList }) => {
   const breadcrumbBuilder = breadcrumbList.map((e, index) => {
     if (index === breadcrumbList.length - 1) {
       return (
-        <React.Fragment>
+        <React.Fragment key={index}>
           <Breadcrumb.Divider icon='right chevron' />
-          <Breadcrumb.Section active key={index}>{e}</Breadcrumb.Section>
+          <Breadcrumb.Section active>{e}</Breadcrumb.Section>
         </React.Fragment>
       )
     } else {
       return (
-        <React.Fragment>
+        <React.Fragment key={index}>
           <Breadcrumb.Divider icon='right chevron' />        
           <Breadcrumb.Section link key={index}>{e}</Breadcrumb.Section>
         </React.Fragment>
