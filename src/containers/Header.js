@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Dropdown, Icon, Input, Menu, Segment } from 'semantic-ui-react'
+import { Dropdown, Icon, Input, Menu } from 'semantic-ui-react'
 
 import { actions } from '../actions/index';
 
