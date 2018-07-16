@@ -1,19 +1,20 @@
 import axios from 'axios';
 import types from './types';
 
-export const getAccounts = () => {
-  return function(dispatch) {
-    fetch('/api/v1/accounts', {
+export const getAccounts = () => async dispatch => {
+  dispatch({ type: types.GET_ACCOUNTS_BEGIN })
+  try {
+    const res = await fetch('/api/v1/accounts', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
       }
     })
-      .then(res => res.json())
-      .then((accountsList) => {
-        dispatch({ type: types.GET_ACCOUNTS, payload: accountsList })
-      })
+    const accountsList = await res.json();
+    dispatch({ type: types.GET_ACCOUNTS_SUCCESS, payload: accountsList })
+  } catch(err) {
+    console.log(err);
   }
 }
 
