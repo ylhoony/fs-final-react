@@ -12,10 +12,6 @@ class Dashboard extends Component {
   }
 }
 
-// function mapStateToProps({ companies }) {  
-//   return { companies };
-// }
-
 function mapDispatchToProps(dispatch) {  
   return {
     actions: bindActionCreators(actions, dispatch)
