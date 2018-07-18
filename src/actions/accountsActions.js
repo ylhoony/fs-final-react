@@ -14,21 +14,25 @@ export const getAccounts = () => async dispatch => {
     const accountsList = await res.json();
     dispatch({ type: types.GET_ACCOUNTS_SUCCESS, payload: accountsList })
   } catch(err) {
-    console.log(err);
+    dispatch({ type: types.GET_ACCOUNTS_FAILURE, payload: err })
   }
 }
 
-export const createAccount = (data) => {
-  return function(dispatch) {
-    axios.post('/api/v1/accounts',{
+export const createAccount = (data) => async dispatch => {
+  try {
+    const res = await axios({
+      method: 'post',
+      url: '/api/v1/accounts',
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
-      body: data      
+      data: data
     })
-      .then((res) => {
-        dispatch({ type: types.CREATE_ACCOUNT, payload: res.data.companies });
-      })
+    console.log(res);
+    dispatch({ type: types.CREATE_ACCOUNT, payload: res.data });
+  } catch(err) {
+    console.log(err);
   }
 }
 
