@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Button, Header, Icon, Table, Segment } from 'semantic-ui-react';
 import Account from './Account';
 import BreadcrumbDisplay from '../BreadcrumbDisplay';
@@ -52,4 +53,10 @@ class AccountsList extends React.Component {
   }
 }
 
-export default withRouter(AccountsList);
+function mapStateToProps({ accounts }) {  
+  return { 
+    accounts: accounts.accounts,
+  };
+}
+
+export default withRouter(connect(mapStateToProps)(AccountsList));
