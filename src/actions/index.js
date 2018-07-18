@@ -1,6 +1,7 @@
-import { fetchCountries } from './fetchCountries';
+import { getCountries } from './countriesActions';
+import { getCurrencies } from './currenciesActions';
 import { signUp, signIn, signOut, authUser } from './userActions';
-import { getAccounts } from './accountsActions';
+import { getAccounts, createAccount } from './accountsActions';
 
 export const actions = {
   // Authentication
@@ -10,7 +11,9 @@ export const actions = {
   authUser,
   // Organization Accounts
   getAccounts,
-
-  // test
-  fetchCountries
+  createAccount,
+  // Countries
+  getCountries,
+  // Currencies
+  getCurrencies,
 }
