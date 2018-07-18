@@ -12,9 +12,9 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps({ companies }) {  
-  return { companies };
-}
+// function mapStateToProps({ companies }) {  
+//   return { companies };
+// }
 
 function mapDispatchToProps(dispatch) {  
   return {
