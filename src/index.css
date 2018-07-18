@@ -23,14 +23,17 @@ body {
   justify-content: center;
 }
 
-.flex-middle {
-  align-items: center;
-}
-
 .flex-between {
   justify-content: space-between;
 }
 
+.flex-around {
+  justify-content: space-around;
+}
+
+.flex-middle {
+  align-items: center;
+}
 
 
 /* padding */
@@ -73,6 +76,10 @@ body {
   width: 33%;
 }
 
+/* Main */
+main {
+  padding-bottom: 48.85px;
+}
 
 /* Footer */
 footer {
