@@ -6,9 +6,16 @@ import { actions } from '../../actions/index';
 
 class Dashboard extends Component {
   render () {
+    console.log("dashboard page", this.props.currentAccount)
     return (
       <h2>This is Dashboard Page.</h2>
     )
+  }
+}
+
+const mapStateToProps = ({ accounts }) => {
+  return {
+    currentAccount: accounts.currentAccount
   }
 }
 
@@ -18,4 +25,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Dashboard));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
