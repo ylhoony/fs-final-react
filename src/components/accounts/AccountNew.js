@@ -39,7 +39,8 @@ class AccountNew extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.actions.createAccount(this.state);
-    this.props.history.push(`/accounts/${this.props.selectedAccount.id}`);
+    // TODO: trigger to change the currentAccount
+    this.props.history.push('/dashboard');
   };
 
   render() {
@@ -58,7 +59,7 @@ class AccountNew extends Component {
       return {
         "data-name": "currency_id",
         "data-value": currency.id,
-        key: currency.alpha2,
+        key: currency.alpha,
         text: currency.name,
         value: currency.id,
       };
@@ -149,10 +150,11 @@ class AccountNew extends Component {
   }
 }
 
-function mapStateToProps({ countries, currencies }) {
+function mapStateToProps({ accounts, countries, currencies }) {
   return {
     countries: countries.countries,
-    currencies: currencies.currencies
+    currencies: currencies.currencies,
+    currentAccount: accounts.currentAccount
   };
 }
 
