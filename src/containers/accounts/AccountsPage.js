@@ -8,7 +8,7 @@ import { actions } from '../../actions/index';
 
 import AccountsList from '../../components/accounts/AccountsList';
 import AccountNew from '../../components/accounts/AccountNew';
-import AccountShow from '../../components/accounts/AccountShow';
+// import AccountShow from '../../components/accounts/AccountShow';
 
 class AccountsPage extends React.Component {
 
