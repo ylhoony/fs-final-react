@@ -18,12 +18,14 @@ export const userReducer = (state = initialState, action) => {
         currentUser: action.payload || false
       }
 
+    // SIGN_UP_USER
     case types.SIGN_UP_USER:
       return {
         ...state,
         currentUser: action.payload
       }
     
+    // SIGN_IN_USER
     case 'SIGN_IN_USER_BEGIN':
     return {
       ...state,
@@ -37,12 +39,14 @@ export const userReducer = (state = initialState, action) => {
       currentUserLoading: false
     }
 
+    // SIGN_OUT_USER
     case types.SIGN_OUT_USER:
       return {
         ...state,
         currentUser: action.payload
       }
 
+    // GET_CURRENT_ACCOUNT
     case 'GET_CURRENT_ACCOUNT_BEGIN':
     return {
       ...state,
@@ -61,9 +65,9 @@ export const userReducer = (state = initialState, action) => {
       ...state,
       currentAccountLoading: false,
       currentAccountError: true
-    }
+    } 
 
-//      
+    // CHANGE_CURRENT_ACCOUNT
     case 'CHANGE_CURRENT_ACCOUNT_BEGIN':
       return {
         ...state,
