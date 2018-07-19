@@ -69,10 +69,8 @@ class App extends Component {
             <Route exact path="/warehouse" component={Warehouse} />
             <Route exact path="/setting" component={Setting} />
 
-            <Route
-              path="/accounts"
-              component={() => <AccountsPage accounts={accounts} />}
-            />
+            <Route path="/accounts" component={AccountsPage} />
+            {/* <Route path="/accounts" component={AccountsPage} /> */}
             <Footer />
           </AuthenticatedRoutes>
         </Switch>
