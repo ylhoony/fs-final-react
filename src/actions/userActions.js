@@ -17,14 +17,34 @@ export const signUp = data => async dispatch => {
 };
 
 export const signIn = data => async dispatch => {
+  dispatch({ type: 'SIGN_IN_USER_BEGIN' });
   const res = await axios.post("/api/v1/sign_in", data);
   localStorage.setItem("token", res.data.token);
-  dispatch({ type: types.SIGN_IN_USER, payload: res.data.user });
+  dispatch({ type: 'SIGN_IN_USER_SUCCESS', payload: res.data.user });
 };
 
 export const signOut = () => dispatch => {
   localStorage.removeItem("token");
   dispatch({ type: types.SIGN_OUT_USER, payload: null });
+};
+
+export const getCurrentAccount = data =>  async dispatch => {
+  try {
+    dispatch({ type: "GET_CURRENT_ACCOUNT_BEGIN" });
+    const res = await axios({
+      method: "GET",
+      url: "/api/v1/current_account",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json"
+      },
+      data: data
+    })
+    
+    dispatch({ type: "GET_CURRENT_ACCOUNT_SUCCESS", payload: res.data })
+  } catch(err) {
+    dispatch({ type: "GET_CURRENT_ACCOUNT_FAILURE", payload: err })
+  }
 };
 
 export const changeCurrentAccount = data =>  async dispatch => {
