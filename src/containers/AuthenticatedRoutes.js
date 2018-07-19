@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { actions } from '../actions/index';
+import { actions } from "../actions/index";
 
-import Loading from '../components/Loading';
+import Loading from "../components/Loading";
 
 class AuthenticatedRoutes extends Component {
   componentDidMount() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      this.props.history.push('/signin');
+      this.props.history.push("/signin");
     }
 
     try {
@@ -20,28 +20,45 @@ class AuthenticatedRoutes extends Component {
       this.props.actions.getAccounts();
       this.props.actions.getCountries();
       this.props.actions.getCurrencies();
-    } catch(err) {
-        localStorage.removeItem('token');
-        this.props.history.push('/signin');
+      this.props.actions.getPaymentOptions();
+    } catch (err) {
+      localStorage.removeItem("token");
+      this.props.history.push("/signin");
     }
   }
 
   render() {
-    const { accountsLoading, countriesLoading, currenciesLoading, currentAccountLoading, currentUserLoading } = this.props;
+    const {
+      accountsLoading,
+      countriesLoading,
+      currenciesLoading,
+      currentAccountLoading,
+      currentUserLoading,
+      paymentOptionsLoading
+    } = this.props;
 
-    if (accountsLoading || countriesLoading || currenciesLoading || currentAccountLoading || currentUserLoading) {
-      return <Loading />
+    if (
+      accountsLoading ||
+      countriesLoading ||
+      currenciesLoading ||
+      currentAccountLoading ||
+      currentUserLoading ||
+      paymentOptionsLoading
+    ) {
+      return <Loading />;
     }
 
-    return (
-      <React.Fragment>
-        {this.props.children}
-      </React.Fragment>
-    )
+    return <React.Fragment>{this.props.children}</React.Fragment>;
   }
 }
 
-function mapStateToProps({ accounts, countries, currencies, user }) {  
+function mapStateToProps({
+  accounts,
+  countries,
+  currencies,
+  paymentOptions,
+  user
+}) {
   return {
     currentAccount: user.currentAccount,
     currentAccountLoading: user.currentAccountLoading,
@@ -60,13 +77,22 @@ function mapStateToProps({ accounts, countries, currencies, user }) {
     currencies: currencies,
     currenciesLoading: currencies.currenciesLoading,
     currenciesError: currencies.currenciesError,
+
+    paymentOptions: paymentOptions.paymentOptions,
+    paymentOptionsLoading: paymentOptions.paymentOptionsLoading,
+    paymentOptionsError: paymentOptions.paymentOptionsError
   };
 }
 
-function mapDispatchToProps(dispatch) {  
+function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthenticatedRoutes));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AuthenticatedRoutes)
+);
