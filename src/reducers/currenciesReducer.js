@@ -1,8 +1,8 @@
-import types from '../actions/types';
+// import types from '../actions/types';
 
 const initialState = {
   currencies: [],
-  currenciesLoading: true,
+  currenciesLoading: false,
   currenciesError: null,
 }
 
