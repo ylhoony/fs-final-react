@@ -5,10 +5,10 @@ import { bindActionCreators } from "redux";
 
 import { actions } from "./actions/index";
 
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 
-import Loading from "./components/Loading";
+// import Loading from "./components/Loading";
 import Header from "./containers/Header";
 import Footer from "./containers/Footer";
 
@@ -28,31 +28,7 @@ import Setting from "./containers/navs/Setting";
 import AccountsPage from "./containers/accounts/AccountsPage";
 
 class App extends Component {
-  componentDidMount() {
-    if (
-      !window.location.pathname.includes("signin") &&
-      !window.location.pathname.includes("signup")
-    ) {
-      this.props.actions.getAccounts();
-      this.props.actions.getCountries();
-      this.props.actions.getCurrencies();
-    }
-  }
-
   render() {
-    const {
-      accounts,
-      accountsLoading,
-      countries,
-      countriesLoading,
-      currencies,
-      currenciesLoading
-    } = this.props;
-
-    if (accountsLoading || countriesLoading || currenciesLoading) {
-      return <Loading />;
-    }
-
     return (
       <BrowserRouter>
         <Switch>
@@ -79,21 +55,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ accounts, countries, currencies, user }) {
+function mapStateToProps({ user }) {
   return {
-    accounts: accounts.accounts,
-    accountsLoading: accounts.accountsLoading,
-    accountsError: accounts.accountsError,
-
-    countries: countries,
-    countriesLoading: countries.countriesLoading,
-    countriesError: countries.countriesError,
-
-    currencies: currencies,
-    currenciesLoading: currencies.currenciesLoading,
-    currenciesError: currencies.currenciesError,
-
-    user: user
+    currentAccount: user.currentAccount,
+    currentUser: user.currentUser,
   };
 }
 
