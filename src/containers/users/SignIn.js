@@ -6,6 +6,8 @@ import { Button, Form, Header, List, Segment } from 'semantic-ui-react'
 
 import { actions } from '../../actions/index';
 
+import Loading from '../../components/Loading';
+
 class SignIn extends Component {
   constructor() {
     super();
@@ -38,6 +40,12 @@ class SignIn extends Component {
   }
 
   render() {
+    const { currentUserLoading } = this.props;
+
+    if (currentUserLoading) {
+      return <Loading />
+    }
+
     return (
       <React.Fragment>
         <section className="container-auth flex flex-center flex-middle vh-100">
@@ -84,8 +92,8 @@ class SignIn extends Component {
 
 const mapStateToProps = ({ user }) => {
   return {
-    currentAccount: user.currentAccount,
-    currentAccountLoading: user.currentAccountLoading
+    currentUser: user.currentUser,
+    currentUserLoading: user.currentUserLoading,
   }
 }
 
