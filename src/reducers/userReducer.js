@@ -5,7 +5,9 @@ const initialState = {
   currentAccountLoading: false,
   currentAccountError: null,
 
-  currentUser: null
+  currentUser: null,
+  currentUserLoading: false,
+  currentUserError: null
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -21,12 +23,19 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.payload
       }
+    
+    case 'SIGN_IN_USER_BEGIN':
+    return {
+      ...state,
+      currentUserLoading: true
+    }
 
-    case types.SIGN_IN_USER:
-      return {
-        ...state,
-        currentUser: action.payload
-      }
+    case 'SIGN_IN_USER_SUCCESS':
+    return {
+      ...state,
+      currentUser: action.payload,
+      currentUserLoading: false
+    }
 
     case types.SIGN_OUT_USER:
       return {
@@ -34,6 +43,27 @@ export const userReducer = (state = initialState, action) => {
         currentUser: action.payload
       }
 
+    case 'GET_CURRENT_ACCOUNT_BEGIN':
+    return {
+      ...state,
+      currentAccountLoading: true
+    }
+
+    case 'GET_CURRENT_ACCOUNT_SUCCESS':
+      return {
+        ...state,
+        currentAccountLoading: false,
+        currentAccount: action.payload
+      }
+
+    case 'GET_CURRENT_ACCOUNT_FAILURE':
+    return {
+      ...state,
+      currentAccountLoading: false,
+      currentAccountError: true
+    }
+
+//      
     case 'CHANGE_CURRENT_ACCOUNT_BEGIN':
       return {
         ...state,
