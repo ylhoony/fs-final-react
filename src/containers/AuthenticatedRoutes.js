@@ -16,6 +16,10 @@ class AuthenticatedRoutes extends Component {
 
     try {
       this.props.actions.authUser();
+      this.props.actions.getCurrentAccount();
+      this.props.actions.getAccounts();
+      this.props.actions.getCountries();
+      this.props.actions.getCurrencies();
     } catch(err) {
         localStorage.removeItem('token');
         this.props.history.push('/signin');
@@ -23,7 +27,9 @@ class AuthenticatedRoutes extends Component {
   }
 
   render() {
-    if (!this.props.currentUser) {
+    const { accountsLoading, countriesLoading, currenciesLoading, currentAccountLoading, currentUserLoading } = this.props;
+
+    if (accountsLoading || countriesLoading || currenciesLoading || currentAccountLoading || currentUserLoading) {
       return <Loading />
     }
 
@@ -35,9 +41,25 @@ class AuthenticatedRoutes extends Component {
   }
 }
 
-function mapStateToProps({ user }) {  
+function mapStateToProps({ accounts, countries, currencies, user }) {  
   return {
-    currentUser: user.currentUser
+    currentAccount: user.currentAccount,
+    currentAccountLoading: user.currentAccountLoading,
+
+    currentUser: user.currentUser,
+    currentUserLoading: user.currentUserLoading,
+
+    accounts: accounts.accounts,
+    accountsLoading: accounts.accountsLoading,
+    accountsError: accounts.accountsError,
+
+    countries: countries,
+    countriesLoading: countries.countriesLoading,
+    countriesError: countries.countriesError,
+
+    currencies: currencies,
+    currenciesLoading: currencies.currenciesLoading,
+    currenciesError: currencies.currenciesError,
   };
 }
 
