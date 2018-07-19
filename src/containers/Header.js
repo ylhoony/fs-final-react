@@ -1,25 +1,29 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Dropdown, Icon, Input, Menu } from "semantic-ui-react";
+import { Dropdown, Icon, Input, Item, Menu } from "semantic-ui-react";
 
 import { actions } from "../actions/index";
+import Loading from "../components/Loading";
 
 class Header extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       activeItem: window.location.pathname,
-      companySelected: "Company Name Inc."
+      currentAccount: props.currentAccount
     };
   }
 
   handleAccountClick = e => {
-    // debugger;
-    // update current_account in server and redirect to /dashboard
+    const account = {
+      account_id: e.target.dataset.id || e.target.parentElement.dataset.id
+    }
 
-    // this.props.actions.changeCurrentAccount();
+    this.props.actions.changeCurrentAccount(account);
+    // TODO: redirect to dashboard once some areas are ready.
   };
 
   handleItemClick = (e, { name }) => {
@@ -33,12 +37,13 @@ class Header extends Component {
   };
 
   render() {
-    const { accounts } = this.props;
+    const { accounts, currentAccount, currentAccountLoading } = this.props;
+
     const accountsDropdownList = accounts.map(account => {
       return (
         <Dropdown.Item
+          data-id={account.id}
           key={account.id}
-          name={account.id}
           text={account.name}
           value={account.id}
           onClick={this.handleAccountClick}
@@ -46,13 +51,19 @@ class Header extends Component {
       );
     });
 
+    console.log("currentAccount in Header: ", currentAccount)
+
+    if (currentAccountLoading) {
+      return <Loading />
+    }
+
     return (
       <React.Fragment>
         <header>
           <Menu pointing>
             <Menu.Item icon="bars" fitted="vertically" />
             <Menu.Menu>
-              <Dropdown item text={this.state.companySelected}>
+              <Dropdown item text={ currentAccount ? currentAccount.name : "my app" }>
                 <Dropdown.Menu>
                   <Dropdown.Header>
                     <a href="/accounts">My Accounts</a>
@@ -104,47 +115,54 @@ class Header extends Component {
 
           <Menu pointing secondary className="padding-all-sm">
             <Menu.Item
-              href="/dashboard"
+              as={Link}
+              to="/dashboard"
               name="dashboard"
               active={this.state.activeItem === "/dashboard"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              href="/demand"
+              as={Link}
+              to="/demand"
               name="demand"
               active={this.state.activeItem === "/demand"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              href="/supply"
+              as={Link}
+              to="/supply"
               name="supply"
               active={this.state.activeItem === "/supply"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              href="/product"
+              as={Link}
+              to="/product"
               name="product"
               active={this.state.activeItem === "/product"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              href="/logistics"
+              as={Link}
+              to="/logistics"
               name="logistics"
               active={this.state.activeItem === "/logistics"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              href="/warehouse"
+              as={Link}
+              to="/warehouse"
               name="warehouse"
               active={this.state.activeItem === "/warehouse"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              href="/setting"
+              as={Link}
+              to="/setting"
               name="setting"
               active={this.state.activeItem === "/setting"}
-              onClick={this.handleItemClick}
-            />
+              onClick={this.handleItemClick}>
+            </Menu.Item>
           </Menu>
         </header>
       </React.Fragment>
@@ -152,9 +170,11 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ accounts }) {
+function mapStateToProps({ accounts, user }) {
   return {
-    accounts: accounts.accounts
+    accounts: accounts.accounts,
+    currentAccount: user.currentAccount,
+    currentAccountLoading: user.currentAccountLoading
   };
 }
 
