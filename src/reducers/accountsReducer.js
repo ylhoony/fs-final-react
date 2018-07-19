@@ -2,7 +2,7 @@ import types from '../actions/types';
 
 const initialState = {
   accounts: [],
-  accountsLoading: true,
+  accountsLoading: false,
   accountsError: null,
   currentAccount: {},
 }
