@@ -23,7 +23,7 @@ class AuthenticatedRoutes extends Component {
   }
 
   render() {
-    if (!this.props.user) {
+    if (!this.props.currentUser) {
       return <Loading />
     }
 
@@ -36,7 +36,9 @@ class AuthenticatedRoutes extends Component {
 }
 
 function mapStateToProps({ user }) {  
-  return { user };
+  return {
+    currentUser: user.currentUser
+  };
 }
 
 function mapDispatchToProps(dispatch) {  
