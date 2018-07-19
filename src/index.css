@@ -77,12 +77,12 @@ body {
 }
 
 /* Main */
-main {
+#root > main {
   padding-bottom: 48.85px;
 }
 
 /* Footer */
-footer {
+#root > footer {
   bottom: 0;
   position: fixed;
   width: 100%;
