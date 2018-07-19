@@ -1,6 +1,6 @@
 import { getCountries } from './countriesActions';
 import { getCurrencies } from './currenciesActions';
-import { signUp, signIn, signOut, authUser } from './userActions';
+import { authUser, signUp, signIn, signOut, changeCurrentAccount } from './userActions';
 import { getAccounts, createAccount } from './accountsActions';
 
 export const actions = {
@@ -9,6 +9,7 @@ export const actions = {
   signIn,
   signOut,
   authUser,
+  changeCurrentAccount,
   // Organization Accounts
   getAccounts,
   createAccount,
