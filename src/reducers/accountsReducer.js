@@ -4,7 +4,7 @@ const initialState = {
   accounts: [],
   accountsLoading: true,
   accountsError: null,
-  selectedAccount: {},
+  currentAccount: {},
 }
 
 export const accountsReducer = (state = initialState, action) => {
@@ -34,7 +34,7 @@ export const accountsReducer = (state = initialState, action) => {
     case types.CREATE_ACCOUNT:
       return {
         ...state,
-        selectedAccount: action.payload
+        currentAccount: action.payload
       }
 
     default: 
