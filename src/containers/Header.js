@@ -23,7 +23,7 @@ class Header extends Component {
     }
 
     this.props.actions.changeCurrentAccount(account);
-    // TODO: redirect to dashboard once some areas are ready.
+    this.props.history.push("/dashboard");
   };
 
   handleItemClick = (e, { name }) => {
