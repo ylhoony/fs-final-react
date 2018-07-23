@@ -24,6 +24,8 @@ import Product from "./containers/navs/Product";
 import Logistics from "./containers/navs/Logistics";
 import Warehouse from "./containers/navs/Warehouse";
 import Setting from "./containers/navs/Setting";
+import PaymentTerms from "./containers/setting/PaymentTerms";
+
 // Menu Containers
 import AccountsPage from "./containers/accounts/AccountsPage";
 
@@ -44,6 +46,7 @@ class App extends Component {
             <Route exact path="/logistics" component={Logistics} />
             <Route exact path="/warehouse" component={Warehouse} />
             <Route exact path="/setting" component={Setting} />
+              <Route path="/payment-terms" component={PaymentTerms} />
 
             <Route path="/accounts" component={AccountsPage} />
             {/* <Route path="/accounts" component={AccountsPage} /> */}
