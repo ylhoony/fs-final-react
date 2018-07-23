@@ -3,6 +3,7 @@ import { getCurrencies } from './currenciesActions';
 import { authUser, signUp, signIn, signOut, getCurrentAccount, changeCurrentAccount } from './userActions';
 import { getAccounts, createAccount } from './accountsActions';
 import { getPaymentOptions } from './paymentOptionsActions';
+import { getPaymentTerms, createPaymentTerm } from './paymentTermsActions';
 
 export const actions = {
   // Authentication
@@ -21,4 +22,7 @@ export const actions = {
   getCurrencies,
   // Payment Options
   getPaymentOptions,
+  // Payment Terms
+  getPaymentTerms,
+  createPaymentTerm,
 }
