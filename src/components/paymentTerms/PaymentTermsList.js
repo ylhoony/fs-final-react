@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table } from "semantic-ui-react";
 
-import PaymentTermShow from "./PaymentTermShow";
+// import PaymentTermShow from "./PaymentTermShow";
 import PaymentTermNew from "./PaymentTermNew";
 import axios from "../../../node_modules/axios";
 
@@ -34,20 +34,44 @@ class PaymentTermsList extends Component {
     let paymentTermRows;
     if (!!paymentTerms.length) {
       paymentTermRows = paymentTerms.map(term => {
+        // return (
+        //   <PaymentTermShow
+        //     active={term.active}
+        //     days={term.days}
+        //     id={term.id}
+        //     key={term.id}
+        //     name={term.name}
+        //     paymentOption={term.payment_option}
+        //     trade_credit_days={term.trade_credit_days}
+        //     trade_credit_rate={term.trade_credit_rate}
+        //     handleClickTableRow={e => this.handleClickTableRow(e)}
+        //     openModal={this.props.openModal}
+        //   />
+        // );
         return (
-          <PaymentTermShow
-            active={term.active}
-            days={term.days}
-            id={term.id}
-            key={term.id}
-            name={term.name}
-            paymentOption={term.payment_option}
-            trade_credit_days={term.trade_credit_days}
-            trade_credit_rate={term.trade_credit_rate}
-            handleClickTableRow={e => this.handleClickTableRow(e)}
-            openModal={this.props.openModal}
-          />
-        );
+          <Table.Row data-id={term.id}>
+            <Table.Cell onClick={this.props.openModal} >
+              { term.name }
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableRow} >
+              { term.days }
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableRow} >
+              { term.payment_option.name }
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableRow} >
+              { term.trade_credit_rate || 0 }
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableRow}>
+              { term.trade_credit_days || 0  }
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableRow}>
+              { term.active ? 'Active' : 'Inactive' }
+            </Table.Cell>
+          </Table.Row>
+        )
+
+
       });
     } else {
       paymentTermRows = 
@@ -80,6 +104,8 @@ class PaymentTermsList extends Component {
             </Table.Row>
           </Table.Footer>
         </Table>
+
+        
       </React.Fragment>
     );
   }
