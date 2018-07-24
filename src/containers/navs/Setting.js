@@ -24,7 +24,7 @@ class Setting extends Component {
                   <Header as="h3">Company Information</Header>
                 </Segment>
                 <Segment>
-                  <Card.Group centered>
+                  <Card.Group className="">
                     <Card>
                       <Card.Content header="Company Addresses" />
                       <Card.Content description={description} />
@@ -36,6 +36,19 @@ class Setting extends Component {
 
                     <Card>
                       <Card.Content header="Company Contacts" />
+                      <Card.Content description={description} />
+                      <Card.Content extra>
+                        <Icon name="user" />
+                        4 Friends
+                      </Card.Content>
+                    </Card>
+
+                    <Card>
+                      <Card.Content 
+                        as={Link}
+                        to="/warehouses"
+                        header="Warehouse Locations"
+                      />
                       <Card.Content description={description} />
                       <Card.Content extra>
                         <Icon name="user" />
@@ -54,9 +67,13 @@ class Setting extends Component {
                   <Header as="h3">Financial?</Header>
                 </Segment>
                 <Segment>
-                  <Card.Group centered>
+                  <Card.Group>
                     <Card>
-                      <Card.Content as={Link} to="/payment-terms" header="Payment Terms" />
+                      <Card.Content
+                        as={Link}
+                        to="/payment-terms"
+                        header="Payment Terms"
+                      />
                       <Card.Content description="this is description" />
                       <Card.Content extra>
                         <Icon name="user" />
@@ -76,7 +93,6 @@ class Setting extends Component {
                 </Segment>
               </Segment.Group>
             </Segment>
-
           </Segment.Group>
         </main>
       </React.Fragment>
