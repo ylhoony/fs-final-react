@@ -79,7 +79,6 @@ class PaymentTerms extends Component {
   render() {
     const {
       currentAccountLoading,
-      paymentTerms,
       paymentTermsLoading
     } = this.props;
 
