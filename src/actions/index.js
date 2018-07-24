@@ -4,6 +4,7 @@ import { authUser, signUp, signIn, signOut, getCurrentAccount, changeCurrentAcco
 import { getAccounts, createAccount } from './accountsActions';
 import { getPaymentOptions } from './paymentOptionsActions';
 import { getPaymentTerms, createPaymentTerm } from './paymentTermsActions';
+import { getWarehouses, createWarehouse } from './warehousesActions';
 
 export const actions = {
   // Authentication
@@ -25,4 +26,7 @@ export const actions = {
   // Payment Terms
   getPaymentTerms,
   createPaymentTerm,
+  // Warehouse Locations
+  getWarehouses, 
+  createWarehouse,
 }
