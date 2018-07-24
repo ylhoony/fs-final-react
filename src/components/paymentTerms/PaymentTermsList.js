@@ -49,7 +49,7 @@ class PaymentTermsList extends Component {
         //   />
         // );
         return (
-          <Table.Row data-id={term.id}>
+          <Table.Row data-id={term.id} key={term.id} >
             <Table.Cell onClick={this.props.openModal} >
               { term.name }
             </Table.Cell>
