@@ -6,6 +6,7 @@ import { currenciesReducer } from "./currenciesReducer";
 import { paymentOptionsReducer } from "./paymentOptionsReducer";
 import { paymentTermsReducer } from "./paymentTermsReducer";
 import { userReducer } from "./userReducer";
+import { warehousesReducer } from "./warehousesReducer";
 
 export const rootReducer = combineReducers({
   accounts: accountsReducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
   paymentOptions: paymentOptionsReducer,
   paymentTerms: paymentTermsReducer,
   user: userReducer,
+  warehouses: warehousesReducer,
 });
