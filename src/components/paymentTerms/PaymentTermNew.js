@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Button, Form, Icon, Modal, Select } from "semantic-ui-react";
+import { Button, Form, Modal, Select } from "semantic-ui-react";
 
 import { actions } from "../../actions/index";
 
@@ -10,7 +10,7 @@ class PaymentTermNew extends Component {
 
 
   render() {
-    const { paymentOptions, value } = this.props;
+    const { paymentOptions } = this.props;
 
     const paymentOptionsList = paymentOptions.map(option => {
       return {
