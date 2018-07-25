@@ -6,23 +6,22 @@ import { Table } from "semantic-ui-react";
 class WarehousesList extends Component {
 
   render() {
-
     const { warehouses } = this.props;
 
     const warehousesRows = warehouses.map(warehouse => {
       return (
-        <Table.Row key={warehouse.id}>
-          <Table.Cell>{warehouse.name}</Table.Cell>
-          <Table.Cell>{warehouse.contact}</Table.Cell>
-          <Table.Cell>{warehouse.street1}\n{warehouse.street1}</Table.Cell>
-          <Table.Cell>{warehouse.city}</Table.Cell>
-          <Table.Cell>{warehouse.state}</Table.Cell>
-          <Table.Cell>{warehouse.country.name}</Table.Cell>
-          <Table.Cell>{warehouse.postal_code}</Table.Cell>
-          <Table.Cell>{warehouse.email}</Table.Cell>
-          <Table.Cell>{warehouse.phone}</Table.Cell>
-          <Table.Cell>{warehouse.fax}</Table.Cell>
-          <Table.Cell>{warehouse.active ? "Active" : "Inactive"}</Table.Cell>
+        <Table.Row key={warehouse.id} data-id={warehouse.id}>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.name}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.contact}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.street1}<br/>{warehouse.street2}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.city}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.state}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.country.name}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.postal_code}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.email}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.phone}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.fax}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.active ? "Active" : "Inactive"}</Table.Cell>
         </Table.Row>
       )
     })
