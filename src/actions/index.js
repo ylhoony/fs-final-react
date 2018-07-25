@@ -4,7 +4,7 @@ import { authUser, signUp, signIn, signOut, getCurrentAccount, changeCurrentAcco
 import { getAccounts, createAccount } from './accountsActions';
 import { getPaymentOptions } from './paymentOptionsActions';
 import { getPaymentTerms, createPaymentTerm } from './paymentTermsActions';
-import { getWarehouses, createWarehouse } from './warehousesActions';
+import { getWarehouses, createWarehouse, getWarehouse, updateWarehouse } from './warehousesActions';
 
 export const actions = {
   // Authentication
@@ -29,4 +29,6 @@ export const actions = {
   // Warehouse Locations
   getWarehouses, 
   createWarehouse,
+  getWarehouse,
+  updateWarehouse,
 }
