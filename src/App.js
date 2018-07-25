@@ -19,6 +19,7 @@ import AuthenticatedRoutes from "./containers/AuthenticatedRoutes";
 // Navigation Containers
 import Dashboard from "./containers/navs/Dashboard";
 import Demand from "./containers/navs/Demand";
+import Customers from "./containers/demand/Customers";
 import Supply from "./containers/navs/Supply";
 import Product from "./containers/navs/Product";
 import Logistics from "./containers/navs/Logistics";
@@ -42,6 +43,7 @@ class App extends Component {
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/demand" component={Demand} />
+              <Route path="/customers" component={Customers} />
             <Route exact path="/supply" component={Supply} />
             <Route exact path="/product" component={Product} />
             <Route exact path="/logistics" component={Logistics} />
