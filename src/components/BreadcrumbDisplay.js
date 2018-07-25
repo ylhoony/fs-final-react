@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Breadcrumb, Segment } from "semantic-ui-react";
 
 const BreadcrumbDisplay = ({ breadcrumbList }) => {
@@ -26,7 +26,7 @@ const BreadcrumbDisplay = ({ breadcrumbList }) => {
   return (
     <Segment>
       <Breadcrumb size="small">
-        <Breadcrumb.Section link>Home</Breadcrumb.Section>
+        <Breadcrumb.Section link as={Link} to="/dashboard">Home</Breadcrumb.Section>
         {breadcrumbBuilder}
       </Breadcrumb>
     </Segment>
