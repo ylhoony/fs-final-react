@@ -42,7 +42,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/signin" component={SignIn} />
           <AuthenticatedRoutes>
-            <Header />
+            <Header />            
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/demand" component={Demand} />
@@ -58,7 +58,6 @@ class App extends Component {
               <Route path="/warehouses" component={Warehouses} />
 
             <Route path="/accounts" component={AccountsPage} />
-            {/* <Route path="/accounts" component={AccountsPage} /> */}
             <Footer />
           </AuthenticatedRoutes>
         </Switch>
