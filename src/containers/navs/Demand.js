@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { Card, Header, Icon, Segment } from "semantic-ui-react";
+import { Card, Segment } from "semantic-ui-react";
 
 import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
 
@@ -10,9 +11,32 @@ class Demand extends Component {
       <React.Fragment>
         <main>
           <Segment.Group>
-            <BreadcrumbDisplay breadcrumbList={[{ name: "Demand", url: "/demand" }]} />
+            <BreadcrumbDisplay
+              breadcrumbList={[{ name: "Demand", url: "/demand" }]}
+            />
 
-            <Segment />
+            <Segment>
+              <Card.Group className="">
+                <Card>
+                  <Card.Content
+                    as={Link}
+                    to="/customers"
+                    header="Customers"
+                  />
+                  <Card.Content description="Manage Customers" />
+                </Card>
+
+
+                <Card>
+                  <Card.Content
+                    as={Link}
+                    to="/customers"
+                    header="Sales Orders"
+                  />
+                  <Card.Content description="sales orders" />
+                </Card>
+              </Card.Group>
+            </Segment>
           </Segment.Group>
         </main>
       </React.Fragment>
@@ -20,4 +44,4 @@ class Demand extends Component {
   }
 }
 
-export default Demand;
+export default withRouter(connect()(Demand));
