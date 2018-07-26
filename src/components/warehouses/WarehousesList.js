@@ -1,30 +1,53 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table } from "semantic-ui-react";
 
 class WarehousesList extends Component {
-
   render() {
     const { warehouses } = this.props;
 
     const warehousesRows = warehouses.map(warehouse => {
       return (
         <Table.Row key={warehouse.id} data-id={warehouse.id}>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.name}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.contact}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.street1}<br/>{warehouse.street2}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.city}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.state}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.country.name}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.postal_code}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.email}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.phone}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.fax}</Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>{warehouse.active ? "Active" : "Inactive"}</Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.name}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.contact}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.street1}
+            <br />
+            {warehouse.street2}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.city}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.state}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.country.name}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.postal_code}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.email}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.phone}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.fax}
+          </Table.Cell>
+          <Table.Cell onClick={this.props.handleClickTableCell}>
+            {warehouse.active ? "Active" : "Inactive"}
+          </Table.Cell>
         </Table.Row>
-      )
-    })
+      );
+    });
 
     return (
       <React.Fragment>
@@ -46,24 +69,24 @@ class WarehousesList extends Component {
           </Table.Header>
 
           <Table.Body>{warehousesRows}</Table.Body>
-          
+
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan="11">
-                {/* <PaymentTermNew floated="left" /> */}
+                <p> table footer</p>
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
         </Table>
       </React.Fragment>
-    )
+    );
   }
 }
 
 const mapStateToProps = ({ warehouses, user }) => {
   return {
     warehouses: warehouses.warehouses,
-    currentAccount: user.currentAccount,
+    currentAccount: user.currentAccount
   };
 };
 
