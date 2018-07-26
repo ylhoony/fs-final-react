@@ -26,8 +26,8 @@ import Logistics from "./containers/navs/Logistics";
 import Warehouse from "./containers/navs/Warehouse";
 // Setting
 import Setting from "./containers/navs/Setting";
-import CompanyAddresses from "./containers/setting/CompanyAddresses";
-import CompanyContacts from "./containers/setting/CompanyContacts";
+import AccountAddresses from "./containers/setting/AccountAddresses";
+import AccountContacts from "./containers/setting/AccountContacts";
 import PaymentTerms from "./containers/setting/PaymentTerms";
 import Warehouses from "./containers/setting/Warehouses";
 
@@ -52,8 +52,8 @@ class App extends Component {
             <Route exact path="/logistics" component={Logistics} />
             <Route exact path="/warehouse" component={Warehouse} />
             <Route exact path="/setting" component={Setting} />
-              <Route path="/company-addresses" component={CompanyAddresses} />
-              <Route path="/company-contacts" component={CompanyContacts} />
+              <Route path="/account-addresses" component={AccountAddresses} />
+              <Route path="/account-contacts" component={AccountContacts} />
               <Route path="/payment-terms" component={PaymentTerms} />
               <Route path="/warehouses" component={Warehouses} />
 

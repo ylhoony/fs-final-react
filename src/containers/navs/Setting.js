@@ -28,7 +28,7 @@ class Setting extends Component {
                     <Card>
                       <Card.Content
                         as={Link}
-                        to="/company-addresses"
+                        to="/account-addresses"
                         header="Company Addresses"
                       />
                       <Card.Content description={description} />
@@ -41,7 +41,7 @@ class Setting extends Component {
                     <Card>
                       <Card.Content
                         as={Link}
-                        to="/company-contacts"
+                        to="/account-contacts"
                         header="Company Contacts"
                       />
                       <Card.Content description={description} />
