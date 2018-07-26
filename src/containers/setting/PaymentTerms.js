@@ -77,10 +77,7 @@ class PaymentTerms extends Component {
   };
 
   render() {
-    const {
-      currentAccountLoading,
-      paymentTermsLoading
-    } = this.props;
+    const { currentAccountLoading, paymentTermsLoading } = this.props;
 
     if (currentAccountLoading || paymentTermsLoading) {
       return <Loading />;
@@ -90,7 +87,12 @@ class PaymentTerms extends Component {
       <React.Fragment>
         <main>
           <Segment.Group>
-            <BreadcrumbDisplay breadcrumbList={["Setting", "Payment Terms"]} />
+            <BreadcrumbDisplay
+              breadcrumbList={[
+                { name: "Setting", url: "/setting" },
+                { name: "Payment Terms", url: "/payment-terms" }
+              ]}
+            />
 
             <Segment className="flex flex-between flex-middle">
               <Header

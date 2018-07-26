@@ -10,11 +10,9 @@ class Demand extends Component {
       <React.Fragment>
         <main>
           <Segment.Group>
-            <BreadcrumbDisplay breadcrumbList={["Demand"]} />
+            <BreadcrumbDisplay breadcrumbList={[{ name: "Demand", url: "/demand" }]} />
 
-            <Segment>
-              
-            </Segment>
+            <Segment />
           </Segment.Group>
         </main>
       </React.Fragment>

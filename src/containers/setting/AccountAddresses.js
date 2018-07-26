@@ -200,7 +200,10 @@ class AccountAddresses extends Component {
         <main>
           <Segment.Group>
             <BreadcrumbDisplay
-              breadcrumbList={["Setting", "Account Address"]}
+              breadcrumbList={[
+                { name: "Setting", url: "/setting" },
+                { name: "Account Addresses", url: "/account-addresses" }
+              ]}
             />
 
             <Segment className="flex flex-between flex-middle">

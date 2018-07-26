@@ -15,7 +15,9 @@ class Setting extends Component {
       <React.Fragment>
         <main>
           <Segment.Group>
-            <BreadcrumbDisplay breadcrumbList={["Setting"]} />
+            <BreadcrumbDisplay
+              breadcrumbList={[{ name: "Setting", url: "/setting" }]}
+            />
 
             {/* Company Address and Contacts Section */}
             <Segment>

@@ -156,13 +156,17 @@ class Warehouses extends Component {
       current_account_id: this.props.currentAccount.id
     };
     if (!!this.state.warehouse.id) {
-      await this.props.actions.updateWarehouse(this.state.warehouse.id, this.state ,params);
+      await this.props.actions.updateWarehouse(
+        this.state.warehouse.id,
+        this.state,
+        params
+      );
     } else {
       await this.props.actions.createWarehouse(this.state, params);
     }
     this.closeModal();
     await this.props.actions.getWarehouses(params);
-    this.props.history.push("/warehouses")
+    this.props.history.push("/warehouses");
   };
 
   render() {
@@ -170,7 +174,7 @@ class Warehouses extends Component {
       countries,
       currentAccountLoading,
       createWarehouseLoading,
-      warehousesLoading,
+      warehousesLoading
     } = this.props;
 
     const countriesOptions = countries.map(country => {
@@ -183,11 +187,7 @@ class Warehouses extends Component {
       };
     });
 
-    if (
-      currentAccountLoading ||
-      createWarehouseLoading ||
-      warehousesLoading      
-    ) {
+    if (currentAccountLoading || createWarehouseLoading || warehousesLoading) {
       return <Loading />;
     }
 
@@ -196,7 +196,10 @@ class Warehouses extends Component {
         <main>
           <Segment.Group>
             <BreadcrumbDisplay
-              breadcrumbList={["Setting", "Warehouse Locations"]}
+              breadcrumbList={[
+                { name: "Setting", url: "/setting" },
+                { name: "Warehouse Locations", url: "/warehouses" }
+              ]}
             />
 
             <Segment className="flex flex-between flex-middle">
@@ -368,7 +371,7 @@ function mapStateToProps({ countries, user, warehouses }) {
     warehousesError: warehouses.warehousesError,
 
     createWarehouseLoading: warehouses.createWarehouseLoading,
-    updateWarehouseLoading: warehouses.updateWarehouseLoading,
+    updateWarehouseLoading: warehouses.updateWarehouseLoading
   };
 }
 
