@@ -8,15 +8,15 @@ const BreadcrumbDisplay = ({ breadcrumbList }) => {
       return (
         <React.Fragment key={index}>
           <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section active>{e}</Breadcrumb.Section>
+          <Breadcrumb.Section active as={Link} to={e.url}>{e.name}</Breadcrumb.Section>
         </React.Fragment>
       );
     } else {
       return (
         <React.Fragment key={index}>
           <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link key={index}>
-            {e}
+          <Breadcrumb.Section as={Link} link to={e.url}>
+            {e.name}
           </Breadcrumb.Section>
         </React.Fragment>
       );
@@ -26,7 +26,9 @@ const BreadcrumbDisplay = ({ breadcrumbList }) => {
   return (
     <Segment>
       <Breadcrumb size="small">
-        <Breadcrumb.Section link as={Link} to="/dashboard">Home</Breadcrumb.Section>
+        <Breadcrumb.Section link as={Link} to="/dashboard">
+          Home
+        </Breadcrumb.Section>
         {breadcrumbBuilder}
       </Breadcrumb>
     </Segment>
