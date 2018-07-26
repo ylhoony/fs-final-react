@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table } from "semantic-ui-react";
@@ -7,47 +7,56 @@ class AccountAddressesList extends Component {
   render() {
     const { accountAddresses } = this.props;
 
-    const accountAddressesRows = accountAddresses.map(accountAddress => {
-      return (
-        <Table.Row key={accountAddress.id} data-id={accountAddress.id}>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.company_name}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.contact}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.street1}
-            <br />
-            {accountAddress.street2}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.city}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.state}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.country.name}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.postal_code}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.email}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.phone}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.fax}
-          </Table.Cell>
-          <Table.Cell onClick={this.props.handleClickTableCell}>
-            {accountAddress.active ? "Active" : "Inactive"}
-          </Table.Cell>
+    let accountAddressesRows;
+    if (!accountAddresses.length) {
+      accountAddressesRows = (
+        <Table.Row>
+          <Table.Cell colSpan="11">Create new address</Table.Cell>
         </Table.Row>
       );
-    });
+    } else {
+      accountAddressesRows = accountAddresses.map(accountAddress => {
+        return (
+          <Table.Row key={accountAddress.id} data-id={accountAddress.id}>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.company_name}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.contact}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.street1}
+              <br />
+              {accountAddress.street2}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.city}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.state}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.country.name}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.postal_code}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.email}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.phone}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.fax}
+            </Table.Cell>
+            <Table.Cell onClick={this.props.handleClickTableCell}>
+              {accountAddress.active ? "Active" : "Inactive"}
+            </Table.Cell>
+          </Table.Row>
+        );
+      });
+    }
 
     return (
       <React.Fragment>
@@ -69,7 +78,7 @@ class AccountAddressesList extends Component {
           </Table.Header>
 
           <Table.Body>{accountAddressesRows}</Table.Body>
-          
+
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan="11">
@@ -79,14 +88,14 @@ class AccountAddressesList extends Component {
           </Table.Footer>
         </Table>
       </React.Fragment>
-    )
+    );
   }
 }
 
 const mapStateToProps = ({ accountAddresses, user }) => {
   return {
     accountAddresses: accountAddresses.accountAddresses,
-    currentAccount: user.currentAccount,
+    currentAccount: user.currentAccount
   };
 };
 
