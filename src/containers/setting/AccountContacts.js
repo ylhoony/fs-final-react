@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class CompanyContacts extends Component {
+class AccountContacts extends Component {
   render() {
     return (
       <React.Fragment>
         <main>
-          this is CompanyContacts page.
+          this is AccountContacts page.
         </main>
       </React.Fragment>
     )
   }
 }
 
-export default CompanyContacts;
+export default AccountContacts;
