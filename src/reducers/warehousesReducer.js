@@ -17,7 +17,7 @@ const initialState = {
 };
 
 export const warehousesReducer = (state = initialState, action) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     // Get Payment Terms
     case "GET_WAREHOUSES_BEGIN":
