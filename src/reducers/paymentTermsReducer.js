@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const paymentTermsReducer = (state = initialState, action) => {
-  console.log(action)
+  // console.log(action)
   switch (action.type) {
     // Get Payment Terms
     case "GET_PAYMENT_TERMS_BEGIN":
