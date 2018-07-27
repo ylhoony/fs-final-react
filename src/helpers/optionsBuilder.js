@@ -9,3 +9,39 @@ export const buildCountriesOptions = countries => {
     };
   });
 };
+
+export const buildWarehousesOptions = warehouses => {
+  return warehouses.map(warehouse => {
+    return {
+      "data-name": "warehouse_id",
+      "data-value": warehouse.id,
+      key: warehouse.id,
+      text: warehouse.name,
+      value: warehouse.id
+    };
+  });
+};
+
+export const buildCurrenciesOptions = currencies => {
+  return currencies.map(currency => {
+    return {
+      "data-name": "currency_id",
+      "data-value": currency.id,
+      key: currency.id,
+      text: currency.name,
+      value: currency.id
+    };
+  });
+};
+
+export const buildPaymentTermsOptions = paymentTerms => {
+  return paymentTerms.map(term => {
+    return {
+      "data-name": "payment_term_id",
+      "data-value": term.id,
+      key: term.id,
+      text: term.name,
+      value: term.id
+    };
+  });
+};
