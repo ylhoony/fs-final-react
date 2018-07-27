@@ -11,15 +11,19 @@ export const buildCountriesOptions = countries => {
 };
 
 export const buildWarehousesOptions = warehouses => {
-  return warehouses.map(warehouse => {
-    return {
-      "data-name": "warehouse_id",
-      "data-value": warehouse.id,
-      key: warehouse.id,
-      text: warehouse.name,
-      value: warehouse.id
-    };
-  });
+  if (!warehouses.length) {
+    return [];
+  } else {
+    return warehouses.map(warehouse => {
+      return {
+        "data-name": "warehouse_id",
+        "data-value": warehouse.id,
+        key: warehouse.id,
+        text: warehouse.name,
+        value: warehouse.id
+      };
+    });
+  }
 };
 
 export const buildCurrenciesOptions = currencies => {
