@@ -1,12 +1,12 @@
 import axios from "axios";
-// import types from "./types";
+import { authToken } from "../helpers/auth";
 
 export const getAccountContacts = params => dispatch => {
   dispatch({ type: "GET_ACCOUNT_CONTACTS_BEGIN" });
   axios
     .get("/api/v1/account_contacts", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: authToken,
         "Content-Type": "application/json"
       },
       params: params
@@ -22,7 +22,7 @@ export const createAccountContact = (data, params) => dispatch => {
     method: "POST",
     url: "/api/v1/account_contacts",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: authToken,
       "Content-Type": "application/json"
     },
     data: data,
@@ -37,7 +37,7 @@ export const getAccountContact = (accountContactId, params) => dispatch => {
   axios
     .get(`/api/v1/account_contacts/${accountContactId}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: authToken,
         "Content-Type": "application/json"
       },
       params: params
@@ -53,7 +53,7 @@ export const updateAccountContact = (accountContactId, data, params) => dispatch
     method: "PUT",
     url: `/api/v1/account_contacts/${accountContactId}`,
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: authToken,
       "Content-Type": "application/json"
     },
     data: data,

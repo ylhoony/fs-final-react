@@ -1,12 +1,12 @@
 import axios from "axios";
-// import types from "./types";
+import { authToken } from "../helpers/auth";
 
 export const getAccountAddresses = params => dispatch => {
   dispatch({ type: "GET_ACCOUNT_ADDRESSES_BEGIN" });
   axios
     .get("/api/v1/account_addresses", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: authToken,
         "Content-Type": "application/json"
       },
       params: params
@@ -22,7 +22,7 @@ export const createAccountAddress = (data, params) => dispatch => {
     method: "POST",
     url: "/api/v1/account_addresses",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: authToken,
       "Content-Type": "application/json"
     },
     data: data,
@@ -37,7 +37,7 @@ export const getAccountAddress = (accountAddressId, params) => dispatch => {
   axios
     .get(`/api/v1/account_addresses/${accountAddressId}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: authToken,
         "Content-Type": "application/json"
       },
       params: params
@@ -47,13 +47,17 @@ export const getAccountAddress = (accountAddressId, params) => dispatch => {
     );
 };
 
-export const updateAccountAddress = (accountAddressId, data, params) => dispatch => {
+export const updateAccountAddress = (
+  accountAddressId,
+  data,
+  params
+) => dispatch => {
   dispatch({ type: "UPDATE_ACCOUNT_ADDRESS_BEGIN" });
   axios({
     method: "PUT",
     url: `/api/v1/account_addresses/${accountAddressId}`,
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: authToken,
       "Content-Type": "application/json"
     },
     data: data,
