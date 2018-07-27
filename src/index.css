@@ -6,6 +6,7 @@ body {
   background-color: #f6f6f6;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
+  overflow-y: scroll;
   padding: 0;
 }
 
@@ -95,6 +96,7 @@ body {
 /* semantic-ui customization */
 h1, h2, h3, h4, h5,
 h2.ui.header,
+h3.ui.header,
 header .ui.menu,
 .ui.menu .item>i.icon,
 i.icon {
