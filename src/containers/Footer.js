@@ -5,7 +5,7 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-        <Segment>
+        <Segment size="tiny">
           <List className='flex flex-around'>
             <List.Item>Apples</List.Item>
             <List.Item>Pears</List.Item>

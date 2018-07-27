@@ -189,16 +189,17 @@ class AccountContacts extends Component {
 
             <Segment className="flex flex-between flex-middle">
               <Header
-                as="h2"
+                as="h3"
                 content="Account Contacts"
                 subheader="Manage your warehouse locations"
               />
 
               <Button
+                basic
+                color="teal"
                 icon
                 labelPosition="left"
-                primary
-                size="small"
+                size="tiny"
                 onClick={() => this.openModalNew()}
               >
                 <Icon name="plus" /> Add Contact
@@ -214,10 +215,10 @@ class AccountContacts extends Component {
         </main>
 
         {/* Modal Start */}
-        <Modal open={this.state.displayModal} onClose={this.closeModal}>
+        <Modal size="tiny" open={this.state.displayModal} onClose={this.closeModal}>
           <Modal.Header>New Account Contact</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.handleFormSubmit}>
+            <Form size="tiny" onSubmit={this.handleFormSubmit}>
               <Form.Input
                 fluid
                 label="First Name"

@@ -60,7 +60,7 @@ class WarehousesList extends Component {
 
     return (
       <React.Fragment>
-        <Table celled selectable color="grey" size="small" textAlign="center">
+        <Table celled selectable color="grey" size="small" sortable textAlign="center">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Warehouse Name</Table.HeaderCell>

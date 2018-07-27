@@ -25,7 +25,7 @@ const BreadcrumbDisplay = ({ breadcrumbList }) => {
 
   return (
     <Segment>
-      <Breadcrumb size="small">
+      <Breadcrumb size="tiny">
         <Breadcrumb.Section link as={Link} to="/dashboard">
           Home
         </Breadcrumb.Section>

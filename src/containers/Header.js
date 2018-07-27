@@ -20,7 +20,7 @@ class Header extends Component {
   handleAccountClick = e => {
     const account = {
       account_id: e.target.dataset.id || e.target.parentElement.dataset.id
-    }
+    };
 
     this.props.actions.changeCurrentAccount(account);
     this.props.history.push("/dashboard");
@@ -51,19 +51,22 @@ class Header extends Component {
       );
     });
 
-    console.log("currentAccount in Header: ", currentAccount)
+    console.log("currentAccount in Header: ", currentAccount);
 
     if (currentAccountLoading) {
-      return <Loading />
+      return <Loading />;
     }
 
     return (
       <React.Fragment>
         <header>
-          <Menu pointing>
+          <Menu pointing size="small">
             <Menu.Item icon="bars" fitted="vertically" />
             <Menu.Menu>
-              <Dropdown item text={ currentAccount ? currentAccount.name : "my app" }>
+              <Dropdown
+                item
+                text={currentAccount ? currentAccount.name : "my app"}
+              >
                 <Dropdown.Menu>
                   <Dropdown.Header>
                     <a href="/accounts">My Accounts</a>
@@ -113,7 +116,7 @@ class Header extends Component {
             </Menu.Menu>
           </Menu>
 
-          <Menu pointing secondary className="padding-all-sm">
+          <Menu className="padding-all-sm" pointing secondary size="tiny">
             <Menu.Item
               as={Link}
               to="/dashboard"
@@ -161,8 +164,8 @@ class Header extends Component {
               to="/setting"
               name="setting"
               active={this.state.activeItem === "/setting"}
-              onClick={this.handleItemClick}>
-            </Menu.Item>
+              onClick={this.handleItemClick}
+            />
           </Menu>
         </header>
       </React.Fragment>

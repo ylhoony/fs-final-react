@@ -191,14 +191,14 @@ class CustomerForm extends Component {
 
             <Segment className="flex flex-between flex-middle">
               <Header
-                as="h2"
+                as="h3"
                 content="Customer Information"
                 subheader="Create new customer"
               />
             </Segment>
 
             <Segment>
-              <Form onSubmit={this.handleFormSubmit}>
+              <Form size="tiny" onSubmit={this.handleFormSubmit}>
                 <Form.Input
                   fluid
                   label="Customer Name"

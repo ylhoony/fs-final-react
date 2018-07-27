@@ -208,16 +208,17 @@ class AccountAddresses extends Component {
 
             <Segment className="flex flex-between flex-middle">
               <Header
-                as="h2"
+                as="h3"
                 content="Account Addresses"
                 subheader="Manage your warehouse locations"
               />
 
               <Button
+                basic
                 icon
+                color="teal"
                 labelPosition="left"
-                primary
-                size="small"
+                size="tiny"
                 onClick={() => this.openModalNew()}
               >
                 <Icon name="plus" /> Add Address
@@ -233,10 +234,10 @@ class AccountAddresses extends Component {
         </main>
 
         {/* Modal Start */}
-        <Modal open={this.state.displayModal} onClose={this.closeModal}>
+        <Modal size="tiny" open={this.state.displayModal} onClose={this.closeModal}>
           <Modal.Header>New Account Address</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.handleFormSubmit}>
+            <Form size="tiny" onSubmit={this.handleFormSubmit}>
               <Form.Input
                 fluid
                 label="Name"
