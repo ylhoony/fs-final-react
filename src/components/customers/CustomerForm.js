@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Form, Header, Segment, Tab } from "semantic-ui-react";
 
+import { authToken } from "../../helpers/auth";
 import { actions } from "../../actions/index";
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
 import Loading from "../Loading";
@@ -47,7 +48,7 @@ class CustomerForm extends Component {
         axios
         .get(`/api/v1/customers/${customerId}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: authToken,
             "Content-Type": "application/json"
           },
           params: params
@@ -115,7 +116,7 @@ class CustomerForm extends Component {
         method: "POST",
         url: "/api/v1/customers",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: authToken,
           "Content-Type": "application/json"
         },
         data: this.state,
