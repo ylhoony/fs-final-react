@@ -27,6 +27,12 @@ import {
   createAccountContact,
   updateAccountContact
 } from "./accountContactsActions";
+import {
+  getCustomers,
+  createCustomer,
+  getCustomer,
+  updateCustomer
+} from "./customersActions";
 
 export const actions = {
   // Authentication
@@ -60,5 +66,10 @@ export const actions = {
   // Account Contacts
   getAccountContacts,
   createAccountContact,
-  updateAccountContact
+  updateAccountContact,
+  // Customers
+  getCustomers,
+  createCustomer,
+  getCustomer,
+  updateCustomer
 };
