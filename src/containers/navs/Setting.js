@@ -26,7 +26,7 @@ class Setting extends Component {
                   <Header as="h3">Company Information</Header>
                 </Segment>
                 <Segment>
-                  <Card.Group className="">
+                  <Card.Group>
                     <Card>
                       <Card.Content
                         as={Link}
@@ -34,10 +34,6 @@ class Setting extends Component {
                         header="Company Addresses"
                       />
                       <Card.Content description={description} />
-                      <Card.Content extra>
-                        <Icon name="user" />
-                        4 Friends
-                      </Card.Content>
                     </Card>
 
                     <Card>
@@ -47,10 +43,6 @@ class Setting extends Component {
                         header="Company Contacts"
                       />
                       <Card.Content description={description} />
-                      <Card.Content extra>
-                        <Icon name="user" />
-                        4 Friends
-                      </Card.Content>
                     </Card>
 
                     <Card>
@@ -59,11 +51,7 @@ class Setting extends Component {
                         to="/warehouses"
                         header="Warehouse Locations"
                       />
-                      <Card.Content description={description} />
-                      <Card.Content extra>
-                        <Icon name="user" />
-                        4 Friends
-                      </Card.Content>
+                      <Card.Content description="test" />
                     </Card>
                   </Card.Group>
                 </Segment>
