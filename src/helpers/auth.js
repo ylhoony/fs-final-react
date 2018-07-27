@@ -1,3 +1,1 @@
-export const getAuthToken = () => {
-  return `Bearer ${localStorage.getItem("token")}`
-}
+export const authToken = `Bearer ${localStorage.getItem("token")}`;
