@@ -28,7 +28,7 @@ class CustomersList extends Component {
     const { currentAccountLoading, customers, customersLoading } = this.props;
 
     let customersRows;
-    if (!customers) {
+    if (!customers.length) {
       customersRows = (
         <Table.Row>
           <Table.Cell colSpan="4">Create new customer</Table.Cell>
