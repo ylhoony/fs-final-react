@@ -5,10 +5,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Form, Header, Segment, Tab } from "semantic-ui-react";
 
-import { authToken } from "../../helpers/auth";
-import { actions } from "../../actions/index";
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
 import Loading from "../Loading";
+import AddressesTab from "../companyAddresses/AddressesTab";
+
+import { authToken } from "../../helpers/auth";
+import { actions } from "../../actions/index";
 import {
   buildCurrenciesOptions,
   buildPaymentTermsOptions,
@@ -27,7 +29,9 @@ class CustomerForm extends Component {
         comment: "",
         warehouse_id: null,
         payment_term_id: null,
-        currency_id: null
+        currency_id: null,
+        addresses: [],
+        contacts: []
       }
     };
   }
@@ -43,33 +47,34 @@ class CustomerForm extends Component {
       if (this.props.match.url === "/customers/new") {
         return;
       } else {
-        const customerId = this.props.match.params.customerId
+        const customerId = this.props.match.params.customerId;
 
         axios
-        .get(`/api/v1/customers/${customerId}`, {
-          headers: {
-            Authorization: authToken,
-            "Content-Type": "application/json"
-          },
-          params: params
-        })
-        .then(res => {
-          const selectedCustomer = res.data;
-
-          this.setState({
-            ...this.state, 
-            customer: {
-              id: selectedCustomer.id || null,
-              account_id: selectedCustomer.account_id || this.props.currentAccount.id,
-              name: selectedCustomer.name || "",
-              tax_id: selectedCustomer.tax_id || "",
-              comment: selectedCustomer.comment || "",
-              warehouse_id: selectedCustomer.warehouse.id || null,
-              payment_term_id: selectedCustomer.payment_term.id || null,
-              currency_id: selectedCustomer.currency.id || null
-            }
+          .get(`/api/v1/customers/${customerId}`, {
+            headers: {
+              Authorization: authToken,
+              "Content-Type": "application/json"
+            },
+            params: params
           })
-        });
+          .then(res => {
+            const selectedCustomer = res.data;
+
+            this.setState({
+              ...this.state,
+              customer: {
+                id: selectedCustomer.id || null,
+                account_id:
+                  selectedCustomer.account_id || this.props.currentAccount.id,
+                name: selectedCustomer.name || "",
+                tax_id: selectedCustomer.tax_id || "",
+                comment: selectedCustomer.comment || "",
+                warehouse_id: selectedCustomer.warehouse.id || null,
+                payment_term_id: selectedCustomer.payment_term.id || null,
+                currency_id: selectedCustomer.currency.id || null
+              }
+            });
+          });
       }
     }
   }
@@ -124,7 +129,7 @@ class CustomerForm extends Component {
       }).then(res => {
         this.props.history.push(`/customers/${res.data.id}`);
       });
-      await this.props.actions.getCustomers(params);      
+      await this.props.actions.getCustomers(params);
     }
   };
 
@@ -146,11 +151,15 @@ class CustomerForm extends Component {
 
     const panes = [
       {
-        menuItem: "Tab 1",
-        render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane>
+        menuItem: "Addresses",
+        render: () => (
+          <Tab.Pane attached={false}>
+            <AddressesTab />
+          </Tab.Pane>
+        )
       },
       {
-        menuItem: "Tab 2",
+        menuItem: "Contacts",
         render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
       },
       {
@@ -253,7 +262,11 @@ class CustomerForm extends Component {
                   onChange={this.handleFormInputChange}
                 />
 
-                <Tab className="field" menu={{ pointing: true }} panes={panes} />
+                <Tab
+                  className="field"
+                  menu={{ pointing: true }}
+                  panes={panes}
+                />
 
                 <Form.Button content="save" />
               </Form>
