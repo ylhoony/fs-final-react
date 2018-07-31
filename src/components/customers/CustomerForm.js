@@ -3,11 +3,12 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Form, Header, Segment, Tab } from "semantic-ui-react";
+import { Form, Header, Input, Menu, Segment } from "semantic-ui-react";
 
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
 import Loading from "../Loading";
-import AddressesTab from "../companyAddresses/AddressesTab";
+import AddressesTab from "../companyDetails/AddressesTab";
+import ContactsTab from "../companyDetails/ContactsTab";
 
 import { authToken } from "../../helpers/auth";
 import { actions } from "../../actions/index";
@@ -21,6 +22,7 @@ class CustomerForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      activeTab: "Addresses",
       customer: {
         id: null,
         account_id: props.currentAccount.id,
@@ -30,7 +32,23 @@ class CustomerForm extends Component {
         warehouse_id: null,
         payment_term_id: null,
         currency_id: null,
-        addresses: [],
+        addresses: [
+          {
+            id: null,
+            company_name: "",
+            contact: "",
+            street1: "",
+            street2: "",
+            city: "",
+            state: "",
+            country_id: "",
+            postal_code: "",
+            email: "",
+            phone: "",
+            fax: "",
+            active: true
+          }
+        ],
         contacts: []
       }
     };
@@ -80,6 +98,7 @@ class CustomerForm extends Component {
   }
 
   handleFormInputChange = (e, { value }) => {
+    console.log("change form data!");
     const key =
       e.target.name ||
       e.target.dataset.name ||
@@ -133,6 +152,47 @@ class CustomerForm extends Component {
     }
   };
 
+  handleClickTab = e => {
+    this.setState({
+      ...this.state,
+      activeTab: e.target.text
+    });
+  };
+
+  // handleAddShareholder = () => {
+  //   this.setState({ shareholders: this.state.shareholders.concat([{ name: '' }]) });
+  // }
+
+  handleAddAddress = e => {
+    e.preventDefault();
+    console.log("Add Product!!");
+    this.setState({
+      ...this.state,
+      customer: {
+        ...this.state.customer,
+        addresses: this.state.customer.addresses.concat({
+          id: null,
+          company_name: "",
+          contact: "",
+          street1: "",
+          street2: "",
+          city: "",
+          state: "",
+          country_id: "",
+          postal_code: "",
+          email: "",
+          phone: "",
+          fax: "",
+          active: true
+        })
+      }
+    });
+  };
+
+  handleChangeAddress = e => {
+    console.log("change address");
+  };
+
   render() {
     const {
       currentAccountLoading,
@@ -149,25 +209,6 @@ class CustomerForm extends Component {
     const paymentTermsOptions = buildPaymentTermsOptions(paymentTerms);
     const warehousesOptions = buildWarehousesOptions(warehouses);
 
-    const panes = [
-      {
-        menuItem: "Addresses",
-        render: () => (
-          <Tab.Pane attached={false}>
-            <AddressesTab />
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: "Contacts",
-        render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>
-      },
-      {
-        menuItem: "Tab 3",
-        render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>
-      }
-    ];
-
     if (
       currentAccountLoading ||
       currenciesLoading ||
@@ -177,6 +218,7 @@ class CustomerForm extends Component {
       return <Loading />;
     }
 
+    console.log(this.state);
     return (
       <React.Fragment>
         <main>
@@ -262,11 +304,42 @@ class CustomerForm extends Component {
                   onChange={this.handleFormInputChange}
                 />
 
-                <Tab
-                  className="field"
-                  menu={{ pointing: true }}
-                  panes={panes}
-                />
+                {/* tab  start */}
+                <Menu attached="top" tabular size="tiny">
+                  <Menu.Item
+                    name="Addresses"
+                    active={this.state.activeTab === "Addresses"}
+                    onClick={this.handleClickTab}
+                  />
+                  <Menu.Item
+                    name="Contacts"
+                    active={this.state.activeTab === "Contacts"}
+                    onClick={this.handleClickTab}
+                  />
+                  <Menu.Menu position="right">
+                    <Menu.Item>
+                      <Input
+                        transparent
+                        icon={{ name: "search", link: true }}
+                        placeholder="Search users..."
+                      />
+                    </Menu.Item>
+                  </Menu.Menu>
+                </Menu>
+                <Segment attached="bottom" size="tiny">
+                  {this.state.activeTab === "Addresses" && (
+                    <AddressesTab
+                      addresses={this.state.customer.addresses}
+                      handleAddAddress={e => this.handleAddAddress(e)}
+                      handleChangeAddress={e => this.handleChangeAddress(e)}
+                    />
+                  )}
+                  {this.state.activeTab === "Contacts" && (
+                    <ContactsTab
+                      handleFormInputChange={() => this.handleFormInputChange()}
+                    />
+                  )}
+                </Segment>
 
                 <Form.Button content="save" />
               </Form>
