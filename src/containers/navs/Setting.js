@@ -73,19 +73,11 @@ class Setting extends Component {
                         header="Payment Terms"
                       />
                       <Card.Content description="this is description" />
-                      <Card.Content extra>
-                        <Icon name="user" />
-                        4 Friends
-                      </Card.Content>
                     </Card>
 
                     <Card>
-                      <Card.Content header="use this" />
+                      <Card.Content header="Tax Rules" />
                       <Card.Content description="This is for other link" />
-                      <Card.Content extra>
-                        <Icon name="user" />
-                        4 Friends
-                      </Card.Content>
                     </Card>
                   </Card.Group>
                 </Segment>
