@@ -24,7 +24,6 @@ class CustomerForm extends Component {
     this.state = {
       activeTab: "Addresses",
       customer: {
-        id: null,
         account_id: props.currentAccount.id,
         name: "",
         tax_id: "",
@@ -61,7 +60,6 @@ class CustomerForm extends Component {
           })
           .then(res => {
             const customer = res.data;
-            // console.log(res.data)
             this.setState({
               ...this.state,
               customer: {
@@ -114,12 +112,21 @@ class CustomerForm extends Component {
     };
 
     if (!!this.state.customer.id) {
-      await this.props.actions.updateCustomer(
-        this.state.customer.id,
-        this.state,
-        params
-      );
-      this.props.history.push(`/customers/${this.state.customer.id}`);
+      const customerId = this.state.customer.id;
+
+      axios({
+        method: "PUT",
+        url: `/api/v1/customers/${customerId}`,
+        headers: {
+          Authorization: authToken,
+          "Content-Type": "application/json"
+        },
+        data: this.state,
+        params: params
+      }).then(res => {
+        this.props.history.push(`/customers/${res.data.id}`);
+      });
+      await this.props.actions.getCustomers(params);
     } else {
       axios({
         method: "POST",
@@ -151,7 +158,6 @@ class CustomerForm extends Component {
       customer: {
         ...this.state.customer,
         addresses_attributes: this.state.customer.addresses_attributes.concat({
-          id: null,
           company_name: "",
           contact: "",
           street1: "",
@@ -163,7 +169,9 @@ class CustomerForm extends Component {
           email: "",
           phone: "",
           fax: "",
-          active: true
+          comment: "",
+          active: true,
+          _destroy: false
         })
       }
     });
@@ -171,15 +179,32 @@ class CustomerForm extends Component {
 
   handleRemoveAddress = (e, index) => {
     e.preventDefault();
-    this.setState({
-      ...this.state,
-      customer: {
-        ...this.state.customer,
-        addresses_attributes: this.state.customer.addresses_attributes.filter(
-          (address, stateIndex) => index !== stateIndex
-        )
-      }
-    });
+    const stateAddresses = this.state.customer.addresses_attributes;
+
+    if (!!stateAddresses[index].id) {
+      const newAddresses = stateAddresses.map((address, stateIndex) => {
+        if (stateIndex !== index) return address;
+        return Object.assign({}, address, { _destroy: true });
+      });
+
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          addresses_attributes: newAddresses
+        }
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          addresses_attributes: this.state.customer.addresses_attributes.filter(
+            (address, stateIndex) => index !== stateIndex
+          )
+        }
+      });
+    }
   };
 
   handleAddressChange = (e, index) => {
@@ -232,7 +257,8 @@ class CustomerForm extends Component {
           mobile: "",
           fax: "",
           comment: "",
-          active: true
+          active: true,
+          _destroy: false
         })
       }
     });
@@ -240,15 +266,33 @@ class CustomerForm extends Component {
 
   handleRemoveContact = (e, index) => {
     e.preventDefault();
-    this.setState({
-      ...this.state,
-      customer: {
-        ...this.state.customer,
-        contacts_attributes: this.state.customer.contacts_attributes.filter(
-          (contact, stateIndex) => index !== stateIndex
-        )
-      }
-    });
+
+    const stateContacts = this.state.customer.contacts_attributes;
+
+    if (!!stateContacts[index].id) {
+      const newContacts = stateContacts.map((address, stateIndex) => {
+        if (stateIndex !== index) return address;
+        return Object.assign({}, address, { _destroy: true });
+      });
+
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          contacts_attributes: newContacts
+        }
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        customer: {
+          ...this.state.customer,
+          contacts_attributes: this.state.customer.contacts_attributes.filter(
+            (address, stateIndex) => index !== stateIndex
+          )
+        }
+      });
+    }
   };
 
   handleContactChange = (e, index) => {
