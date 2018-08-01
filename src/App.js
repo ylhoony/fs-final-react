@@ -16,11 +16,17 @@ import SignUp from "./containers/users/SignUp";
 import SignIn from "./containers/users/SignIn";
 
 import AuthenticatedRoutes from "./containers/AuthenticatedRoutes";
+
 // Navigation Containers
+import AccountsPage from "./containers/accounts/AccountsPage";
 import Dashboard from "./containers/navs/Dashboard";
+
 import Demand from "./containers/navs/Demand";
 import Customers from "./containers/demand/Customers";
+
 import Supply from "./containers/navs/Supply";
+import Suppliers from "./containers/supply/Suppliers";
+
 import Product from "./containers/navs/Product";
 import Logistics from "./containers/navs/Logistics";
 import Warehouse from "./containers/navs/Warehouse";
@@ -30,9 +36,6 @@ import AccountAddresses from "./containers/setting/AccountAddresses";
 import AccountContacts from "./containers/setting/AccountContacts";
 import PaymentTerms from "./containers/setting/PaymentTerms";
 import Warehouses from "./containers/setting/Warehouses";
-
-// Menu Containers
-import AccountsPage from "./containers/accounts/AccountsPage";
 
 class App extends Component {
   render() {
@@ -48,6 +51,7 @@ class App extends Component {
             <Route exact path="/demand" component={Demand} />
               <Route path="/customers" component={Customers} />
             <Route exact path="/supply" component={Supply} />
+              <Route path="/suppliers" component={Suppliers} />
             <Route exact path="/product" component={Product} />
             <Route exact path="/logistics" component={Logistics} />
             <Route exact path="/warehouse" component={Warehouse} />
