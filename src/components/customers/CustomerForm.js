@@ -32,8 +32,8 @@ class CustomerForm extends Component {
         warehouse_id: null,
         payment_term_id: null,
         currency_id: null,
-        addresses: [],
-        contacts: []
+        addresses_attributes: [],
+        contacts_attributes: []
       }
     };
   }
@@ -60,20 +60,21 @@ class CustomerForm extends Component {
             params: params
           })
           .then(res => {
-            const selectedCustomer = res.data;
-
+            const customer = res.data;
+            // console.log(res.data)
             this.setState({
               ...this.state,
               customer: {
-                id: selectedCustomer.id || null,
-                account_id:
-                  selectedCustomer.account_id || this.props.currentAccount.id,
-                name: selectedCustomer.name || "",
-                tax_id: selectedCustomer.tax_id || "",
-                comment: selectedCustomer.comment || "",
-                warehouse_id: selectedCustomer.warehouse.id || null,
-                payment_term_id: selectedCustomer.payment_term.id || null,
-                currency_id: selectedCustomer.currency.id || null
+                id: customer.id || null,
+                account_id: customer.account_id || this.props.currentAccount.id,
+                name: customer.name || "",
+                tax_id: customer.tax_id || "",
+                comment: customer.comment || "",
+                warehouse_id: customer.warehouse.id || null,
+                payment_term_id: customer.payment_term.id || null,
+                currency_id: customer.currency.id || null,
+                addresses_attributes: customer.addresses,
+                contacts_attributes: customer.contacts
               }
             });
           });
@@ -149,7 +150,7 @@ class CustomerForm extends Component {
       ...this.state,
       customer: {
         ...this.state.customer,
-        addresses: this.state.customer.addresses.concat({
+        addresses_attributes: this.state.customer.addresses_attributes.concat({
           id: null,
           company_name: "",
           contact: "",
@@ -174,7 +175,7 @@ class CustomerForm extends Component {
       ...this.state,
       customer: {
         ...this.state.customer,
-        addresses: this.state.customer.addresses.filter(
+        addresses_attributes: this.state.customer.addresses_attributes.filter(
           (address, stateIndex) => index !== stateIndex
         )
       }
@@ -182,18 +183,25 @@ class CustomerForm extends Component {
   };
 
   handleAddressChange = (e, index) => {
-    const key = e.target.name || e.target.dataset.name || e.target.previousSibling.name;
+    const key =
+      e.target.name ||
+      e.target.dataset.name ||
+      e.target.parentElement.dataset.name ||
+      (e.target.previousSibling && e.target.previousSibling.name);
     let newValue;
     if (key === "active") {
-      this.state.customer.addresses.find(
+      this.state.customer.addresses_attributes.find(
         (address, stateIndex) => stateIndex === index
       ).active
         ? (newValue = false)
         : (newValue = true);
     } else {
-      newValue = e.target.value || e.target.dataset.value;
+      newValue =
+        e.target.value ||
+        e.target.dataset.value ||
+        e.target.parentElement.dataset.value;
     }
-    const newAddresses = this.state.customer.addresses.map(
+    const newAddresses = this.state.customer.addresses_attributes.map(
       (address, stateIndex) => {
         if (stateIndex !== index) return address;
         return Object.assign({}, address, { [key]: newValue });
@@ -203,7 +211,77 @@ class CustomerForm extends Component {
       ...this.state,
       customer: {
         ...this.state.customer,
-        addresses: newAddresses
+        addresses_attributes: newAddresses
+      }
+    });
+  };
+
+  handleAddContact = e => {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      customer: {
+        ...this.state.customer,
+        contacts_attributes: this.state.customer.contacts_attributes.concat({
+          id: null,
+          first_name: "",
+          last_name: "",
+          job_title: "",
+          email: "",
+          phone: "",
+          mobile: "",
+          fax: "",
+          comment: "",
+          active: true
+        })
+      }
+    });
+  };
+
+  handleRemoveContact = (e, index) => {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      customer: {
+        ...this.state.customer,
+        contacts_attributes: this.state.customer.contacts_attributes.filter(
+          (contact, stateIndex) => index !== stateIndex
+        )
+      }
+    });
+  };
+
+  handleContactChange = (e, index) => {
+    console.log("change contact info");
+    const key =
+      e.target.name ||
+      e.target.dataset.name ||
+      e.target.parentElement.dataset.name ||
+      (e.target.previousSibling && e.target.previousSibling.name);
+    let newValue;
+    if (key === "active") {
+      this.state.customer.contacts_attributes.find(
+        (contact, stateIndex) => stateIndex === index
+      ).active
+        ? (newValue = false)
+        : (newValue = true);
+    } else {
+      newValue =
+        e.target.value ||
+        e.target.dataset.value ||
+        e.target.parentElement.dataset.value;
+    }
+    const newContacts = this.state.customer.contacts_attributes.map(
+      (contact, stateIndex) => {
+        if (stateIndex !== index) return contact;
+        return Object.assign({}, contact, { [key]: newValue });
+      }
+    );
+    this.setState({
+      ...this.state,
+      customer: {
+        ...this.state.customer,
+        contacts_attributes: newContacts
       }
     });
   };
@@ -344,7 +422,7 @@ class CustomerForm extends Component {
                 <Segment attached="bottom" size="tiny">
                   {this.state.activeTab === "Addresses" && (
                     <AddressesTab
-                      addresses={this.state.customer.addresses}
+                      addresses={this.state.customer.addresses_attributes}
                       handleAddAddress={e => this.handleAddAddress(e)}
                       handleRemoveAddress={this.handleRemoveAddress}
                       handleAddressChange={this.handleAddressChange}
@@ -352,7 +430,10 @@ class CustomerForm extends Component {
                   )}
                   {this.state.activeTab === "Contacts" && (
                     <ContactsTab
-                      handleFormInputChange={() => this.handleFormInputChange()}
+                      contacts={this.state.customer.contacts_attributes}
+                      handleAddContact={e => this.handleAddContact(e)}
+                      handleRemoveContact={this.handleRemoveContact}
+                      handleContactChange={this.handleContactChange}
                     />
                   )}
                 </Segment>
