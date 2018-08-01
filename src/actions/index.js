@@ -33,6 +33,12 @@ import {
   getCustomer,
   updateCustomer
 } from "./customersActions";
+import {
+  getSuppliers,
+  createSupplier,
+  getSupplier,
+  updateSupplier
+} from "./suppliersActions";
 
 export const actions = {
   // Authentication
@@ -71,5 +77,10 @@ export const actions = {
   getCustomers,
   createCustomer,
   getCustomer,
-  updateCustomer
+  updateCustomer,
+  // Suppliers
+  getSuppliers,
+  createSupplier,
+  getSupplier,
+  updateSupplier
 };
