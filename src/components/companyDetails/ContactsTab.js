@@ -24,93 +24,95 @@ class ContactsTab extends Component {
 
           <Table.Body>
             {contacts.map((contact, index) => {
-              return (
-                <Table.Row key={index}>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="first_name"
-                      placeholder="first name"
-                      value={contact.first_name}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="last_name"
-                      placeholder="last name"
-                      value={contact.last_name}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
+              if (!contact._destroy) {
+                return (
+                  <Table.Row key={index}>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="first_name"
+                        placeholder="first name"
+                        value={contact.first_name}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="last_name"
+                        placeholder="last name"
+                        value={contact.last_name}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
 
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="job_title"
-                      placeholder="Job Title"
-                      value={contact.job_title}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="email"
-                      placeholder="email"
-                      value={contact.email}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="phone"
-                      placeholder="phone"
-                      value={contact.phone}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="fax"
-                      placeholder="fax"
-                      value={contact.fax}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="comment"
-                      placeholder="comment"
-                      value={contact.comment}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Checkbox
-                      toggle
-                      name="active"
-                      placeholder="active"
-                      checked={contact.active}
-                      onChange={e => this.props.handleContactChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button
-                      basic
-                      color="red"
-                      compact
-                      icon="minus"
-                      size="mini"
-                      onClick={e => this.props.handleRemoveContact(e, index)}
-                    />
-                  </Table.Cell>
-                </Table.Row>
-              );
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="job_title"
+                        placeholder="Job Title"
+                        value={contact.job_title}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="email"
+                        placeholder="email"
+                        value={contact.email}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="phone"
+                        placeholder="phone"
+                        value={contact.phone}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="fax"
+                        placeholder="fax"
+                        value={contact.fax}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="comment"
+                        placeholder="comment"
+                        value={contact.comment}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Checkbox
+                        toggle
+                        name="active"
+                        placeholder="active"
+                        checked={contact.active}
+                        onChange={e => this.props.handleContactChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        basic
+                        color="red"
+                        compact
+                        icon="minus"
+                        size="mini"
+                        onClick={e => this.props.handleRemoveContact(e, index)}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              }
             })}
           </Table.Body>
           <Table.Footer>

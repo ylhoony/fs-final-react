@@ -33,133 +33,137 @@ class AddressesTab extends Component {
 
           <Table.Body>
             {addresses.map((address, index) => {
-              return (
-                <Table.Row key={index}>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="company_name"
-                      placeholder="company name"
-                      value={address.company_name}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="contact"
-                      placeholder="contact"
-                      value={address.contact}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="street1"
-                      placeholder="street 1"
-                      value={address.street1}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="street2"
-                      placeholder="street2"
-                      value={address.street2}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="city"
-                      placeholder="city"
-                      value={address.city}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="state"
-                      placeholder="state"
-                      value={address.state}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Select
-                      name="country_id"
-                      options={countriesOptions}
-                      text={
-                        address.country_id
-                          ? countriesOptions.find(
-                              country => country.key === parseInt(address.country_id, 10)
-                            ).text
-                          : "Select country"
-                      }
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="postal_code"
-                      placeholder="postal_code"
-                      value={address.postal_code}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="email"
-                      placeholder="email"
-                      value={address.email}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="phone"
-                      placeholder="phone"
-                      value={address.phone}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Input
-                      fluid
-                      name="fax"
-                      placeholder="fax"
-                      value={address.fax}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Form.Checkbox
-                      toggle
-                      name="active"
-                      placeholder="active"
-                      checked={address.active}
-                      onChange={e => this.props.handleAddressChange(e, index)}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button
-                      basic
-                      color="red"
-                      compact
-                      icon="minus"
-                      size="mini"
-                      onClick={e => this.props.handleRemoveAddress(e, index)}
-                    />
-                  </Table.Cell>
-                </Table.Row>
-              );
+              if (!address._destroy) {
+                return (
+                  <Table.Row key={index}>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="company_name"
+                        placeholder="company name"
+                        value={address.company_name}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="contact"
+                        placeholder="contact"
+                        value={address.contact}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="street1"
+                        placeholder="street 1"
+                        value={address.street1}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="street2"
+                        placeholder="street2"
+                        value={address.street2}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="city"
+                        placeholder="city"
+                        value={address.city}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="state"
+                        placeholder="state"
+                        value={address.state}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Select
+                        name="country_id"
+                        options={countriesOptions}
+                        text={
+                          address.country_id
+                            ? countriesOptions.find(
+                                country =>
+                                  country.key ===
+                                  parseInt(address.country_id, 10)
+                              ).text
+                            : "Select country"
+                        }
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="postal_code"
+                        placeholder="postal_code"
+                        value={address.postal_code}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="email"
+                        placeholder="email"
+                        value={address.email}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="phone"
+                        placeholder="phone"
+                        value={address.phone}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Input
+                        fluid
+                        name="fax"
+                        placeholder="fax"
+                        value={address.fax}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Form.Checkbox
+                        toggle
+                        name="active"
+                        placeholder="active"
+                        checked={address.active}
+                        onChange={e => this.props.handleAddressChange(e, index)}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        basic
+                        color="red"
+                        compact
+                        icon="minus"
+                        size="mini"
+                        onClick={e => this.props.handleRemoveAddress(e, index)}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              }
             })}
           </Table.Body>
           <Table.Footer>
