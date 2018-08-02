@@ -37,6 +37,8 @@ import Setting from "./containers/navs/Setting";
 import AccountAddresses from "./containers/setting/AccountAddresses";
 import AccountContacts from "./containers/setting/AccountContacts";
 import PaymentTerms from "./containers/setting/PaymentTerms";
+import ProductCategories from "./containers/setting/ProductCategories";
+import ProductBrands from "./containers/setting/ProductBrands";
 import Warehouses from "./containers/setting/Warehouses";
 
 class App extends Component {
@@ -62,6 +64,8 @@ class App extends Component {
               <Route path="/account-addresses" component={AccountAddresses} />
               <Route path="/account-contacts" component={AccountContacts} />
               <Route path="/payment-terms" component={PaymentTerms} />
+              <Route path="/product-brands" component={ProductBrands} />
+              <Route path="/product-categories" component={ProductCategories} />
               <Route path="/warehouses" component={Warehouses} />
 
             <Route path="/accounts" component={AccountsPage} />
