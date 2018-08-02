@@ -6,11 +6,6 @@ import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
 
 class Setting extends Component {
   render() {
-    const description = [
-      "Amy is a violinist with 2 years experience in the wedding industry.",
-      "She enjoys the outdoors and currently resides in upstate New York."
-    ].join(" ");
-
     return (
       <React.Fragment>
         <main>
@@ -33,7 +28,7 @@ class Setting extends Component {
                         to="/account-addresses"
                         header="Company Addresses"
                       />
-                      <Card.Content description={description} />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                     </Card>
 
                     <Card>
@@ -42,7 +37,7 @@ class Setting extends Component {
                         to="/account-contacts"
                         header="Company Contacts"
                       />
-                      <Card.Content description={description} />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                     </Card>
 
                     <Card>
@@ -51,7 +46,7 @@ class Setting extends Component {
                         to="/warehouses"
                         header="Warehouse Locations"
                       />
-                      <Card.Content description="test" />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                     </Card>
                   </Card.Group>
                 </Segment>
@@ -72,12 +67,41 @@ class Setting extends Component {
                         to="/payment-terms"
                         header="Payment Terms"
                       />
-                      <Card.Content description="this is description" />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                     </Card>
 
                     <Card>
                       <Card.Content header="Tax Rules" />
-                      <Card.Content description="This is for other link" />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </Card>
+                  </Card.Group>
+                </Segment>
+              </Segment.Group>
+            </Segment>
+            {/* Product */}
+            <Segment>
+              <Segment.Group>
+                <Segment>
+                  <Header as="h3">Products</Header>
+                </Segment>
+                <Segment>
+                  <Card.Group>
+                    <Card>
+                      <Card.Content
+                        as={Link}
+                        to="/product-categories"
+                        header="Product Categories"
+                      />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </Card>
+
+                    <Card>
+                      <Card.Content
+                        as={Link}
+                        to="/product-brands"
+                        header="Product Brands"
+                      />
+                      <Card.Content description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                     </Card>
                   </Card.Group>
                 </Segment>
