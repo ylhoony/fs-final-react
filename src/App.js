@@ -28,6 +28,8 @@ import Supply from "./containers/navs/Supply";
 import Suppliers from "./containers/supply/Suppliers";
 
 import Product from "./containers/navs/Product";
+import Products from "./containers/product/Products";
+
 import Logistics from "./containers/navs/Logistics";
 import Warehouse from "./containers/navs/Warehouse";
 // Setting
@@ -45,7 +47,7 @@ class App extends Component {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/signin" component={SignIn} />
           <AuthenticatedRoutes>
-            <Header />            
+            <Header />
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/demand" component={Demand} />
@@ -53,6 +55,7 @@ class App extends Component {
             <Route exact path="/supply" component={Supply} />
               <Route path="/suppliers" component={Suppliers} />
             <Route exact path="/product" component={Product} />
+              <Route path="/products" component={Products} />
             <Route exact path="/logistics" component={Logistics} />
             <Route exact path="/warehouse" component={Warehouse} />
             <Route exact path="/setting" component={Setting} />
@@ -73,7 +76,7 @@ class App extends Component {
 function mapStateToProps({ user }) {
   return {
     currentAccount: user.currentAccount,
-    currentUser: user.currentUser,
+    currentUser: user.currentUser
   };
 }
 
