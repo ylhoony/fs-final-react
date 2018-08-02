@@ -117,7 +117,7 @@ class AccountAddresses extends Component {
             street2: selectedAccountAddress.street2 || "",
             city: selectedAccountAddress.city || "",
             state: selectedAccountAddress.state || "",
-            country_id: selectedAccountAddress.country.id,
+            country_id: selectedAccountAddress.country_id,
             postal_code: selectedAccountAddress.postal_code || "",
             email: selectedAccountAddress.email || "",
             phone: selectedAccountAddress.phone || "",

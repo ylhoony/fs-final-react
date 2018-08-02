@@ -5,7 +5,7 @@ import { Table } from "semantic-ui-react";
 
 class AccountAddressesList extends Component {
   render() {
-    const { accountAddresses } = this.props;
+    const { accountAddresses, countries } = this.props;
 
     let accountAddressesRows;
     if (!accountAddresses.length) {
@@ -36,7 +36,11 @@ class AccountAddressesList extends Component {
               {accountAddress.state}
             </Table.Cell>
             <Table.Cell onClick={this.props.handleClickTableCell}>
-              {accountAddress.country.name}
+              {
+                countries.find(
+                  country => country.id === accountAddress.country_id
+                ).name
+              }
             </Table.Cell>
             <Table.Cell onClick={this.props.handleClickTableCell}>
               {accountAddress.postal_code}
@@ -92,10 +96,12 @@ class AccountAddressesList extends Component {
   }
 }
 
-const mapStateToProps = ({ accountAddresses, user }) => {
+const mapStateToProps = ({ accountAddresses, countries, user }) => {
   return {
     accountAddresses: accountAddresses.accountAddresses,
-    currentAccount: user.currentAccount
+    currentAccount: user.currentAccount,
+
+    countries: countries.countries
   };
 };
 
