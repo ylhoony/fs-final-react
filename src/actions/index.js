@@ -46,6 +46,13 @@ import {
   updateProductCategory,
   deleteProductCategory,
 } from "./productCategoriesActions";
+import {
+  getProductBrands,
+  createProductBrand,
+  getProductBrand,
+  updateProductBrand,
+  deleteProductBrand,
+} from "./productBrandsActions";
 
 export const actions = {
   // Authentication
@@ -96,4 +103,10 @@ export const actions = {
   getProductCategory,
   updateProductCategory,
   deleteProductCategory,
+  // Product Brands
+  getProductBrands,
+  createProductBrand,
+  getProductBrand,
+  updateProductBrand,
+  deleteProductBrand,
 };
