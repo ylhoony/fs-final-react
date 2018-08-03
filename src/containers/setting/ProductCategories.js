@@ -44,36 +44,13 @@ class ProductCategories extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // const {
-    //   currentAccountLoading,
-    //   productCategoriesLoading,
-    //   updateProductCategoryLoading,
-    //   deleteProductCategoryLoading
-    // } = this.props;
-
-    // const diffAccountLoading =
-    //   currentAccountLoading !== nextProps.currentAccountLoading;
-    // const diffCategoriesLoading =
-    //   productCategoriesLoading !== nextProps.productCategoriesLoading;
-    // const diffUpdateCategoryLoading =
-    //   updateProductCategoryLoading !== nextProps.updateProductCategoryLoading;
-    // const diffDeleteCategoryLoading =
-    //   deleteProductCategoryLoading !== nextProps.deleteProductCategoryLoading;
     const diffSidebar = this.state.displaySidebar !== nextState.displaySidebar;
     const diffCategories =
       this.props.productCategories !== nextProps.productCategories;
     const diffCategory =
       this.state.product_category !== nextState.product_category;
 
-    return (
-      diffCategories ||
-      diffCategory ||
-      diffSidebar
-      // diffAccountLoading ||
-      // diffCategoriesLoading ||
-      // diffUpdateCategoryLoading ||
-      // diffDeleteCategoryLoading
-    );
+    return diffCategories || diffCategory || diffSidebar;
   }
 
   clearState = () => {
