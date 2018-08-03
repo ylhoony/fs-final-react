@@ -51,6 +51,23 @@ class Header extends Component {
       );
     });
 
+    // let accountsDropdownList;
+    // if (!accounts.length) {
+    //   return;
+    // } else {
+    //   accountsDropdownList = accounts.map(account => {
+    //     return (
+    //       <Dropdown.Item
+    //         data-id={account.id}
+    //         key={account.id}
+    //         text={account.name}
+    //         value={account.id}
+    //         onClick={this.handleAccountClick}
+    //       />
+    //     );
+    //   });
+    // }
+
     console.log("currentAccount in Header: ", currentAccount);
 
     if (currentAccountLoading) {
@@ -72,7 +89,7 @@ class Header extends Component {
                     <a href="/accounts">My Accounts</a>
                   </Dropdown.Header>
                   <Dropdown.Divider />
-                  {accountsDropdownList}
+                  {!!accounts.length && accountsDropdownList}
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Menu>
