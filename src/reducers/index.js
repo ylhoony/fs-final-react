@@ -8,6 +8,7 @@ import { currenciesReducer } from "./currenciesReducer";
 import { customersReducer } from "./customersReducer";
 import { paymentOptionsReducer } from "./paymentOptionsReducer";
 import { paymentTermsReducer } from "./paymentTermsReducer";
+import { productBrandsReducer } from "./productBrandsReducer";
 import { productCategoriesReducer } from "./productCategoriesReducer";
 import { suppliersReducer } from "./suppliersReducer";
 import { userReducer } from "./userReducer";
@@ -22,6 +23,7 @@ export const rootReducer = combineReducers({
   customers: customersReducer,
   paymentOptions: paymentOptionsReducer,
   paymentTerms: paymentTermsReducer,
+  productBrands: productBrandsReducer,
   productCategories: productCategoriesReducer,
   suppliers: suppliersReducer,
   user: userReducer,
