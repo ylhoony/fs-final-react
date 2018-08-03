@@ -39,6 +39,13 @@ import {
   getSupplier,
   updateSupplier
 } from "./suppliersActions";
+import {
+  getProductCategories,
+  createProductCategory,
+  getProductCategory,
+  updateProductCategory,
+  deleteProductCategory,
+} from "./productCategoriesActions";
 
 export const actions = {
   // Authentication
@@ -82,5 +89,11 @@ export const actions = {
   getSuppliers,
   createSupplier,
   getSupplier,
-  updateSupplier
+  updateSupplier,
+  // Product Category
+  getProductCategories,
+  createProductCategory,
+  getProductCategory,
+  updateProductCategory,
+  deleteProductCategory,
 };
