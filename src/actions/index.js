@@ -53,6 +53,13 @@ import {
   updateProductBrand,
   deleteProductBrand,
 } from "./productBrandsActions";
+import {
+  getProducts,
+  createProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+} from "./productsActions";
 
 export const actions = {
   // Authentication
@@ -109,4 +116,10 @@ export const actions = {
   getProductBrand,
   updateProductBrand,
   deleteProductBrand,
+  // Products
+  getProducts,
+  createProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct,
 };
