@@ -161,11 +161,11 @@ class ProductCategories extends Component {
 
   render() {
     const {
-      currentAccountLoading,
+      // currentAccountLoading,
       productCategories,
-      productCategoriesLoading,
-      updateProductCategoryLoading,
-      deleteProductCategoryLoading
+      // productCategoriesLoading,
+      // updateProductCategoryLoading,
+      // deleteProductCategoryLoading
     } = this.props;
 
     // if (
@@ -198,6 +198,8 @@ class ProductCategories extends Component {
         );
       });
     }
+
+    console.log(this.props.productCategories);
 
     return (
       <React.Fragment>
