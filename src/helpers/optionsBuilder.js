@@ -49,3 +49,27 @@ export const buildPaymentTermsOptions = paymentTerms => {
     };
   });
 };
+
+export const buildProductCategoriesOptions = categories => {
+  return categories.map(category => {
+    return {
+      "data-name": "product_category_id",
+      "data-value": category.id,
+      key: category.id,
+      text: category.name,
+      value: category.id
+    };
+  });
+};
+
+export const buildProductBrandsOptions = brands => {
+  return brands.map(brand => {
+    return {
+      "data-name": "product_brand_id",
+      "data-value": brand.id,
+      key: brand.id,
+      text: brand.name,
+      value: brand.id
+    };
+  });
+};
