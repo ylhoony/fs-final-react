@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 import _ from "lodash";
 import {
   Button,
-  Container,
   Divider,
   Form,
   Header,
@@ -36,6 +35,11 @@ class ProductsList extends Component {
     }
   }
 
+  handleTableCellClick = e => {
+    const productId = e.target.parentNode.dataset.id;
+    this.props.history.push(`/products/${productId}`);
+  };
+
   render() {
     const { currentAccountLoading, products, productsLoading } = this.props;
 
@@ -50,11 +54,21 @@ class ProductsList extends Component {
       productsRows = products.map(product => {
         return (
           <Table.Row key={product.id} data-id={product.id}>
-            <Table.Cell>{product.sku}</Table.Cell>
-            <Table.Cell>{product.name}</Table.Cell>
-            <Table.Cell>{product.product_category.name}</Table.Cell>
-            <Table.Cell>{product.product_brand.name}</Table.Cell>
-            <Table.Cell>{_.toNumber(product.base_price).toFixed(2)}</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>
+              {product.sku}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>
+              {product.name}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>
+              {product.product_category.name}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>
+              {product.product_brand.name}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>
+              {_.toNumber(product.base_price).toFixed(2)}
+            </Table.Cell>
           </Table.Row>
         );
       });
