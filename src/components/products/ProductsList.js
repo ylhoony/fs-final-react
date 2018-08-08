@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import _ from "lodash";
 import {
   Button,
   Container,
@@ -26,7 +27,44 @@ class ProductsList extends Component {
     };
   }
 
+  componentDidMount() {
+    if (!this.props.currentAccountLoading) {
+      const params = {
+        current_account_id: this.props.currentAccount.id
+      };
+      this.props.actions.getProducts(params);
+    }
+  }
+
   render() {
+    const { currentAccountLoading, products, productsLoading } = this.props;
+
+    let productsRows;
+    if (!products.length) {
+      productsRows = (
+        <Table.Row>
+          <Table.Cell colSpan="5">Create new product</Table.Cell>
+        </Table.Row>
+      );
+    } else {
+      productsRows = products.map(product => {
+        return (
+          <Table.Row key={product.id} data-id={product.id}>
+            <Table.Cell>{product.sku}</Table.Cell>
+            <Table.Cell>{product.name}</Table.Cell>
+            <Table.Cell>{product.product_category.name}</Table.Cell>
+            <Table.Cell>{product.product_brand.name}</Table.Cell>
+            <Table.Cell>{_.toNumber(product.base_price).toFixed(2)}</Table.Cell>
+          </Table.Row>
+        );
+      });
+    }
+
+    if (currentAccountLoading || productsLoading) {
+      return <Loading />;
+    }
+
+    console.log(this.props.products);
     return (
       <React.Fragment>
         <main>
@@ -88,7 +126,7 @@ class ProductsList extends Component {
                     <Form.Input
                       inline
                       name="name"
-                      label="Product ame"
+                      label="Product name"
                       placeholder="product name"
                       // width={4}
                     />
@@ -118,14 +156,15 @@ class ProductsList extends Component {
                     <Table.HeaderCell>Product Name</Table.HeaderCell>
                     <Table.HeaderCell>Category</Table.HeaderCell>
                     <Table.HeaderCell>Brand</Table.HeaderCell>
+                    <Table.HeaderCell>Base Price</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
 
-                {/* <Table.Body>{customersRows}</Table.Body> */}
+                <Table.Body>{productsRows}</Table.Body>
 
                 <Table.Footer>
                   <Table.Row>
-                    <Table.HeaderCell colSpan="4">
+                    <Table.HeaderCell colSpan="5">
                       <p> table footer</p>
                     </Table.HeaderCell>
                   </Table.Row>
@@ -139,4 +178,25 @@ class ProductsList extends Component {
   }
 }
 
-export default ProductsList;
+const mapStateToProps = ({ products, user }) => {
+  return {
+    currentAccount: user.currentAccount,
+    currentAccountLoading: user.currentAccountLoading,
+
+    products: products.products,
+    productsLoading: products.productsLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ProductsList)
+);
