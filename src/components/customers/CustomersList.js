@@ -124,7 +124,7 @@ class CustomersList extends Component {
   }
 }
 
-function mapStateToProps({ currencies, user, customers }) {
+const mapStateToProps = ({ currencies, user, customers }) => {
   return {
     currencies: currencies.currencies,
 
@@ -135,13 +135,13 @@ function mapStateToProps({ currencies, user, customers }) {
     customersLoading: customers.customersLoading,
     customersError: customers.customersError
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
 
 export default withRouter(
   connect(
