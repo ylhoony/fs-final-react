@@ -30,7 +30,7 @@ class Demand extends Component {
                 <Card>
                   <Card.Content
                     as={Link}
-                    to="/customers"
+                    to="/sales"
                     header="Sales Orders"
                   />
                   <Card.Content description="sales orders" />
