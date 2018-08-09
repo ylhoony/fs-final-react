@@ -5,6 +5,10 @@ import { bindActionCreators } from "redux";
 import { Form, Header, Segment, Select } from "semantic-ui-react";
 
 import { actions } from "../../actions/index";
+import {
+  buildCountriesOptions,
+  buildCurrenciesOptions
+} from "../../helpers/optionsBuilder";
 
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
 
@@ -34,40 +38,30 @@ class AccountNew extends Component {
     this.setState({
       account: Object.assign({}, this.state.account, { [key]: value })
     });
+
+    console.log(this.state);
   };
 
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.actions.createAccount(this.state);
     // TODO: trigger to change the currentAccount
-    this.props.history.push('/dashboard');
+    this.props.actions.getAccounts();
   };
 
   render() {
-    const { countries, currencies } = this.props;
-
-    const countryOptions = countries.map(country => {
-      return {
-        "data-name": "country_id",
-        "data-value": country.id,
-        key: country.alpha2,
-        text: country.name,
-        value: country.id,
-      };
-    });
-    const currencyOptions = currencies.map(currency => {
-      return {
-        "data-name": "currency_id",
-        "data-value": currency.id,
-        key: currency.alpha,
-        text: currency.name,
-        value: currency.id,
-      };
-    });
+    const { countries, currencies, match } = this.props;
+    const countriesOptions = buildCountriesOptions(countries);
+    const currenciesOptions = buildCurrenciesOptions(currencies);
 
     return (
       <React.Fragment>
-        <BreadcrumbDisplay breadcrumbList={["Accounts", "New"]} />
+        <BreadcrumbDisplay
+          breadcrumbList={[
+            { name: "Accounts", url: "/accounts" },
+            { name: "Accounts:Info", url: `${match.url}` }
+          ]}
+        />
 
         <Segment className="flex flex-between flex-middle">
           <Header
@@ -125,7 +119,7 @@ class AccountNew extends Component {
               control={Select}
               label="Country"
               name="country_id"
-              options={countryOptions}
+              options={countriesOptions}
               onChange={this.handleFormInput}
             />
             <Form.Field
@@ -139,7 +133,7 @@ class AccountNew extends Component {
               control={Select}
               label="Primary Currency"
               name="currency_id"
-              options={currencyOptions}
+              options={currenciesOptions}
               onChange={this.handleFormInput}
             />
             <Form.Button>Create New Account</Form.Button>
@@ -150,19 +144,19 @@ class AccountNew extends Component {
   }
 }
 
-function mapStateToProps({ accounts, countries, currencies }) {
+const mapStateToProps = ({ accounts, countries, currencies }) => {
   return {
     countries: countries.countries,
     currencies: currencies.currencies,
     currentAccount: accounts.currentAccount
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
 
 export default withRouter(
   connect(
