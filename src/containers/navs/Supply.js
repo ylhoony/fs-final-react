@@ -25,9 +25,9 @@ class Supply extends Component {
                 <Card>
                   <Card.Content
                     as={Link}
-                    to="/suppliers"
+                    to="/purchases"
                     header="Purchase Orders"
-                    />
+                  />
                   <Card.Content description="purchase orders" />
                 </Card>
               </Card.Group>
