@@ -19,7 +19,7 @@ import { actions } from "../../actions/index";
 import { authToken } from "../../helpers/auth";
 
 import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
-import Loading from "../../components/Loading";
+// import Loading from "../../components/Loading";
 
 class ProductBrands extends Component {
   constructor(props) {
@@ -165,21 +165,8 @@ class ProductBrands extends Component {
 
   render() {
     const {
-      currentAccountLoading,
       productBrands,
-      productBrandsLoading,
-      updateProductBrandLoading,
-      deleteProductBrandLoading
     } = this.props;
-
-    // if (
-    //   currentAccountLoading ||
-    //   productBrandsLoading ||
-    //   updateProductBrandLoading ||
-    //   deleteProductBrandLoading
-    // ) {
-    //   return <Loading />;
-    // }
 
     let productBrandsTableRows;
     if (!productBrands.length) {
