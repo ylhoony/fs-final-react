@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Card, Header, Icon, Segment } from "semantic-ui-react";
+import { Card, Header, Segment } from "semantic-ui-react";
 
 import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
 
