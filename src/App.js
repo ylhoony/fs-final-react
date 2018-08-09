@@ -23,9 +23,11 @@ import Dashboard from "./containers/navs/Dashboard";
 
 import Demand from "./containers/navs/Demand";
 import Customers from "./containers/demand/Customers";
+import SalesOrders from "./containers/demand/SalesOrders";
 
 import Supply from "./containers/navs/Supply";
 import Suppliers from "./containers/supply/Suppliers";
+import PurchaseOrders from "./containers/supply/PurchaseOrders";
 
 import Product from "./containers/navs/Product";
 import Products from "./containers/product/Products";
@@ -54,8 +56,10 @@ class App extends Component {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/demand" component={Demand} />
               <Route path="/customers" component={Customers} />
+              <Route path="/sales" component={SalesOrders} />
             <Route exact path="/supply" component={Supply} />
               <Route path="/suppliers" component={Suppliers} />
+              <Route path="/purchases" component={PurchaseOrders} />
             <Route exact path="/product" component={Product} />
               <Route path="/products" component={Products} />
             <Route exact path="/logistics" component={Logistics} />
