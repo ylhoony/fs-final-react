@@ -11,36 +11,11 @@ import BreadcrumbDisplay from "../BreadcrumbDisplay";
 import Loading from "../Loading";
 
 class PurchaseOrdersList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      purchase_order: {
-        type: "PurchaseOrder",
-        account_id: props.currentAccount.id,
-        account_address_id: null,
-        account_contact_id: null,
-        supplier_id: null,
-        billing_address_id: null,
-        shipping_address_id: null,
-        warehouse_id: null,
-        currency_id: null,
-        payment_term_id: null,
-        order_reference: "",
-        comment: "",
-        order_date: moment().format("YYYY-MM-DD 12:00:00")
-      }
-    };
-  }
-
   componentDidMount() {
     if (!this.props.currentAccountLoading) {
       const params = {
         current_account_id: this.props.currentAccount.id
       };
-      // this.props.actions.getSuppliers(params);
-      // this.props.actions.getPaymentTerms(params);
-      // this.props.actions.getWarehouses(params);
       this.props.actions.getPurchaseOrders(params);
     }
   }
@@ -48,9 +23,6 @@ class PurchaseOrdersList extends Component {
   render() {
     const {
       currentAccountLoading,
-      // currenciesLoading,
-      // suppliersLoading,
-      // paymentTermsLoading,
       purchaseOrdersLoading,
       purchaseOrders,
       match
@@ -67,19 +39,6 @@ class PurchaseOrdersList extends Component {
       poRows = purchaseOrders.map(po => {
         return (
           <Table.Row key={po.id} data-id={po.id}>
-            {/* <Table.Cell onClick={this.handleClickTableCell}>
-              {po.name}
-            </Table.Cell>
-            <Table.Cell onClick={this.handleClickTableCell}>
-              {po.currency.alpha}
-            </Table.Cell>
-            <Table.Cell onClick={this.handleClickTableCell}>
-              {po.warehouse ? po.warehouse.name : ""}
-            </Table.Cell>
-            <Table.Cell onClick={this.handleClickTableCell}>
-              {po.payment_term.name}
-            </Table.Cell> */}
-
             <Table.Cell>{po.id}</Table.Cell>
             <Table.Cell>{po.order_reference}</Table.Cell>
             <Table.Cell>{po.supplier.name}</Table.Cell>
@@ -92,17 +51,9 @@ class PurchaseOrdersList extends Component {
       });
     }
 
-    if (
-      currentAccountLoading ||
-      // currenciesLoading ||
-      // suppliersLoading ||
-      // paymentTermsLoading ||
-      purchaseOrdersLoading
-    ) {
+    if (currentAccountLoading || purchaseOrdersLoading) {
       return <Loading />;
     }
-
-    console.log(this.props);
 
     return (
       <React.Fragment>
@@ -185,17 +136,8 @@ const mapStateToProps = ({
     currentAccount: user.currentAccount,
     currentAccountLoading: user.currentAccountLoading,
 
-    currencies: currencies.currencies,
-    currenciesLoading: currencies.currenciesLoading,
-
     purchaseOrders: purchaseOrders.purchaseOrders,
     purchaseOrdersLoading: purchaseOrders.purchaseOrdersLoading,
-
-    suppliers: suppliers.suppliers,
-    suppliersLoading: suppliers.suppliersLoading,
-
-    paymentTerms: paymentTerms.paymentTerms,
-    paymentTermsLoading: paymentTerms.paymentTermsLoading
   };
 };
 
