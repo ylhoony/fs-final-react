@@ -362,7 +362,7 @@ class SupplierForm extends Component {
           <Segment.Group>
             <BreadcrumbDisplay
               breadcrumbList={[
-                { name: "Demand", url: "/demand" },
+                { name: "Supply", url: "/supply" },
                 { name: "Suppliers", url: "/suppliers" },
                 { name: "Suppliers:Info", url: `${match.url}` }
               ]}
