@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Button, Header, Segment, Table } from "semantic-ui-react";
+import { Button, Header, Icon, Segment, Table } from "semantic-ui-react";
 import moment from "moment";
 
 import { actions } from "../../actions/index";
@@ -52,8 +52,45 @@ class PurchaseOrdersList extends Component {
       // suppliersLoading,
       // paymentTermsLoading,
       purchaseOrdersLoading,
+      purchaseOrders,
       match
     } = this.props;
+
+    let poRows;
+    if (!purchaseOrders.length) {
+      poRows = (
+        <Table.Row>
+          <Table.Cell colSpan="4">Create new purchase order</Table.Cell>
+        </Table.Row>
+      );
+    } else {
+      poRows = purchaseOrders.map(po => {
+        return (
+          <Table.Row key={po.id} data-id={po.id}>
+            {/* <Table.Cell onClick={this.handleClickTableCell}>
+              {po.name}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableCell}>
+              {po.currency.alpha}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableCell}>
+              {po.warehouse ? po.warehouse.name : ""}
+            </Table.Cell>
+            <Table.Cell onClick={this.handleClickTableCell}>
+              {po.payment_term.name}
+            </Table.Cell> */}
+
+            <Table.Cell>{po.id}</Table.Cell>
+            <Table.Cell>{po.order_reference}</Table.Cell>
+            <Table.Cell>{po.supplier.name}</Table.Cell>
+            <Table.Cell>{po.shipping_address.name}</Table.Cell>
+            <Table.Cell>{po.warehouse.name}</Table.Cell>
+            <Table.Cell>Amount</Table.Cell>
+            <Table.Cell>Status</Table.Cell>
+          </Table.Row>
+        );
+      });
+    }
 
     if (
       currentAccountLoading ||
@@ -78,10 +115,57 @@ class PurchaseOrdersList extends Component {
               ]}
             />
 
+            <Segment className="flex flex-between flex-middle">
+              <Header
+                as="h3"
+                content="Purchase Order"
+                subheader="Manage Purchase Orders"
+              />
+
+              <Button
+                as={Link}
+                basic
+                color="teal"
+                compact
+                icon
+                labelPosition="left"
+                size="tiny"
+                to="/purchases/new"
+              >
+                <Icon name="plus" /> Purchase
+              </Button>
+            </Segment>
+
             <Segment>
-              hello
-              
-              
+              <Table
+                celled
+                selectable
+                color="grey"
+                size="small"
+                textAlign="center"
+              >
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Order Number</Table.HeaderCell>
+                    <Table.HeaderCell>Order Reference</Table.HeaderCell>
+                    <Table.HeaderCell>Supplier</Table.HeaderCell>
+                    <Table.HeaderCell>Ship From</Table.HeaderCell>
+                    <Table.HeaderCell>Ship To</Table.HeaderCell>
+                    <Table.HeaderCell>Amount</Table.HeaderCell>
+                    <Table.HeaderCell>Status</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body>{poRows}</Table.Body>
+
+                <Table.Footer>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="7">
+                      <p> table footer</p>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Footer>
+              </Table>
             </Segment>
           </Segment.Group>
         </main>
@@ -90,7 +174,13 @@ class PurchaseOrdersList extends Component {
   }
 }
 
-const mapStateToProps = ({ currencies, paymentTerms, purchaseOrders, suppliers, user }) => {
+const mapStateToProps = ({
+  currencies,
+  paymentTerms,
+  purchaseOrders,
+  suppliers,
+  user
+}) => {
   return {
     currentAccount: user.currentAccount,
     currentAccountLoading: user.currentAccountLoading,
