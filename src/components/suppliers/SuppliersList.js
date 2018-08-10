@@ -65,7 +65,7 @@ class SupplierList extends Component {
           <Segment.Group>
             <BreadcrumbDisplay
               breadcrumbList={[
-                { name: "Demand", url: "/demand" },
+                { name: "Supply", url: "/supply" },
                 { name: "Supplier", url: "/suppliers" }
               ]}
             />
