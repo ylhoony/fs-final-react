@@ -72,20 +72,22 @@ class SupplierList extends Component {
 
             <Segment className="flex flex-between flex-middle">
               <Header
-                as="h2"
+                as="h3"
                 content="Supplier"
                 subheader="Manage your suppliers"
               />
 
               <Button
                 as={Link}
+                basic
+                color="teal"
+                compact
                 icon
                 labelPosition="left"
-                primary
-                size="small"
+                size="tiny"
                 to="/suppliers/new"
               >
-                <Icon name="plus" /> Add Customer
+                <Icon name="plus" /> Add Supplier
               </Button>
             </Segment>
 
