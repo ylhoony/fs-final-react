@@ -60,6 +60,12 @@ import {
   updateProduct,
   deleteProduct,
 } from "./productsActions";
+import {
+  getPurchaseOrders,
+  createPurchaseOrder,
+  getPurchaseOrder,
+  updatePurchaseOrder,
+} from "./purchaseOrdersActions";
 
 export const actions = {
   // Authentication
@@ -122,4 +128,9 @@ export const actions = {
   getProduct,
   updateProduct,
   deleteProduct,
+  // Purchase Order
+  getPurchaseOrders,
+  createPurchaseOrder,
+  getPurchaseOrder,
+  updatePurchaseOrder,
 };
