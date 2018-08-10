@@ -73,3 +73,51 @@ export const buildProductBrandsOptions = brands => {
     };
   });
 };
+
+export const buildSuppliersOptions = suppliers => {
+  return suppliers.map(supplier => {
+    return {
+      "data-name": "supplier_id",
+      "data-value": supplier.id,
+      key: supplier.id,
+      text: supplier.name,
+      value: supplier.id
+    };
+  });
+};
+
+export const buildAddressesOptions = (addressList, dataName) => {
+  return addressList.map(address => {
+    return {
+      "data-name": dataName,
+      "data-value": address.id,
+      key: address.id,
+      text: address.company_name,
+      value: address.id
+    };
+  });
+};
+
+export const buildContactsOptions = (contactList, dataName) => {
+  return contactList.map(contact => {
+    return {
+      "data-name": dataName,
+      "data-value": contact.id,
+      key: contact.id,
+      text: `${contact.first_name} ${contact.last_name}`,
+      value: contact.id
+    };
+  });
+};
+
+export const buildProductsOptions = products => {
+  return products.map(product => {
+    return {
+      "data-name": "product_id",
+      "data-value": product.id,
+      key: product.id,
+      text: product.name,
+      value: product.id
+    };
+  });
+};
