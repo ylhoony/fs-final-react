@@ -13,8 +13,10 @@ import {
   Table
 } from "semantic-ui-react";
 import _ from "lodash";
+import axios from "axios";
 import moment from "moment";
 
+import { authToken } from "../../helpers/auth";
 import { actions } from "../../actions/index";
 import {
   buildSuppliersOptions,
@@ -22,7 +24,8 @@ import {
   buildContactsOptions,
   buildWarehousesOptions,
   buildCurrenciesOptions,
-  buildPaymentTermsOptions
+  buildPaymentTermsOptions,
+  buildProductOptions
 } from "../../helpers/optionsBuilder";
 
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
@@ -34,6 +37,7 @@ class PurchaseOrderForm extends Component {
 
     this.state = {
       purchase_order: {
+        id: null,
         type: "PurchaseOrder",
         account_id: props.currentAccount.id,
         account_address_id: null,
@@ -46,37 +50,88 @@ class PurchaseOrderForm extends Component {
         payment_term_id: null,
         order_reference: "",
         comment: "",
-        order_date: moment().format("YYYY-MM-DD 12:00:00")
+        order_date: moment().format("YYYY-MM-DD"),
+        order_lines_attributes: []
       }
     };
   }
 
   componentDidMount() {
+    const params = {
+      current_account_id: this.props.currentAccount.id
+    };
+
     if (!this.props.currentAccountLoading) {
-      const params = {
-        current_account_id: this.props.currentAccount.id
-      };
-      this.props.actions.getSuppliers(params);
-      this.props.actions.getPaymentTerms(params);
-      this.props.actions.getWarehouses(params);
+      const {
+        getSuppliers,
+        getPaymentTerms,
+        getWarehouses,
+        getProducts
+      } = this.props.actions;
+      getSuppliers(params);
+      getPaymentTerms(params);
+      getWarehouses(params);
+      getProducts(params);
+
+      if (this.props.match.url === "/purchases/new") {
+        return;
+      } else {
+        const poId = this.props.match.params.purchaseOrderId;
+        axios
+          .get(`/api/v1/purchase_orders/${poId}`, {
+            headers: {
+              Authorization: authToken,
+              "Content-Type": "application/json"
+            },
+            params: params
+          })
+          .then(res => {
+            const po = res.data;
+            console.log(po);
+            this.setState({
+              ...this.state,
+              purchase_order: {
+                ...this.state.purchase_order,
+                id: po.id || null,
+                account_id: po.account.id || null,
+                account_address_id: po.account_address.id || null,
+                account_contact_id: po.account_contact.id || null,
+                supplier_id: po.supplier.id || null,
+                billing_address_id: po.billing_address.id || null,
+                shipping_address_id: po.shipping_address.id || null,
+                warehouse_id: po.warehouse.id || null,
+                currency_id: po.currency.id || null,
+                payment_term_id: po.payment_term.id || null,
+                order_reference: po.order_reference,
+                comment: po.comment,
+                order_date: po.order_date
+              }
+            });
+          });
+      }
     }
   }
 
   handleFormInputChange = e => {
-    console.log(e.target);
-
     const key =
       e.target.name ||
       (e.target.dataset && e.target.dataset.name) ||
       (e.target.parentNode && e.target.parentNode.dataset.name) ||
       e.target.querySelector(".selected").dataset.name;
-    const value =
-      e.target.value ||
-      (e.target.dataset && e.target.dataset.value) ||
-      (e.target.parentNode && e.target.parentNode.dataset.value) ||
-      e.target.querySelector(".selected").dataset.value;
 
-    // debugger;
+    let value;
+    if (
+      _.isEqual(e.target.type, "text") ||
+      _.isEqual(e.target.type, "textarea")
+    ) {
+      value = e.target.value;
+    } else {
+      value =
+        e.target.value ||
+        (e.target.dataset && e.target.dataset.value) ||
+        (e.target.parentNode && e.target.parentNode.dataset.value) ||
+        e.target.querySelector(".selected").dataset.value;
+    }
 
     if (
       key === "supplier_id" &&
@@ -103,9 +158,102 @@ class PurchaseOrderForm extends Component {
     console.log("state: ", this.state.purchase_order);
   };
 
-  handleFormSubmit = e => {
+  handleFormSubmit = async e => {
     e.preventDefault();
-    console.log("submit form");
+
+    const params = {
+      current_account_id: this.props.currentAccount.id
+    };
+
+    if (!!this.state.purchase_order.id) {
+      const poId = this.state.purchase_order.id;
+
+      axios({
+        method: "PUT",
+        url: `/api/v1/purchase_orders/${poId}`,
+        headers: {
+          Authorization: authToken,
+          "Content-Type": "application/json"
+        },
+        data: this.state,
+        params: params
+      }).then(res => {
+        this.props.history.push(`/purchases/${res.data.id}`);
+      });
+      await this.props.actions.getPurchaseOrders(params);
+    } else {
+      axios({
+        method: "POST",
+        url: "/api/v1/purchase_orders",
+        headers: {
+          Authorization: authToken,
+          "Content-Type": "application/json"
+        },
+        data: this.state,
+        params: params
+      }).then(res => {
+        this.props.history.push(`/purchases/${res.data.id}`);
+      });
+      await this.props.actions.getPurchaseOrders(params);
+    }
+  };
+
+  handleAddOrderLine = e => {
+    e.preventDefault();
+    this.setState({
+      ...this.state,
+      purchase_order: {
+        ...this.state.purchase_order,
+        order_lines_attributes: this.state.purchase_order.order_lines_attributes.concat(
+          {
+            id: null,
+            product_id: "",
+            comment: "",
+            quantity: 1,
+            unit_price: 0,
+            line_total: 0,
+            _destroy: false
+          }
+        )
+      }
+    });
+  };
+
+  handleOrderLineChange = (e, index) => {
+    console.log("change order line");
+    debugger;
+
+    const key =
+      e.target.name ||
+      (e.target.parentNode.dataset && e.target.parentNode.dataset.name) ||
+      (e.target.closest(".selected") &&
+        e.target.closest(".selected").dataset.name);
+
+    const value =
+      e.target.value ||
+      (e.target.parentNode.dataset && e.target.parentNode.dataset.value) ||
+      (e.target.closest(".selected") &&
+        e.target.closest(".selected").dataset.value);
+
+    const newOrderLines = this.state.purchase_order.order_lines_attributes.map(
+      (line, stateIndex) => {
+        if (stateIndex !== index) return line;
+        return Object.assign({}, line, { [key]: value });
+      }
+    );
+
+    this.setState({
+      ...this.state,
+      purchase_order: {
+        ...this.state.purchase_order,
+        order_lines_attributes: newOrderLines
+      }
+    });
+
+    console.log(
+      "state after line change",
+      this.state.purchase_order.order_lines_attributes
+    );
   };
 
   findItem = (list, id) => {
@@ -123,6 +271,8 @@ class PurchaseOrderForm extends Component {
       suppliersLoading,
       paymentTerms,
       paymentTermsLoading,
+      products,
+      productsLoading,
       warehouses,
       warehousesLoading
     } = this.props;
@@ -133,9 +283,7 @@ class PurchaseOrderForm extends Component {
     );
 
     let supplierBillingAddressesOptions;
-    if (!this.state.purchase_order.supplier_id) {
-      // return;
-    } else {
+    if (!!this.state.purchase_order.supplier_id) {
       const addresses = suppliers.find(
         supplier =>
           supplier.id === _.toNumber(this.state.purchase_order.supplier_id)
@@ -147,9 +295,7 @@ class PurchaseOrderForm extends Component {
     }
 
     let supplierShippingAddressesOptions;
-    if (!this.state.purchase_order.supplier_id) {
-      // return;
-    } else {
+    if (!!this.state.purchase_order.supplier_id) {
       const addresses = suppliers.find(
         supplier =>
           supplier.id === _.toNumber(this.state.purchase_order.supplier_id)
@@ -169,6 +315,84 @@ class PurchaseOrderForm extends Component {
     const currenciesOptions = buildCurrenciesOptions(currencies);
     const paymentTermsOptions = buildPaymentTermsOptions(paymentTerms);
     const suppliersOptions = buildSuppliersOptions(suppliers);
+    const productOptions = buildProductOptions(products);
+
+    let orderLinesRows;
+    if (!this.state.purchase_order.order_lines_attributes.length) {
+      orderLinesRows = (
+        <Table.Row>
+          <Table.Cell colSpan={6} content="there are no order lines" />
+        </Table.Row>
+      );
+    } else {
+      orderLinesRows = this.state.purchase_order.order_lines_attributes.map(
+        (orderLine, index) => {
+          return (
+            <Table.Row key={index}>
+              <Table.Cell>
+                <Form.Dropdown
+                  fluid
+                  search
+                  selection
+                  name="product_id"
+                  options={productOptions}
+                  // text={!!orderLine.product_id ? products.find(product => product.id === orderLine.product_id).sku : "Select product"}
+                  placeholder="Select Product"
+                  onChange={e => this.handleOrderLineChange(e, index)}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                {!!orderLine.product_id
+                  ? products.find(
+                      product =>
+                        _.toNumber(product.id) ===
+                        _.toNumber(orderLine.product_id)
+                    ).name
+                  : ""}
+              </Table.Cell>
+              <Table.Cell>
+                <Form.TextArea
+                  name="comment"
+                  value={orderLine.comment}
+                  onChange={e => this.handleOrderLineChange(e, index)}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <Form.Input
+                  fluid
+                  min="1"
+                  name="quantity"
+                  placeholder="qty"
+                  step="1"
+                  type="number"
+                  onChange={e => this.handleOrderLineChange(e, index)}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <Form.Input
+                  fluid
+                  min="0"
+                  name="unit_price"
+                  placeholder="price"
+                  type="number"
+                  step="0.01"
+                  onChange={e => this.handleOrderLineChange(e, index)}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                {(Math.round(
+                  (Math.round(
+                    orderLine.quantity * orderLine.unit_price * 1000
+                  ) /
+                    1000) *
+                    100
+                ) / 100).toFixed(2) || 0}
+              </Table.Cell>
+            </Table.Row>
+          );
+        }
+      );
+    }
 
     console.log(this.props);
 
@@ -177,6 +401,7 @@ class PurchaseOrderForm extends Component {
       currenciesLoading ||
       suppliersLoading ||
       paymentTermsLoading ||
+      productsLoading ||
       warehousesLoading
     ) {
       return <Loading />;
@@ -394,6 +619,7 @@ class PurchaseOrderForm extends Component {
                     label="Order Reference"
                     name="order_reference"
                     placeholder="Order reference"
+                    value={this.state.purchase_order.order_reference}
                     onChange={this.handleFormInputChange}
                   />
 
@@ -432,10 +658,27 @@ class PurchaseOrderForm extends Component {
                   />
                 </Form.Group>
 
+                <Form.Group widths="equal">
+                  <Form.Input
+                    fluid
+                    label="Order Date"
+                    name="order_date"
+                    // placeholder="Order reference"
+                    type="date"
+                    value={moment(this.state.purchase_order.order_date).format(
+                      "YYYY-MM-DD"
+                    )}
+                    onChange={this.handleFormInputChange}
+                  />
+                  <Item className="field" />
+                  <Item className="field" />
+                </Form.Group>
+
                 <Form.TextArea
                   label="Comment"
                   name="comment"
                   placeholder="Comment"
+                  value={this.state.purchase_order.comment}
                   onChange={this.handleFormInputChange}
                 />
 
@@ -454,29 +697,20 @@ class PurchaseOrderForm extends Component {
                   </Table.Header>
 
                   <Table.Body>
-                    <Table.Row>
-                      <Table.Cell>SKU</Table.Cell>
-                      <Table.Cell>Product Name</Table.Cell>
-                      <Table.Cell>Comment</Table.Cell>
-                      <Table.Cell>
-                        <Form.Input
-                          fluid
-                          name="company_name"
-                          placeholder="company name"
-                          // onChange={e =>
-                          //   this.props.handleAddressChange(e, index)
-                          // }
-                        />
-                      </Table.Cell>
-                      <Table.Cell>Unit Price</Table.Cell>
-                      <Table.Cell>Amount</Table.Cell>
-                    </Table.Row>
+                    {orderLinesRows}
+                    {/* table rows */}
                   </Table.Body>
 
                   <Table.Footer>
                     <Table.Row>
                       <Table.Cell colSpan={6}>
-                        <Button basic color="teal" compact size="tiny">
+                        <Button
+                          basic
+                          color="teal"
+                          compact
+                          size="tiny"
+                          onClick={this.handleAddOrderLine}
+                        >
                           add order line
                         </Button>
                       </Table.Cell>
@@ -497,6 +731,7 @@ class PurchaseOrderForm extends Component {
 const mapStateToProps = ({
   currencies,
   paymentTerms,
+  products,
   suppliers,
   user,
   warehouses
@@ -513,6 +748,9 @@ const mapStateToProps = ({
 
     paymentTerms: paymentTerms.paymentTerms,
     paymentTermsLoading: paymentTerms.paymentTermsLoading,
+
+    products: products.products,
+    productsLoading: products.productsLoading,
 
     warehouses: warehouses.warehouses,
     warehousesLoading: warehouses.warehousesLoading
