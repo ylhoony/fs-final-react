@@ -22,7 +22,7 @@ class PurchaseOrders extends Component {
           />
           <Route
             exact
-            path={`${match.url}/:customerId`}
+            path={`${match.url}/:purchaseOrderId`}
             component={() => <PurchaseOrderForm />}
           />
         </Switch>
@@ -32,17 +32,3 @@ class PurchaseOrders extends Component {
 }
 
 export default withRouter(PurchaseOrders);
-
-// type,
-// account_id,
-// account_address_id,
-// account_contact_id,
-// customer_id,
-// supplier_id,
-// company_address_id,
-// company_contact_id,
-// warehouse_id,
-// currency_id,
-// order_reference,
-// comment,
-// order_date,
