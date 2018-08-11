@@ -20,6 +20,11 @@ class PurchaseOrdersList extends Component {
     }
   }
 
+  handleTableCellClick = e => {
+    const poId = e.target.parentNode.dataset.id;
+    this.props.history.push(`/purchases/${poId}`)
+  }
+
   render() {
     const {
       currentAccountLoading,
@@ -39,12 +44,12 @@ class PurchaseOrdersList extends Component {
       poRows = purchaseOrders.map(po => {
         return (
           <Table.Row key={po.id} data-id={po.id}>
-            <Table.Cell>{po.id}</Table.Cell>
-            <Table.Cell>{po.order_reference}</Table.Cell>
-            <Table.Cell>{po.supplier.name}</Table.Cell>
-            <Table.Cell>{po.shipping_address.name}</Table.Cell>
-            <Table.Cell>{po.warehouse.name}</Table.Cell>
-            <Table.Cell>Amount</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>{po.id}</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>{po.order_reference}</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>{po.supplier.name}</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>{po.shipping_address.name}</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>{po.warehouse.name}</Table.Cell>
+            <Table.Cell onClick={this.handleTableCellClick}>Amount</Table.Cell>
             <Table.Cell>Status</Table.Cell>
           </Table.Row>
         );
