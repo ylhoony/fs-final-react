@@ -1,3 +1,6 @@
+import React from "react";
+import { Header } from "semantic-ui-react";
+
 export const buildCountriesOptions = countries => {
   return countries.map(country => {
     return {
@@ -110,14 +113,15 @@ export const buildContactsOptions = (contactList, dataName) => {
   });
 };
 
-export const buildProductsOptions = products => {
+export const buildProductOptions = products => {
   return products.map(product => {
     return {
       "data-name": "product_id",
       "data-value": product.id,
       key: product.id,
-      text: product.name,
-      value: product.id
+      text: product.sku,
+      value: product.id,
+      content: <Header content={product.sku} subheader={product.name} />
     };
   });
 };
