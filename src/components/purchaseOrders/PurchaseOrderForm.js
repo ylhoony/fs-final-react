@@ -211,12 +211,43 @@ class PurchaseOrderForm extends Component {
             comment: "",
             quantity: 1,
             unit_price: 0,
-            line_total: 0,
+            // line_total: 0,
             _destroy: false
           }
         )
       }
     });
+  };
+
+  handleRemoveOrderLine = (e, index) => {
+    e.preventDefault();
+    console.log("remove line");
+    const stateOrderLines = this.state.purchase_order.order_lines_attributes;
+
+    if (!!stateOrderLines[index].id) {
+      const newOrderLines = stateOrderLines.map((line, stateIndex) => {
+        if (stateIndex !== index) return line;
+        return Object.assign({}, line, { _destroy: true });
+      });
+
+      this.setState({
+        ...this.state,
+        purchase_order: {
+          ...this.state.purchase_order.order_lines_attributes,
+          order_lines_attributes: newOrderLines
+        }
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        purchase_order: {
+          ...this.state.purchase_order,
+          order_lines_attributes: this.state.purchase_order.order_lines_attributes.filter(
+            (line, stateIndex) => index !== stateIndex
+          )
+        }
+      });
+    }
   };
 
   handleOrderLineChange = (e, index) => {
@@ -238,7 +269,17 @@ class PurchaseOrderForm extends Component {
     const newOrderLines = this.state.purchase_order.order_lines_attributes.map(
       (line, stateIndex) => {
         if (stateIndex !== index) return line;
-        return Object.assign({}, line, { [key]: value });
+        return Object.assign({}, line, {
+          [key]: value,
+          // line_total:
+          //   (
+          //     Math.round(
+          //       (Math.round(line.quantity * line.unit_price * 1000) /
+          //         1000) *
+          //         100
+          //     ) / 100
+          //   ).toFixed(2) || 0
+        });
       }
     );
 
@@ -380,21 +421,31 @@ class PurchaseOrderForm extends Component {
                 />
               </Table.Cell>
               <Table.Cell>
-                {(Math.round(
-                  (Math.round(
-                    orderLine.quantity * orderLine.unit_price * 1000
-                  ) /
-                    1000) *
-                    100
-                ) / 100).toFixed(2) || 0}
+                {(
+                  Math.round(
+                    (Math.round(
+                      orderLine.quantity * orderLine.unit_price * 1000
+                    ) /
+                      1000) *
+                      100
+                  ) / 100
+                ).toFixed(2) || 0}
+              </Table.Cell>
+              <Table.Cell>
+                <Button
+                  basic
+                  color="red"
+                  compact
+                  icon="minus"
+                  size="mini"
+                  onClick={e => this.handleRemoveOrderLine(e, index)}
+                />
               </Table.Cell>
             </Table.Row>
           );
         }
       );
     }
-
-    console.log(this.props);
 
     if (
       currentAccountLoading ||
@@ -693,12 +744,12 @@ class PurchaseOrderForm extends Component {
                       <Table.HeaderCell>Quantity</Table.HeaderCell>
                       <Table.HeaderCell>Unit Price</Table.HeaderCell>
                       <Table.HeaderCell>Amount</Table.HeaderCell>
+                      <Table.HeaderCell />
                     </Table.Row>
                   </Table.Header>
 
                   <Table.Body>
                     {orderLinesRows}
-                    {/* table rows */}
                   </Table.Body>
 
                   <Table.Footer>
