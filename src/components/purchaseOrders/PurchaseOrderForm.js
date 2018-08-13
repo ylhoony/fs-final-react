@@ -270,7 +270,7 @@ class PurchaseOrderForm extends Component {
       (line, stateIndex) => {
         if (stateIndex !== index) return line;
         return Object.assign({}, line, {
-          [key]: value,
+          [key]: value
           // line_total:
           //   (
           //     Math.round(
@@ -748,9 +748,7 @@ class PurchaseOrderForm extends Component {
                     </Table.Row>
                   </Table.Header>
 
-                  <Table.Body>
-                    {orderLinesRows}
-                  </Table.Body>
+                  <Table.Body>{orderLinesRows}</Table.Body>
 
                   <Table.Footer>
                     <Table.Row>
