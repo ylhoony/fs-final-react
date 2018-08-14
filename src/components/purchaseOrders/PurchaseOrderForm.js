@@ -2,16 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  Button,
-  Form,
-  Header,
-  Icon,
-  Item,
-  Input,
-  Segment,
-  Table
-} from "semantic-ui-react";
+import { Button, Form, Header, Item, Segment, Table } from "semantic-ui-react";
 import _ from "lodash";
 import axios from "axios";
 import moment from "moment";
@@ -87,7 +78,7 @@ class PurchaseOrderForm extends Component {
           })
           .then(res => {
             const po = res.data;
-            console.log(po);
+            console.log("PO", po);
             this.setState({
               ...this.state,
               purchase_order: {
@@ -103,8 +94,9 @@ class PurchaseOrderForm extends Component {
                 currency_id: po.currency.id || null,
                 payment_term_id: po.payment_term.id || null,
                 order_reference: po.order_reference,
-                comment: po.comment,
-                order_date: po.order_date
+                comment: !!po.comment ? po.comment : "",
+                order_date: po.order_date,
+                order_lines_attributes: po.order_lines || []
               }
             });
           });
@@ -207,6 +199,7 @@ class PurchaseOrderForm extends Component {
         order_lines_attributes: this.state.purchase_order.order_lines_attributes.concat(
           {
             id: null,
+            order_id: null,
             product_id: "",
             comment: "",
             quantity: 1,
@@ -233,7 +226,7 @@ class PurchaseOrderForm extends Component {
       this.setState({
         ...this.state,
         purchase_order: {
-          ...this.state.purchase_order.order_lines_attributes,
+          ...this.state.purchase_order,
           order_lines_attributes: newOrderLines
         }
       });
@@ -242,7 +235,7 @@ class PurchaseOrderForm extends Component {
         ...this.state,
         purchase_order: {
           ...this.state.purchase_order,
-          order_lines_attributes: this.state.purchase_order.order_lines_attributes.filter(
+          order_lines_attributes: stateOrderLines.filter(
             (line, stateIndex) => index !== stateIndex
           )
         }
@@ -269,17 +262,7 @@ class PurchaseOrderForm extends Component {
     const newOrderLines = this.state.purchase_order.order_lines_attributes.map(
       (line, stateIndex) => {
         if (stateIndex !== index) return line;
-        return Object.assign({}, line, {
-          [key]: value
-          // line_total:
-          //   (
-          //     Math.round(
-          //       (Math.round(line.quantity * line.unit_price * 1000) /
-          //         1000) *
-          //         100
-          //     ) / 100
-          //   ).toFixed(2) || 0
-        });
+        return Object.assign({}, line, { [key]: value });
       }
     );
 
@@ -368,81 +351,93 @@ class PurchaseOrderForm extends Component {
     } else {
       orderLinesRows = this.state.purchase_order.order_lines_attributes.map(
         (orderLine, index) => {
-          return (
-            <Table.Row key={index}>
-              <Table.Cell>
-                <Form.Dropdown
-                  fluid
-                  search
-                  selection
-                  name="product_id"
-                  options={productOptions}
-                  // text={!!orderLine.product_id ? products.find(product => product.id === orderLine.product_id).sku : "Select product"}
-                  placeholder="Select Product"
-                  onChange={e => this.handleOrderLineChange(e, index)}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                {!!orderLine.product_id
-                  ? products.find(
-                      product =>
-                        _.toNumber(product.id) ===
-                        _.toNumber(orderLine.product_id)
-                    ).name
-                  : ""}
-              </Table.Cell>
-              <Table.Cell>
-                <Form.TextArea
-                  name="comment"
-                  value={orderLine.comment}
-                  onChange={e => this.handleOrderLineChange(e, index)}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <Form.Input
-                  fluid
-                  min="1"
-                  name="quantity"
-                  placeholder="qty"
-                  step="1"
-                  type="number"
-                  onChange={e => this.handleOrderLineChange(e, index)}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <Form.Input
-                  fluid
-                  min="0"
-                  name="unit_price"
-                  placeholder="price"
-                  type="number"
-                  step="0.01"
-                  onChange={e => this.handleOrderLineChange(e, index)}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                {(
-                  Math.round(
-                    (Math.round(
-                      orderLine.quantity * orderLine.unit_price * 1000
-                    ) /
-                      1000) *
-                      100
-                  ) / 100
-                ).toFixed(2) || 0}
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  basic
-                  color="red"
-                  compact
-                  icon="minus"
-                  size="mini"
-                  onClick={e => this.handleRemoveOrderLine(e, index)}
-                />
-              </Table.Cell>
-            </Table.Row>
-          );
+          if (!orderLine._destroy) {
+            return (
+              <Table.Row key={index}>
+                <Table.Cell>
+                  <Form.Dropdown
+                    fluid
+                    search
+                    selection
+                    name="product_id"
+                    options={productOptions}
+                    text={
+                      !!orderLine.product_id
+                        ? productOptions.find(
+                            product =>
+                              _.toNumber(product.key) ===
+                              _.toNumber(orderLine.product_id)
+                          ).text
+                        : "Select Product"
+                    }
+                    placeholder="Select Product"
+                    onChange={e => this.handleOrderLineChange(e, index)}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  {!!orderLine.product_id
+                    ? products.find(
+                        product =>
+                          _.toNumber(product.id) ===
+                          _.toNumber(orderLine.product_id)
+                      ).name
+                    : ""}
+                </Table.Cell>
+                <Table.Cell>
+                  <Form.TextArea
+                    name="comment"
+                    value={orderLine.comment}
+                    onChange={e => this.handleOrderLineChange(e, index)}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Form.Input
+                    fluid
+                    min="1"
+                    name="quantity"
+                    placeholder="qty"
+                    step="1"
+                    type="number"
+                    value={orderLine.quantity}
+                    onChange={e => this.handleOrderLineChange(e, index)}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Form.Input
+                    fluid
+                    min="0"
+                    name="unit_price"
+                    placeholder="price"
+                    type="number"
+                    step="0.01"
+                    value={orderLine.unit_price}
+                    onChange={e => this.handleOrderLineChange(e, index)}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  {(
+                    Math.round(
+                      (Math.round(
+                        orderLine.quantity * orderLine.unit_price * 1000
+                      ) /
+                        1000) *
+                        100
+                    ) / 100
+                  ).toFixed(2) || 0}
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    basic
+                    color="red"
+                    compact
+                    icon="minus"
+                    size="mini"
+                    onClick={e => this.handleRemoveOrderLine(e, index)}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            );
+          }
         }
       );
     }
