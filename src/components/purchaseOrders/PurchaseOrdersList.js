@@ -6,6 +6,7 @@ import { Button, Header, Icon, Segment, Table } from "semantic-ui-react";
 import moment from "moment";
 
 import { actions } from "../../actions/index";
+import PurchaseOrdersListRows from "./PurchaseOrdersListRows";
 
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
 import Loading from "../Loading";
@@ -22,8 +23,8 @@ class PurchaseOrdersList extends Component {
 
   handleTableCellClick = e => {
     const poId = e.target.parentNode.dataset.id;
-    this.props.history.push(`/purchases/${poId}`)
-  }
+    this.props.history.push(`/purchases/${poId}`);
+  };
 
   render() {
     const {
@@ -32,29 +33,6 @@ class PurchaseOrdersList extends Component {
       purchaseOrders,
       match
     } = this.props;
-
-    let poRows;
-    if (!purchaseOrders.length) {
-      poRows = (
-        <Table.Row>
-          <Table.Cell colSpan="4">Create new purchase order</Table.Cell>
-        </Table.Row>
-      );
-    } else {
-      poRows = purchaseOrders.map(po => {
-        return (
-          <Table.Row key={po.id} data-id={po.id}>
-            <Table.Cell onClick={this.handleTableCellClick}>{po.id}</Table.Cell>
-            <Table.Cell onClick={this.handleTableCellClick}>{po.order_reference}</Table.Cell>
-            <Table.Cell onClick={this.handleTableCellClick}>{po.supplier.name}</Table.Cell>
-            <Table.Cell onClick={this.handleTableCellClick}>{po.shipping_address.name}</Table.Cell>
-            <Table.Cell onClick={this.handleTableCellClick}>{po.warehouse.name}</Table.Cell>
-            <Table.Cell onClick={this.handleTableCellClick}>Amount</Table.Cell>
-            <Table.Cell>Status</Table.Cell>
-          </Table.Row>
-        );
-      });
-    }
 
     if (currentAccountLoading || purchaseOrdersLoading) {
       return <Loading />;
@@ -112,7 +90,9 @@ class PurchaseOrdersList extends Component {
                   </Table.Row>
                 </Table.Header>
 
-                <Table.Body>{poRows}</Table.Body>
+                <Table.Body>
+                  <PurchaseOrdersListRows purchaseOrders={purchaseOrders} />
+                </Table.Body>
 
                 <Table.Footer>
                   <Table.Row>
@@ -142,7 +122,7 @@ const mapStateToProps = ({
     currentAccountLoading: user.currentAccountLoading,
 
     purchaseOrders: purchaseOrders.purchaseOrders,
-    purchaseOrdersLoading: purchaseOrders.purchaseOrdersLoading,
+    purchaseOrdersLoading: purchaseOrders.purchaseOrdersLoading
   };
 };
 
