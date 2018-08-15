@@ -16,7 +16,7 @@ const initialState = {
   selectedProductCategoryError: null,
 
   deleteProductCategoryLoading: false,
-  deleteProductCategoryError: true,
+  deleteProductCategoryError: null,
 };
 
 export const productCategoriesReducer = (state = initialState, action) => {
