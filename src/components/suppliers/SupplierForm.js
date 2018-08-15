@@ -81,7 +81,6 @@ class SupplierForm extends Component {
   }
 
   handleFormInputChange = (e, { value }) => {
-    console.log("change form data!");
     const key =
       e.target.name ||
       e.target.dataset.name ||
@@ -296,7 +295,6 @@ class SupplierForm extends Component {
   };
 
   handleContactChange = (e, index) => {
-    console.log("change contact info");
     const key =
       e.target.name ||
       e.target.dataset.name ||
@@ -355,7 +353,6 @@ class SupplierForm extends Component {
       return <Loading />;
     }
 
-    console.log(this.state);
     return (
       <React.Fragment>
         <main>
