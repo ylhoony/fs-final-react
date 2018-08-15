@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Dropdown, Icon, Menu } from "semantic-ui-react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 import { actions } from "../actions/index";
 import Loading from "../components/Loading";
+import AccountDropdownList from "../components/header/AccountDropdownList";
+import NavMenu from "../components/header/NavMenu";
 
 class Header extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeItem: window.location.pathname,
       currentAccount: props.currentAccount
     };
   }
@@ -26,10 +27,6 @@ class Header extends Component {
     this.props.history.push("/dashboard");
   };
 
-  handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name });
-  };
-
   handleSignOut = e => {
     e.preventDefault();
     this.props.actions.signOut();
@@ -38,35 +35,14 @@ class Header extends Component {
 
   render() {
     const { accounts, currentAccount, currentAccountLoading } = this.props;
-
-    const accountsDropdownList = accounts.map(account => {
-      return (
-        <Dropdown.Item
-          data-id={account.id}
-          key={account.id}
-          text={account.name}
-          value={account.id}
-          onClick={this.handleAccountClick}
-        />
-      );
-    });
-
-    // let accountsDropdownList;
-    // if (!accounts.length) {
-    //   return;
-    // } else {
-    //   accountsDropdownList = accounts.map(account => {
-    //     return (
-    //       <Dropdown.Item
-    //         data-id={account.id}
-    //         key={account.id}
-    //         text={account.name}
-    //         value={account.id}
-    //         onClick={this.handleAccountClick}
-    //       />
-    //     );
-    //   });
-    // }
+    const menuList = [
+      { name: "dashboard", endpoint: "/dashboard" },
+      { name: "demand", endpoint: "/demand" },
+      { name: "supply", endpoint: "/supply" },
+      { name: "product", endpoint: "/product" },
+      { name: "warehouse", endpoint: "/warehouse" },
+      { name: "setting", endpoint: "/setting" }
+    ];
 
     console.log("currentAccount in Header: ", currentAccount);
 
@@ -89,7 +65,9 @@ class Header extends Component {
                     <a href="/accounts">My Accounts</a>
                   </Dropdown.Header>
                   <Dropdown.Divider />
-                  {!!accounts.length && accountsDropdownList}
+                  {!!accounts.length && (
+                    <AccountDropdownList accounts={accounts} />
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Menu>
@@ -107,26 +85,6 @@ class Header extends Component {
                 <div className="results" />
               </div>
 
-              <Dropdown item icon="user" simple>
-                <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Icon name="dropdown" />
-                    <span className="text">New</span>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item>Document</Dropdown.Item>
-                      <Dropdown.Item>Image</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown.Item>
-                  <Dropdown.Item>Open</Dropdown.Item>
-                  <Dropdown.Item>Save...</Dropdown.Item>
-                  <Dropdown.Item>Edit Permissions</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Header>Export</Dropdown.Header>
-                  <Dropdown.Item>Share</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-
               <Menu.Item onClick={event => this.handleSignOut(event)}>
                 Sign out
               </Menu.Item>
@@ -134,55 +92,7 @@ class Header extends Component {
           </Menu>
 
           <Menu className="padding-all-sm" pointing secondary size="tiny">
-            <Menu.Item
-              as={Link}
-              to="/dashboard"
-              name="dashboard"
-              active={this.state.activeItem === "/dashboard"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              as={Link}
-              to="/demand"
-              name="demand"
-              active={this.state.activeItem === "/demand"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              as={Link}
-              to="/supply"
-              name="supply"
-              active={this.state.activeItem === "/supply"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              as={Link}
-              to="/product"
-              name="product"
-              active={this.state.activeItem === "/product"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              as={Link}
-              to="/logistics"
-              name="logistics"
-              active={this.state.activeItem === "/logistics"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              as={Link}
-              to="/warehouse"
-              name="warehouse"
-              active={this.state.activeItem === "/warehouse"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              as={Link}
-              to="/setting"
-              name="setting"
-              active={this.state.activeItem === "/setting"}
-              onClick={this.handleItemClick}
-            />
+            <NavMenu list={menuList} />
           </Menu>
         </header>
       </React.Fragment>
@@ -190,19 +100,19 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ accounts, user }) {
+const mapStateToProps = ({ accounts, user }) => {
   return {
     accounts: accounts.accounts,
     currentAccount: user.currentAccount,
     currentAccountLoading: user.currentAccountLoading
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
 
 export default withRouter(
   connect(
