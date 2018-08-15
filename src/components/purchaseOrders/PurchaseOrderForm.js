@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button, Form, Header, Item, Segment, Table } from "semantic-ui-react";
@@ -78,7 +78,6 @@ class PurchaseOrderForm extends Component {
           })
           .then(res => {
             const po = res.data;
-            console.log("PO", po);
             this.setState({
               ...this.state,
               purchase_order: {
@@ -147,7 +146,6 @@ class PurchaseOrderForm extends Component {
         }
       });
     }
-    console.log("state: ", this.state.purchase_order);
   };
 
   handleFormSubmit = async e => {
@@ -214,7 +212,6 @@ class PurchaseOrderForm extends Component {
 
   handleRemoveOrderLine = (e, index) => {
     e.preventDefault();
-    console.log("remove line");
     const stateOrderLines = this.state.purchase_order.order_lines_attributes;
 
     if (!!stateOrderLines[index].id) {
@@ -244,8 +241,6 @@ class PurchaseOrderForm extends Component {
   };
 
   handleOrderLineChange = (e, index) => {
-    console.log("change order line");
-    debugger;
 
     const key =
       e.target.name ||
@@ -273,11 +268,6 @@ class PurchaseOrderForm extends Component {
         order_lines_attributes: newOrderLines
       }
     });
-
-    console.log(
-      "state after line change",
-      this.state.purchase_order.order_lines_attributes
-    );
   };
 
   findItem = (list, id) => {
