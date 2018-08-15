@@ -21,6 +21,7 @@ import {
 
 import BreadcrumbDisplay from "../BreadcrumbDisplay";
 import Loading from "../Loading";
+import PurchaseOrderFormLine from "./PurchaseOrderFormLine";
 
 class PurchaseOrderForm extends Component {
   constructor(props) {
@@ -241,7 +242,6 @@ class PurchaseOrderForm extends Component {
   };
 
   handleOrderLineChange = (e, index) => {
-
     const key =
       e.target.name ||
       (e.target.parentNode.dataset && e.target.parentNode.dataset.name) ||
@@ -330,107 +330,6 @@ class PurchaseOrderForm extends Component {
     const paymentTermsOptions = buildPaymentTermsOptions(paymentTerms);
     const suppliersOptions = buildSuppliersOptions(suppliers);
     const productOptions = buildProductOptions(products);
-
-    let orderLinesRows;
-    if (!this.state.purchase_order.order_lines_attributes.length) {
-      orderLinesRows = (
-        <Table.Row>
-          <Table.Cell colSpan={6} content="there are no order lines" />
-        </Table.Row>
-      );
-    } else {
-      orderLinesRows = this.state.purchase_order.order_lines_attributes.map(
-        (orderLine, index) => {
-          if (!orderLine._destroy) {
-            return (
-              <Table.Row key={index}>
-                <Table.Cell>
-                  <Form.Dropdown
-                    fluid
-                    search
-                    selection
-                    name="product_id"
-                    options={productOptions}
-                    text={
-                      !!orderLine.product_id
-                        ? productOptions.find(
-                            product =>
-                              _.toNumber(product.key) ===
-                              _.toNumber(orderLine.product_id)
-                          ).text
-                        : "Select Product"
-                    }
-                    placeholder="Select Product"
-                    onChange={e => this.handleOrderLineChange(e, index)}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  {!!orderLine.product_id
-                    ? products.find(
-                        product =>
-                          _.toNumber(product.id) ===
-                          _.toNumber(orderLine.product_id)
-                      ).name
-                    : ""}
-                </Table.Cell>
-                <Table.Cell>
-                  <Form.TextArea
-                    name="comment"
-                    value={orderLine.comment}
-                    onChange={e => this.handleOrderLineChange(e, index)}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  <Form.Input
-                    fluid
-                    min="1"
-                    name="quantity"
-                    placeholder="qty"
-                    step="1"
-                    type="number"
-                    value={orderLine.quantity}
-                    onChange={e => this.handleOrderLineChange(e, index)}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  <Form.Input
-                    fluid
-                    min="0"
-                    name="unit_price"
-                    placeholder="price"
-                    type="number"
-                    step="0.01"
-                    value={orderLine.unit_price}
-                    onChange={e => this.handleOrderLineChange(e, index)}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  {(
-                    Math.round(
-                      (Math.round(
-                        orderLine.quantity * orderLine.unit_price * 1000
-                      ) /
-                        1000) *
-                        100
-                    ) / 100
-                  ).toFixed(2) || 0}
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    basic
-                    color="red"
-                    compact
-                    icon="minus"
-                    size="mini"
-                    onClick={e => this.handleRemoveOrderLine(e, index)}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            );
-          }
-        }
-      );
-    }
 
     if (
       currentAccountLoading ||
@@ -733,7 +632,15 @@ class PurchaseOrderForm extends Component {
                     </Table.Row>
                   </Table.Header>
 
-                  <Table.Body>{orderLinesRows}</Table.Body>
+                  <Table.Body>
+                    <PurchaseOrderFormLine
+                      poLines={this.state.purchase_order.order_lines_attributes}
+                      products={products}
+                      productOptions={productOptions}
+                      handleOrderLineChange={this.handleOrderLineChange}
+                      handleRemoveOrderLine={this.handleRemoveOrderLine}
+                    />
+                  </Table.Body>
 
                   <Table.Footer>
                     <Table.Row>
