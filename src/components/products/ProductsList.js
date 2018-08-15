@@ -61,10 +61,10 @@ class ProductsList extends Component {
               {product.name}
             </Table.Cell>
             <Table.Cell onClick={this.handleTableCellClick}>
-              {product.product_category.name}
+              {product.product_category && product.product_category.name}
             </Table.Cell>
             <Table.Cell onClick={this.handleTableCellClick}>
-              {product.product_brand.name}
+              {product.product_brand && product.product_brand.name}
             </Table.Cell>
             <Table.Cell onClick={this.handleTableCellClick}>
               {_.toNumber(product.base_price).toFixed(2)}
