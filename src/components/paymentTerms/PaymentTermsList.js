@@ -9,23 +9,18 @@ import axios from "../../../node_modules/axios";
 
 class PaymentTermsList extends Component {
   handleClickTableRow = async e => {
-    console.log("hello!!!");
-
     const paymentTermId = e.target.parentElement.dataset.id;
     const params = {
       current_account_id: this.props.currentAccount.id
     }
 
-    const res = await axios.get(`/api/v1/payment_terms/${paymentTermId}`, {
+    await axios.get(`/api/v1/payment_terms/${paymentTermId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
     })
-
-    console.log(res.data);
-
   }
 
   render() {
@@ -34,20 +29,6 @@ class PaymentTermsList extends Component {
     let paymentTermRows;
     if (!!paymentTerms.length) {
       paymentTermRows = paymentTerms.map(term => {
-        // return (
-        //   <PaymentTermShow
-        //     active={term.active}
-        //     days={term.days}
-        //     id={term.id}
-        //     key={term.id}
-        //     name={term.name}
-        //     paymentOption={term.payment_option}
-        //     trade_credit_days={term.trade_credit_days}
-        //     trade_credit_rate={term.trade_credit_rate}
-        //     handleClickTableRow={e => this.handleClickTableRow(e)}
-        //     openModal={this.props.openModal}
-        //   />
-        // );
         return (
           <Table.Row data-id={term.id} key={term.id} >
             <Table.Cell onClick={this.props.openModal} >
