@@ -72,7 +72,7 @@ class AccountNew extends Component {
         </Segment>
 
         <Segment className="border-top-remove">
-          <Form onSubmit={e => this.handleFormSubmit(e)}>
+          <Form onSubmit={this.handleFormSubmit}>
             <Form.Field
               control="input"
               label="Company Name"
