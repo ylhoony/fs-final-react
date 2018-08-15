@@ -3,7 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button, Header, Icon, Segment, Table } from "semantic-ui-react";
-import moment from "moment";
 
 import { actions } from "../../actions/index";
 import PurchaseOrdersListRows from "./PurchaseOrdersListRows";
