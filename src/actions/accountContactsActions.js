@@ -3,7 +3,7 @@ import { authToken } from "../helpers/auth";
 
 export const getAccountContacts = params => dispatch => {
   dispatch({ type: "GET_ACCOUNT_CONTACTS_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/account_contacts", {
       headers: {
         Authorization: authToken,
@@ -18,7 +18,7 @@ export const getAccountContacts = params => dispatch => {
 
 export const createAccountContact = (data, params) => dispatch => {
   dispatch({ type: "CREATE_ACCOUNT_CONTACT_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/account_contacts",
     headers: {
@@ -34,7 +34,7 @@ export const createAccountContact = (data, params) => dispatch => {
 
 export const getAccountContact = (accountContactId, params) => dispatch => {
   dispatch({ type: "GET_ACCOUNT_CONTACT_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/account_contacts/${accountContactId}`, {
       headers: {
         Authorization: authToken,
@@ -49,7 +49,7 @@ export const getAccountContact = (accountContactId, params) => dispatch => {
 
 export const updateAccountContact = (accountContactId, data, params) => dispatch => {
   dispatch({ type: "UPDATE_ACCOUNT_CONTACT_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/account_contacts/${accountContactId}`,
     headers: {

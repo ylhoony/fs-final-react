@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getWarehouses = params => dispatch => {
   dispatch({ type: "GET_WAREHOUSES_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/warehouses", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -18,7 +18,7 @@ export const getWarehouses = params => dispatch => {
 
 export const createWarehouse = (data, params) => dispatch => {
   dispatch({ type: "CREATE_WAREHOUSE_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/warehouses",
     headers: {
@@ -34,7 +34,7 @@ export const createWarehouse = (data, params) => dispatch => {
 
 export const getWarehouse = (warehouseId, params) => dispatch => {
   dispatch({ type: "GET_WAREHOUSE_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/warehouses/${warehouseId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -49,7 +49,7 @@ export const getWarehouse = (warehouseId, params) => dispatch => {
 
 export const updateWarehouse = (warehouseId, data, params) => dispatch => {
   dispatch({ type: "UPDATE_WAREHOUSE_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/warehouses/${warehouseId}`,
     headers: {

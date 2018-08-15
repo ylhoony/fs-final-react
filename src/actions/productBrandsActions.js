@@ -3,7 +3,7 @@ import { authToken } from "../helpers/auth";
 
 export const getProductBrands = params => dispatch => {
   dispatch({ type: "GET_PRODUCT_BRANDS_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/product_brands", {
       headers: {
         Authorization: authToken,
@@ -18,7 +18,7 @@ export const getProductBrands = params => dispatch => {
 
 export const createProductBrand = (data, params) => dispatch => {
   dispatch({ type: "CREATE_PRODUCT_BRAND_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/product_brands",
     headers: {
@@ -34,7 +34,7 @@ export const createProductBrand = (data, params) => dispatch => {
 
 export const getProductBrand = (productBrandId, params) => dispatch => {
   dispatch({ type: "GET_PRODUCT_BRAND_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/product_brands/${productBrandId}`, {
       headers: {
         Authorization: authToken,
@@ -53,7 +53,7 @@ export const updateProductBrand = (
   params
 ) => dispatch => {
   dispatch({ type: "UPDATE_PRODUCT_BRAND_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/product_brands/${productBrandId}`,
     headers: {
@@ -69,7 +69,7 @@ export const updateProductBrand = (
 
 export const deleteProductBrand = (productBrandId, params) => dispatch => {
   dispatch({ type: "DELETE_PRODUCT_BRAND_BEGIN" });
-  axios
+  return axios
     .delete(`/api/v1/product_brands/${productBrandId}`, {
       headers: {
         Authorization: authToken,

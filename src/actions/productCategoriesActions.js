@@ -3,7 +3,7 @@ import { authToken } from "../helpers/auth";
 
 export const getProductCategories = params => dispatch => {
   dispatch({ type: "GET_PRODUCT_CATEGORIES_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/product_categories", {
       headers: {
         Authorization: authToken,
@@ -18,7 +18,7 @@ export const getProductCategories = params => dispatch => {
 
 export const createProductCategory = (data, params) => dispatch => {
   dispatch({ type: "CREATE_PRODUCT_CATEGORY_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/product_categories",
     headers: {
@@ -34,7 +34,7 @@ export const createProductCategory = (data, params) => dispatch => {
 
 export const getProductCategory = (productCategoryId, params) => dispatch => {
   dispatch({ type: "GET_PRODUCT_CATEGORY_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/product_categories/${productCategoryId}`, {
       headers: {
         Authorization: authToken,
@@ -53,7 +53,7 @@ export const updateProductCategory = (
   params
 ) => dispatch => {
   dispatch({ type: "UPDATE_PRODUCT_CATEGORY_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/product_categories/${productCategoryId}`,
     headers: {
@@ -69,7 +69,7 @@ export const updateProductCategory = (
 
 export const deleteProductCategory = (productCategoryId, params) => dispatch => {
   dispatch({ type: "DELETE_PRODUCT_CATEGORY_BEGIN" });
-  axios
+  return axios
     .delete(`/api/v1/product_categories/${productCategoryId}`, {
       headers: {
         Authorization: authToken,

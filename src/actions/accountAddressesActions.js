@@ -3,7 +3,7 @@ import { authToken } from "../helpers/auth";
 
 export const getAccountAddresses = params => dispatch => {
   dispatch({ type: "GET_ACCOUNT_ADDRESSES_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/account_addresses", {
       headers: {
         Authorization: authToken,
@@ -18,7 +18,7 @@ export const getAccountAddresses = params => dispatch => {
 
 export const createAccountAddress = (data, params) => dispatch => {
   dispatch({ type: "CREATE_ACCOUNT_ADDRESS_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/account_addresses",
     headers: {
@@ -34,7 +34,7 @@ export const createAccountAddress = (data, params) => dispatch => {
 
 export const getAccountAddress = (accountAddressId, params) => dispatch => {
   dispatch({ type: "GET_ACCOUNT_ADDRESS_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/account_addresses/${accountAddressId}`, {
       headers: {
         Authorization: authToken,
@@ -53,7 +53,7 @@ export const updateAccountAddress = (
   params
 ) => dispatch => {
   dispatch({ type: "UPDATE_ACCOUNT_ADDRESS_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/account_addresses/${accountAddressId}`,
     headers: {
