@@ -455,14 +455,6 @@ class PurchaseOrderForm extends Component {
                     {!!this.state.purchase_order.account_contact_id && (
                       <Item.Content>
                         <Item.Description>
-                          <p>
-                            Cute dogs come in a variety of shapes and sizes.
-                            Some cute dogs are cute for their adorable faces
-                          </p>
-                          <p>
-                            Many people also have their own barometers for what
-                            makes a cute dog.
-                          </p>
                         </Item.Description>
                       </Item.Content>
                     )}
@@ -472,14 +464,6 @@ class PurchaseOrderForm extends Component {
                     {!!this.state.purchase_order.warehouse_id && (
                       <Item.Content>
                         <Item.Description>
-                          <p>
-                            Cute dogs come in a variety of shapes and sizes.
-                            Some cute dogs are cute for their adorable faces
-                          </p>
-                          <p>
-                            Many people also have their own barometers for what
-                            makes a cute dog.
-                          </p>
                         </Item.Description>
                       </Item.Content>
                     )}
