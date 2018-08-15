@@ -66,7 +66,10 @@ class Header extends Component {
                   </Dropdown.Header>
                   <Dropdown.Divider />
                   {!!accounts.length && (
-                    <AccountDropdownList accounts={accounts} />
+                    <AccountDropdownList
+                      accounts={accounts}
+                      handleAccountClick={this.handleAccountClick}
+                    />
                   )}
                 </Dropdown.Menu>
               </Dropdown>

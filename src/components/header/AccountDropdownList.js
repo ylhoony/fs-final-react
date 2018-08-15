@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown } from "semantic-ui-react";
 
-const AccountDropdownList = ({ accounts }) => {
+const AccountDropdownList = ({ accounts, handleAccountClick }) => {
   return accounts.map(account => {
     return (
       <Dropdown.Item
@@ -9,7 +9,7 @@ const AccountDropdownList = ({ accounts }) => {
         key={account.id}
         text={account.name}
         value={account.id}
-        onClick={this.handleAccountClick}
+        onClick={handleAccountClick}
       />
     );
   });
