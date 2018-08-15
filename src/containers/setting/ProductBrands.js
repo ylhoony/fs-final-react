@@ -43,20 +43,6 @@ class ProductBrands extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const diffSidebar = this.state.displaySidebar !== nextState.displaySidebar;
-    const diffBrands =
-      this.props.productBrands !== nextProps.productBrands;
-    const diffBrand =
-      this.state.product_brand !== nextState.product_brand;
-
-    return (
-      diffBrands ||
-      diffBrand ||
-      diffSidebar
-    );
-  }
-
   clearState = () => {
     this.setState({
       displaySidebar: false,
@@ -117,7 +103,7 @@ class ProductBrands extends Component {
     } else {
       await this.props.actions.createProductBrand(this.state, params);
     }
-    this.props.actions.getProductBrands(params);
+    await this.props.actions.getProductBrands(params);
     this.handleSidebarHide();
   };
 
@@ -153,7 +139,6 @@ class ProductBrands extends Component {
 
   handleDelete = async e => {
     e.preventDefault();
-    console.log("delete");
     const params = {
       current_account_id: this.props.currentAccount.id
     };
