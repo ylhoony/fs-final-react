@@ -231,7 +231,11 @@ class Warehouses extends Component {
 
         {/* Modal Start */}
 
-        <Modal size="tiny" open={this.state.displayModal} onClose={this.closeModal}>
+        <Modal
+          size="tiny"
+          open={this.state.displayModal}
+          onClose={this.closeModal}
+        >
           <Modal.Header>New Warehouse</Modal.Header>
           <Modal.Content>
             <Form size="tiny" onSubmit={this.handleFormSubmit}>
@@ -360,7 +364,7 @@ class Warehouses extends Component {
   }
 }
 
-function mapStateToProps({ countries, user, warehouses }) {
+const mapStateToProps = ({ countries, user, warehouses }) => {
   return {
     countries: countries.countries,
 
@@ -374,13 +378,13 @@ function mapStateToProps({ countries, user, warehouses }) {
     createWarehouseLoading: warehouses.createWarehouseLoading,
     updateWarehouseLoading: warehouses.updateWarehouseLoading
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
 
 export default withRouter(
   connect(

@@ -52,13 +52,13 @@ class AuthenticatedRoutes extends Component {
   }
 }
 
-function mapStateToProps({
+const mapStateToProps = ({
   accounts,
   countries,
   currencies,
   paymentOptions,
   user
-}) {
+}) => {
   return {
     currentAccount: user.currentAccount,
     currentAccountLoading: user.currentAccountLoading,
@@ -82,13 +82,13 @@ function mapStateToProps({
     paymentOptionsLoading: paymentOptions.paymentOptionsLoading,
     paymentOptionsError: paymentOptions.paymentOptionsError
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
 
 export default withRouter(
   connect(
