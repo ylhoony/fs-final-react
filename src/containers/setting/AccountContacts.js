@@ -155,8 +155,8 @@ class AccountContacts extends Component {
     } else {
       await this.props.actions.createAccountContact(this.state, params);
     }
-    this.closeModal();
     await this.props.actions.getAccountContacts(params);
+    this.closeModal();
     this.props.history.push("/account-contacts");
   };
 
