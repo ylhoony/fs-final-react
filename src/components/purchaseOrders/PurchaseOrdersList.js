@@ -91,7 +91,10 @@ class PurchaseOrdersList extends Component {
                 </Table.Header>
 
                 <Table.Body>
-                  <PurchaseOrdersListRows purchaseOrders={purchaseOrders} />
+                  <PurchaseOrdersListRows
+                    purchaseOrders={purchaseOrders}
+                    handleTableCellClick={this.handleTableCellClick}
+                  />
                 </Table.Body>
 
                 <Table.Footer>
