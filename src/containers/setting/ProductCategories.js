@@ -19,7 +19,7 @@ import { actions } from "../../actions/index";
 import { authToken } from "../../helpers/auth";
 
 import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
-// import Loading from "../../components/Loading";
+import Loading from "../../components/Loading";
 
 class ProductCategories extends Component {
   constructor(props) {
@@ -104,16 +104,17 @@ class ProductCategories extends Component {
     };
 
     if (!!this.state.product_category.id) {
-      console.log("update");
-      await this.props.actions.updateProductCategory(
-        this.state.product_category.id,
-        this.state,
-        params
-      );
+      await this.props.actions
+        .updateProductCategory(
+          this.state.product_category.id,
+          this.state,
+          params
+        )
     } else {
-      await this.props.actions.createProductCategory(this.state, params);
+      await this.props.actions
+        .createProductCategory(this.state, params)
     }
-    this.props.actions.getProductCategories(params);
+    await this.props.actions.getProductCategories(params);
     this.handleSidebarHide();
   };
 
@@ -161,21 +162,21 @@ class ProductCategories extends Component {
 
   render() {
     const {
-      // currentAccountLoading,
+      currentAccountLoading,
       productCategories,
-      // productCategoriesLoading,
-      // updateProductCategoryLoading,
-      // deleteProductCategoryLoading
+      productCategoriesLoading,
+      updateProductCategoryLoading,
+      deleteProductCategoryLoading
     } = this.props;
 
-    // if (
-    //   currentAccountLoading ||
-    //   productCategoriesLoading ||
-    //   updateProductCategoryLoading ||
-    //   deleteProductCategoryLoading
-    // ) {
-    //   return <Loading />;
-    // }
+    if (
+      currentAccountLoading ||
+      productCategoriesLoading ||
+      updateProductCategoryLoading ||
+      deleteProductCategoryLoading
+    ) {
+      return <Loading />;
+    }
 
     let productCategoriesTableRows;
     if (!productCategories.length) {
@@ -199,7 +200,7 @@ class ProductCategories extends Component {
       });
     }
 
-    console.log(this.props.productCategories);
+    console.log("category props: ", this.props);
 
     return (
       <React.Fragment>
