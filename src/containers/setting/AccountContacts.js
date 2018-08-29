@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -88,34 +87,26 @@ class AccountContacts extends Component {
       current_account_id: this.props.currentAccount.id
     };
 
-    axios
-      .get(`/api/v1/account_contacts/${accountContactId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json"
-        },
-        params: params
-      })
-      .then(res => {
-        const selectedAccountContact = res.data;
+    this.props.actions.getAccountContact(accountContactId, params).then(res => {
+      const selectedAccountContact = res.payload;
 
-        this.setState({
-          ...this.state,
-          contact: Object.assign({}, this.state.contact, {
-            id: selectedAccountContact.id,
-            first_name: selectedAccountContact.first_name || "",
-            last_name: selectedAccountContact.last_name || "",
-            job_title: selectedAccountContact.job_title || "",
-            email: selectedAccountContact.email || "",
-            phone: selectedAccountContact.phone || "",
-            mobile: selectedAccountContact.mobile || "",
-            fax: selectedAccountContact.fax || "",
-            comment: selectedAccountContact.comment || "",
-            active: true
-          })
-        });
-        this.openModal();
+      this.setState({
+        ...this.state,
+        contact: Object.assign({}, this.state.contact, {
+          id: selectedAccountContact.id,
+          first_name: selectedAccountContact.first_name || "",
+          last_name: selectedAccountContact.last_name || "",
+          job_title: selectedAccountContact.job_title || "",
+          email: selectedAccountContact.email || "",
+          phone: selectedAccountContact.phone || "",
+          mobile: selectedAccountContact.mobile || "",
+          fax: selectedAccountContact.fax || "",
+          comment: selectedAccountContact.comment || "",
+          active: true
+        })
       });
+      this.openModal();
+    });
   };
 
   handleFormInputChange = (e, { value }) => {
@@ -177,14 +168,15 @@ class AccountContacts extends Component {
       return <Loading />;
     }
 
-    console.log("account conatcts", this.props);
-
     return (
       <React.Fragment>
         <main>
           <Segment.Group>
             <BreadcrumbDisplay
-              breadcrumbList={[{name: "Setting", url: "/setting"}, {name: "Account Contact", url: "/account-contacts"}]}
+              breadcrumbList={[
+                { name: "Setting", url: "/setting" },
+                { name: "Account Contact", url: "/account-contacts" }
+              ]}
             />
 
             <Segment className="flex flex-between flex-middle">
@@ -215,7 +207,11 @@ class AccountContacts extends Component {
         </main>
 
         {/* Modal Start */}
-        <Modal size="tiny" open={this.state.displayModal} onClose={this.closeModal}>
+        <Modal
+          size="tiny"
+          open={this.state.displayModal}
+          onClose={this.closeModal}
+        >
           <Modal.Header>New Account Contact</Modal.Header>
           <Modal.Content>
             <Form size="tiny" onSubmit={this.handleFormSubmit}>
