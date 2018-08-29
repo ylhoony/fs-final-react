@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -10,7 +9,6 @@ import Loading from "../Loading";
 import AddressesTab from "../companyDetails/AddressesTab";
 import ContactsTab from "../companyDetails/ContactsTab";
 
-import { authToken } from "../../helpers/auth";
 import { actions } from "../../actions/index";
 import {
   buildCurrenciesOptions,
@@ -28,9 +26,9 @@ class SupplierForm extends Component {
         name: "",
         tax_id: "",
         comment: "",
-        warehouse_id: null,
-        payment_term_id: null,
-        currency_id: null,
+        warehouse_id: undefined,
+        payment_term_id: undefined,
+        currency_id: undefined,
         addresses_attributes: [],
         contacts_attributes: []
       }
@@ -50,32 +48,24 @@ class SupplierForm extends Component {
       } else {
         const supplierId = this.props.match.params.supplierId;
 
-        axios
-          .get(`/api/v1/suppliers/${supplierId}`, {
-            headers: {
-              Authorization: authToken,
-              "Content-Type": "application/json"
-            },
-            params: params
-          })
-          .then(res => {
-            const supplier = res.data;
-            this.setState({
-              ...this.state,
-              supplier: {
-                id: supplier.id || null,
-                account_id: supplier.account_id || this.props.currentAccount.id,
-                name: supplier.name || "",
-                tax_id: supplier.tax_id || "",
-                comment: supplier.comment || "",
-                warehouse_id: supplier.warehouse.id || null,
-                payment_term_id: supplier.payment_term.id || null,
-                currency_id: supplier.currency.id || null,
-                addresses_attributes: supplier.addresses,
-                contacts_attributes: supplier.contacts
-              }
-            });
+        this.props.actions.getSupplier(supplierId, params).then(res => {
+          const supplier = res.payload;
+          this.setState({
+            ...this.state,
+            supplier: {
+              id: supplier.id || undefined,
+              account_id: supplier.account_id || this.props.currentAccount.id,
+              name: supplier.name || "",
+              tax_id: supplier.tax_id || "",
+              comment: supplier.comment || "",
+              warehouse_id: supplier.warehouse.id || undefined,
+              payment_term_id: supplier.payment_term.id || undefined,
+              currency_id: supplier.currency.id || undefined,
+              addresses_attributes: supplier.addresses,
+              contacts_attributes: supplier.contacts
+            }
           });
+        });
       }
     }
   }
@@ -112,32 +102,15 @@ class SupplierForm extends Component {
 
     if (!!this.state.supplier.id) {
       const supplierId = this.state.supplier.id;
-
-      axios({
-        method: "PUT",
-        url: `/api/v1/suppliers/${supplierId}`,
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/suppliers/${res.data.id}`);
-      });
-      await this.props.actions.getSuppliers(params);
+      await this.props.actions
+        .updateSupplier(supplierId, this.state, params)
+        .then(data => {
+          this.props.history.push(`/suppliers/${data.payload.id}`);
+        });
+      this.props.actions.getSuppliers(params);
     } else {
-      axios({
-        method: "POST",
-        url: "/api/v1/suppliers",
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/suppliers/${res.data.id}`);
+      this.props.actions.createSupplier(this.state, params).then(res => {
+        this.props.history.push(`/suppliers/${res.payload.id}`);
       });
       await this.props.actions.getSuppliers(params);
     }
@@ -163,7 +136,7 @@ class SupplierForm extends Component {
           street2: "",
           city: "",
           state: "",
-          country_id: null,
+          country_id: undefined,
           postal_code: "",
           email: "",
           phone: "",
