@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getSuppliers = params => dispatch => {
   dispatch({ type: "GET_SUPPLIERS_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/suppliers", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -18,7 +18,7 @@ export const getSuppliers = params => dispatch => {
 
 export const createSupplier = (data, params) => dispatch => {
   dispatch({ type: "CREATE_SUPPLIER_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/suppliers",
     headers: {
@@ -34,7 +34,7 @@ export const createSupplier = (data, params) => dispatch => {
 
 export const getSupplier = (supplierId, params) => dispatch => {
   dispatch({ type: "GET_SUPPLIER_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/suppliers/${supplierId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -42,14 +42,12 @@ export const getSupplier = (supplierId, params) => dispatch => {
       },
       params: params
     })
-    .then(res =>
-      dispatch({ type: "GET_SUPPLIER_SUCCESS", payload: res.data })
-    );
+    .then(res => dispatch({ type: "GET_SUPPLIER_SUCCESS", payload: res.data }));
 };
 
 export const updateSupplier = (supplierId, data, params) => dispatch => {
   dispatch({ type: "UPDATE_SUPPLIER_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/suppliers/${supplierId}`,
     headers: {
