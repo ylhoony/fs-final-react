@@ -25,6 +25,7 @@ import {
 } from "./accountAddressesActions";
 import {
   getAccountContacts,
+  getAccountContact,
   createAccountContact,
   updateAccountContact
 } from "./accountContactsActions";
@@ -100,6 +101,7 @@ export const actions = {
   updateAccountAddress,
   // Account Contacts
   getAccountContacts,
+  getAccountContact,
   createAccountContact,
   updateAccountContact,
   // Customers
