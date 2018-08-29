@@ -1,12 +1,12 @@
 import axios from "axios";
-import { authToken } from "../helpers/auth";
+// import { authToken } from "../helpers/auth";
 
 export const getProducts = params => dispatch => {
   dispatch({ type: "GET_PRODUCTS_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/products", {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
@@ -18,11 +18,11 @@ export const getProducts = params => dispatch => {
 
 export const createProduct = (data, params) => dispatch => {
   dispatch({ type: "CREATE_PRODUCT_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/products",
     headers: {
-      Authorization: authToken,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json"
     },
     data: data,
@@ -34,10 +34,10 @@ export const createProduct = (data, params) => dispatch => {
 
 export const getProduct = (productId, params) => dispatch => {
   dispatch({ type: "GET_PRODUCT_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/products/${productId}`, {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
@@ -53,11 +53,11 @@ export const updateProduct = (
   params
 ) => dispatch => {
   dispatch({ type: "UPDATE_PRODUCT_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/products/${productId}`,
     headers: {
-      Authorization: authToken,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json"
     },
     data: data,
@@ -69,10 +69,10 @@ export const updateProduct = (
 
 export const deleteProduct = (productId, params) => dispatch => {
   dispatch({ type: "DELETE_PRODUCT_BEGIN" });
-  axios
+  return axios
     .delete(`/api/v1/products/${productId}`, {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
