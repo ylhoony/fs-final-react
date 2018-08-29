@@ -19,6 +19,7 @@ import {
 } from "./warehousesActions";
 import {
   getAccountAddresses,
+  getAccountAddress,
   createAccountAddress,
   updateAccountAddress
 } from "./accountAddressesActions";
@@ -94,6 +95,7 @@ export const actions = {
   updateWarehouse,
   // Account Addresses
   getAccountAddresses,
+  getAccountAddress,
   createAccountAddress,
   updateAccountAddress,
   // Account Contacts
