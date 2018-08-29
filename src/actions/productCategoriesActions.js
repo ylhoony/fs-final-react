@@ -6,7 +6,7 @@ export const getProductCategories = params => dispatch => {
   return axios
     .get("/api/v1/product_categories", {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
@@ -22,7 +22,7 @@ export const createProductCategory = (data, params) => dispatch => {
     method: "POST",
     url: "/api/v1/product_categories",
     headers: {
-      Authorization: authToken,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json"
     },
     data: data,
@@ -37,7 +37,7 @@ export const getProductCategory = (productCategoryId, params) => dispatch => {
   return axios
     .get(`/api/v1/product_categories/${productCategoryId}`, {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
@@ -57,7 +57,7 @@ export const updateProductCategory = (
     method: "PUT",
     url: `/api/v1/product_categories/${productCategoryId}`,
     headers: {
-      Authorization: authToken,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json"
     },
     data: data,
@@ -67,12 +67,15 @@ export const updateProductCategory = (
   );
 };
 
-export const deleteProductCategory = (productCategoryId, params) => dispatch => {
+export const deleteProductCategory = (
+  productCategoryId,
+  params
+) => dispatch => {
   dispatch({ type: "DELETE_PRODUCT_CATEGORY_BEGIN" });
   return axios
     .delete(`/api/v1/product_categories/${productCategoryId}`, {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params

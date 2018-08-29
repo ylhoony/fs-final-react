@@ -6,7 +6,7 @@ export const getProductBrands = params => dispatch => {
   return axios
     .get("/api/v1/product_brands", {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
@@ -22,7 +22,7 @@ export const createProductBrand = (data, params) => dispatch => {
     method: "POST",
     url: "/api/v1/product_brands",
     headers: {
-      Authorization: authToken,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json"
     },
     data: data,
@@ -37,7 +37,7 @@ export const getProductBrand = (productBrandId, params) => dispatch => {
   return axios
     .get(`/api/v1/product_brands/${productBrandId}`, {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
@@ -57,7 +57,7 @@ export const updateProductBrand = (
     method: "PUT",
     url: `/api/v1/product_brands/${productBrandId}`,
     headers: {
-      Authorization: authToken,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json"
     },
     data: data,
@@ -72,7 +72,7 @@ export const deleteProductBrand = (productBrandId, params) => dispatch => {
   return axios
     .delete(`/api/v1/product_brands/${productBrandId}`, {
       headers: {
-        Authorization: authToken,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json"
       },
       params: params
