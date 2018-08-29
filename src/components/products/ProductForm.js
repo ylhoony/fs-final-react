@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -7,7 +6,6 @@ import _ from "lodash";
 import { Checkbox, Form, Header, Segment } from "semantic-ui-react";
 
 import { actions } from "../../actions/index";
-import { authToken } from "../../helpers/auth";
 import {
   buildProductCategoriesOptions,
   buildProductBrandsOptions
@@ -35,14 +33,6 @@ class ProductForm extends Component {
     };
   }
 
-  account_id;
-  product_category_id;
-  product_brand_id;
-  sku;
-  name;
-  description;
-  active;
-
   componentDidMount() {
     const params = {
       current_account_id: this.props.currentAccount.id
@@ -58,31 +48,23 @@ class ProductForm extends Component {
     } else {
       const productId = this.props.match.params.productId;
 
-      axios
-        .get(`/api/v1/products/${productId}`, {
-          headers: {
-            Authorization: authToken,
-            "Content-Type": "application/json"
-          },
-          params: params
-        })
-        .then(res => {
-          const product = res.data;
-          this.setState({
-            ...this.state,
-            product: {
-              id: product.id || null,
-              account_id: product.account_id || this.props.currentAccount.id,
-              product_brand_id: product.product_brand.id || null,
-              product_category_id: product.product_category.id || null,
-              sku: product.sku,
-              name: product.name,
-              description: product.description || "",
-              base_price: product.base_price || 0,
-              active: product.active
-            }
-          });
+      this.props.actions.getProduct(productId, params).then(res => {
+        const product = res.payload;
+        this.setState({
+          ...this.state,
+          product: {
+            id: product.id || null,
+            account_id: product.account_id || this.props.currentAccount.id,
+            product_brand_id: product.product_brand.id || null,
+            product_category_id: product.product_category.id || null,
+            sku: product.sku,
+            name: product.name,
+            description: product.description || "",
+            base_price: product.base_price || 0,
+            active: product.active
+          }
         });
+      });
     }
   }
 
@@ -115,31 +97,15 @@ class ProductForm extends Component {
     if (!!this.state.product.id) {
       const productId = this.state.product.id;
 
-      axios({
-        method: "PUT",
-        url: `/api/v1/products/${productId}`,
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/products/${res.data.id}`);
-      });
+      this.props.actions
+        .updateProduct(productId, this.state, params)
+        .then(res => {
+          this.props.history.push(`/products/${res.payload.id}`);
+        });
       await this.props.actions.getProducts(params);
     } else {
-      axios({
-        method: "POST",
-        url: "/api/v1/products",
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/products/${res.data.id}`);
+      this.props.actions.createProduct(this.state, params).then(res => {
+        this.props.history.push(`/products/${res.payload.id}`);
       });
       await this.props.actions.getProducts(params);
     }
