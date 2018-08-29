@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -96,16 +95,9 @@ class Warehouses extends Component {
       current_account_id: this.props.currentAccount.id
     };
 
-    axios
-      .get(`/api/v1/warehouses/${warehouseId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json"
-        },
-        params: params
-      })
+    await this.props.actions.getWarehouse(warehouseId, params)
       .then(res => {
-        const selectedWarehouse = res.data;
+        const selectedWarehouse = res.payload;
 
         this.setState({
           ...this.state,
@@ -374,6 +366,8 @@ const mapStateToProps = ({ countries, user, warehouses }) => {
     warehouses: warehouses.warehouses,
     warehousesLoading: warehouses.warehousesLoading,
     warehousesError: warehouses.warehousesError,
+
+    selectedWarehouse: warehouses.selectedWarehouse,
 
     createWarehouseLoading: warehouses.createWarehouseLoading,
     updateWarehouseLoading: warehouses.updateWarehouseLoading
