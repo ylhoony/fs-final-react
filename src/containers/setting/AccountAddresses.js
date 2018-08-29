@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -96,16 +95,9 @@ class AccountAddresses extends Component {
       current_account_id: this.props.currentAccount.id
     };
 
-    axios
-      .get(`/api/v1/account_addresses/${accountAddressId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json"
-        },
-        params: params
-      })
+    this.props.actions.getAccountAddress(accountAddressId, params)
       .then(res => {
-        const selectedAccountAddress = res.data;
+        const selectedAccountAddress = res.payload;
 
         this.setState({
           ...this.state,
