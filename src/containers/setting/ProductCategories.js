@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -16,8 +15,6 @@ import {
 } from "semantic-ui-react";
 
 import { actions } from "../../actions/index";
-import { authToken } from "../../helpers/auth";
-
 import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
 import Loading from "../../components/Loading";
 
@@ -104,38 +101,27 @@ class ProductCategories extends Component {
     };
 
     if (!!this.state.product_category.id) {
-      await this.props.actions
-        .updateProductCategory(
-          this.state.product_category.id,
-          this.state,
-          params
-        )
+      await this.props.actions.updateProductCategory(
+        this.state.product_category.id,
+        this.state,
+        params
+      );
     } else {
-      await this.props.actions
-        .createProductCategory(this.state, params)
+      await this.props.actions.createProductCategory(this.state, params);
     }
     await this.props.actions.getProductCategories(params);
     this.handleSidebarHide();
   };
 
-  handleTableCellClick = e => {
+  handleTableCellClick = async e => {
     const categoryId = e.target.parentNode.dataset.id;
-
     const params = {
       current_account_id: this.props.currentAccount.id
     };
-
-    axios
-      .get(`/api/v1/product_categories/${categoryId}`, {
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        params: params
-      })
+    await this.props.actions
+      .getProductCategory(categoryId, params)
       .then(res => {
-        const category = res.data;
-
+        const category = res.payload;
         this.setState({
           ...this.state,
           product_category: {
@@ -150,7 +136,6 @@ class ProductCategories extends Component {
 
   handleDelete = async e => {
     e.preventDefault();
-    console.log("delete");
     const params = {
       current_account_id: this.props.currentAccount.id
     };
@@ -165,6 +150,7 @@ class ProductCategories extends Component {
       currentAccountLoading,
       productCategories,
       productCategoriesLoading,
+      selectedProductCategoryLoading,
       updateProductCategoryLoading,
       deleteProductCategoryLoading
     } = this.props;
@@ -172,6 +158,7 @@ class ProductCategories extends Component {
     if (
       currentAccountLoading ||
       productCategoriesLoading ||
+      selectedProductCategoryLoading ||
       updateProductCategoryLoading ||
       deleteProductCategoryLoading
     ) {
@@ -199,8 +186,6 @@ class ProductCategories extends Component {
         );
       });
     }
-
-    console.log("category props: ", this.props);
 
     return (
       <React.Fragment>
@@ -315,6 +300,10 @@ const mapStateToProps = ({ productCategories, user }) => {
     productCategories: productCategories.productCategories,
     productCategoriesLoading: productCategories.productCategoriesLoading,
     productCategoriesError: productCategories.productCategoriesError,
+
+    selectedProductCategory: productCategories.selectedProductCategory,
+    selectedProductCategoryLoading:
+      productCategories.selectedProductCategoryLoading,
 
     updateProductCategoryLoading:
       productCategories.updateProductCategoryLoading,

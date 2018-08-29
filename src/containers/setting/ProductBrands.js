@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -94,7 +93,6 @@ class ProductBrands extends Component {
     };
 
     if (!!this.state.product_brand.id) {
-      console.log("update");
       await this.props.actions.updateProductBrand(
         this.state.product_brand.id,
         this.state,
@@ -114,17 +112,9 @@ class ProductBrands extends Component {
       current_account_id: this.props.currentAccount.id
     };
 
-    axios
-      .get(`/api/v1/product_brands/${brandId}`, {
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        params: params
-      })
+    this.props.actions.getProductBrand(brandId, params)
       .then(res => {
-        const brand = res.data;
-
+        const brand = res.payload;
         this.setState({
           ...this.state,
           product_brand: {
