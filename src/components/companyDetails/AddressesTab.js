@@ -45,7 +45,7 @@ const AddressesTab = ({
                       fluid
                       name="company_name"
                       placeholder="company name"
-                      value={address.company_name}
+                      value={address.company_name || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -54,7 +54,7 @@ const AddressesTab = ({
                       fluid
                       name="contact"
                       placeholder="contact"
-                      value={address.contact}
+                      value={address.contact || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -63,7 +63,7 @@ const AddressesTab = ({
                       fluid
                       name="street1"
                       placeholder="street 1"
-                      value={address.street1}
+                      value={address.street1 || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -72,7 +72,7 @@ const AddressesTab = ({
                       fluid
                       name="street2"
                       placeholder="street2"
-                      value={address.street2}
+                      value={address.street2 || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -81,7 +81,7 @@ const AddressesTab = ({
                       fluid
                       name="city"
                       placeholder="city"
-                      value={address.city}
+                      value={address.city || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -90,7 +90,7 @@ const AddressesTab = ({
                       fluid
                       name="state"
                       placeholder="state"
-                      value={address.state}
+                      value={address.state || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -114,7 +114,7 @@ const AddressesTab = ({
                       fluid
                       name="postal_code"
                       placeholder="postal_code"
-                      value={address.postal_code}
+                      value={address.postal_code || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -123,7 +123,7 @@ const AddressesTab = ({
                       fluid
                       name="email"
                       placeholder="email"
-                      value={address.email}
+                      value={address.email || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -132,7 +132,7 @@ const AddressesTab = ({
                       fluid
                       name="phone"
                       placeholder="phone"
-                      value={address.phone}
+                      value={address.phone || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
@@ -141,7 +141,7 @@ const AddressesTab = ({
                       fluid
                       name="fax"
                       placeholder="fax"
-                      value={address.fax}
+                      value={address.fax || ""}
                       onChange={e => handleAddressChange(e, index)}
                     />
                   </Table.Cell>
