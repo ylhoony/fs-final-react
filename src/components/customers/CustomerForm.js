@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -10,7 +9,6 @@ import Loading from "../Loading";
 import AddressesTab from "../companyDetails/AddressesTab";
 import ContactsTab from "../companyDetails/ContactsTab";
 
-import { authToken } from "../../helpers/auth";
 import { actions } from "../../actions/index";
 import {
   buildCurrenciesOptions,
@@ -49,33 +47,24 @@ class CustomerForm extends Component {
         return;
       } else {
         const customerId = this.props.match.params.customerId;
-
-        axios
-          .get(`/api/v1/customers/${customerId}`, {
-            headers: {
-              Authorization: authToken,
-              "Content-Type": "application/json"
-            },
-            params: params
-          })
-          .then(res => {
-            const customer = res.data;
-            this.setState({
-              ...this.state,
-              customer: {
-                id: customer.id || null,
-                account_id: customer.account_id || this.props.currentAccount.id,
-                name: customer.name || "",
-                tax_id: customer.tax_id || "",
-                comment: customer.comment || "",
-                warehouse_id: customer.warehouse.id || null,
-                payment_term_id: customer.payment_term.id || null,
-                currency_id: customer.currency.id || null,
-                addresses_attributes: customer.addresses,
-                contacts_attributes: customer.contacts
-              }
-            });
+        this.props.actions.getCustomer(customerId, params).then(res => {
+          const customer = res.payload;
+          this.setState({
+            ...this.state,
+            customer: {
+              id: customer.id || null,
+              account_id: customer.account_id || this.props.currentAccount.id,
+              name: customer.name || "",
+              tax_id: customer.tax_id || "",
+              comment: customer.comment || "",
+              warehouse_id: customer.warehouse.id || null,
+              payment_term_id: customer.payment_term.id || null,
+              currency_id: customer.currency.id || null,
+              addresses_attributes: customer.addresses,
+              contacts_attributes: customer.contacts
+            }
           });
+        });
       }
     }
   }
@@ -113,32 +102,15 @@ class CustomerForm extends Component {
 
     if (!!this.state.customer.id) {
       const customerId = this.state.customer.id;
-
-      axios({
-        method: "PUT",
-        url: `/api/v1/customers/${customerId}`,
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/customers/${res.data.id}`);
-      });
+      this.props.actions
+        .updateCustomer(customerId, this.state, params)
+        .then(res => {
+          this.props.history.push(`/customers/${res.payload.id}`);
+        });
       await this.props.actions.getCustomers(params);
     } else {
-      axios({
-        method: "POST",
-        url: "/api/v1/customers",
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/customers/${res.data.id}`);
+      this.props.actions.createCustomer(this.state, params).then(res => {
+        this.props.history.push(`/customers/${res.payload.id}`);
       });
       await this.props.actions.getCustomers(params);
     }
