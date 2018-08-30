@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getPurchaseOrders = params => dispatch => {
   dispatch({ type: "GET_PURCHASE_ORDERS_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/purchase_orders", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -18,7 +18,7 @@ export const getPurchaseOrders = params => dispatch => {
 
 export const createPurchaseOrder = (data, params) => dispatch => {
   dispatch({ type: "CREATE_PURCHASE_ORDER_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/purchase_orders",
     headers: {
@@ -34,7 +34,7 @@ export const createPurchaseOrder = (data, params) => dispatch => {
 
 export const getPurchaseOrder = (purchase_orderId, params) => dispatch => {
   dispatch({ type: "GET_PURCHASE_ORDER_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/purchase_orders/${purchase_orderId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -49,7 +49,7 @@ export const getPurchaseOrder = (purchase_orderId, params) => dispatch => {
 
 export const updatePurchaseOrder = (purchase_orderId, data, params) => dispatch => {
   dispatch({ type: "UPDATE_PURCHASE_ORDER_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/purchase_orders/${purchase_orderId}`,
     headers: {
