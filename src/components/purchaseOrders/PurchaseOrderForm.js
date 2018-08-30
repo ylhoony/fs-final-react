@@ -60,25 +60,19 @@ class PurchaseOrderForm extends Component {
         getWarehouses,
         getProducts
       } = this.props.actions;
-      getSuppliers(params);
-      getPaymentTerms(params);
-      getWarehouses(params);
-      getProducts(params);
 
-      if (this.props.match.url === "/purchases/new") {
-        return;
-      } else {
-        const poId = this.props.match.params.purchaseOrderId;
-        axios
-          .get(`/api/v1/purchase_orders/${poId}`, {
-            headers: {
-              Authorization: authToken,
-              "Content-Type": "application/json"
-            },
-            params: params
-          })
-          .then(res => {
-            const po = res.data;
+      Promise.all([
+        getSuppliers(params),
+        getPaymentTerms(params),
+        getWarehouses(params),
+        getProducts(params)
+      ]).then(res => {
+        if (this.props.match.url === "/purchases/new") {
+          return;
+        } else {
+          const poId = this.props.match.params.purchaseOrderId;
+          this.props.actions.getPurchaseOrder(poId, params).then(res => {
+            const po = res.payload;
             this.setState({
               ...this.state,
               purchase_order: {
@@ -100,7 +94,8 @@ class PurchaseOrderForm extends Component {
               }
             });
           });
-      }
+        }
+      });
     }
   }
 
@@ -158,32 +153,15 @@ class PurchaseOrderForm extends Component {
 
     if (!!this.state.purchase_order.id) {
       const poId = this.state.purchase_order.id;
-
-      axios({
-        method: "PUT",
-        url: `/api/v1/purchase_orders/${poId}`,
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/purchases/${res.data.id}`);
-      });
+      this.props.actions
+        .updatePurchaseOrder(poId, this.state, params)
+        .then(res => {
+          this.props.history.push(`/purchases/${res.payload.id}`);
+        });
       await this.props.actions.getPurchaseOrders(params);
     } else {
-      axios({
-        method: "POST",
-        url: "/api/v1/purchase_orders",
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        },
-        data: this.state,
-        params: params
-      }).then(res => {
-        this.props.history.push(`/purchases/${res.data.id}`);
+      this.props.actions.createPurchaseOrder(this.state, params).then(res => {
+        this.props.history.push(`/purchases/${res.payload.id}`);
       });
       await this.props.actions.getPurchaseOrders(params);
     }
@@ -454,8 +432,7 @@ class PurchaseOrderForm extends Component {
                   <Item className="field">
                     {!!this.state.purchase_order.account_contact_id && (
                       <Item.Content>
-                        <Item.Description>
-                        </Item.Description>
+                        <Item.Description />
                       </Item.Content>
                     )}
                   </Item>
@@ -463,8 +440,7 @@ class PurchaseOrderForm extends Component {
                   <Item className="field">
                     {!!this.state.purchase_order.warehouse_id && (
                       <Item.Content>
-                        <Item.Description>
-                        </Item.Description>
+                        <Item.Description />
                       </Item.Content>
                     )}
                   </Item>
