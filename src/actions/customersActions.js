@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getCustomers = params => dispatch => {
   dispatch({ type: "GET_CUSTOMERS_BEGIN" });
-  axios
+  return axios
     .get("/api/v1/customers", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -18,7 +18,7 @@ export const getCustomers = params => dispatch => {
 
 export const createCustomer = (data, params) => dispatch => {
   dispatch({ type: "CREATE_CUSTOMER_BEGIN" });
-  axios({
+  return axios({
     method: "POST",
     url: "/api/v1/customers",
     headers: {
@@ -34,7 +34,7 @@ export const createCustomer = (data, params) => dispatch => {
 
 export const getCustomer = (customerId, params) => dispatch => {
   dispatch({ type: "GET_CUSTOMER_BEGIN" });
-  axios
+  return axios
     .get(`/api/v1/customers/${customerId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -49,7 +49,7 @@ export const getCustomer = (customerId, params) => dispatch => {
 
 export const updateCustomer = (customerId, data, params) => dispatch => {
   dispatch({ type: "UPDATE_CUSTOMER_BEGIN" });
-  axios({
+  return axios({
     method: "PUT",
     url: `/api/v1/customers/${customerId}`,
     headers: {
