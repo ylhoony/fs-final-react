@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button, Form, Header, Item, Segment, Table } from "semantic-ui-react";
 import _ from "lodash";
-import axios from "axios";
 import moment from "moment";
 
 import { authToken } from "../../helpers/auth";
