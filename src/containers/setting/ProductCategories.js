@@ -26,8 +26,10 @@ class ProductCategories extends Component {
       product_category: {
         id: null,
         name: "",
-        active: true
-      }
+        active: true,
+        likecount: 0
+      },
+      productCategories: []
     };
   }
 
@@ -36,19 +38,24 @@ class ProductCategories extends Component {
       const params = {
         current_account_id: this.props.currentAccount.id
       };
-      this.props.actions.getProductCategories(params);
+      this.props.actions.getProductCategories(params).then(res => {
+        this.setState({
+          ...this.state,
+          productCategories: res.payload
+        });
+      });
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const diffSidebar = this.state.displaySidebar !== nextState.displaySidebar;
-    const diffCategories =
-      this.props.productCategories !== nextProps.productCategories;
-    const diffCategory =
-      this.state.product_category !== nextState.product_category;
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const diffSidebar = this.state.displaySidebar !== nextState.displaySidebar;
+  //   const diffCategories =
+  //     this.props.productCategories !== nextProps.productCategories;
+  //   const diffCategory =
+  //     this.state.product_category !== nextState.product_category;
 
-    return diffCategories || diffCategory || diffSidebar;
-  }
+  //   return diffCategories || diffCategory || diffSidebar;
+  // }
 
   clearState = () => {
     this.setState({
@@ -130,8 +137,8 @@ class ProductCategories extends Component {
             active: category.active
           }
         });
-        this.handleSidebarShow();
       });
+    this.handleSidebarShow();
   };
 
   handleDelete = async e => {
@@ -145,11 +152,47 @@ class ProductCategories extends Component {
     this.handleSidebarHide();
   };
 
+  increaseLikeCount = e => {
+    const categoryId = e.target.closest("tr").dataset.id;
+    const newCategoriesList = this.state.productCategories.map(category => {
+      if (category.id === parseInt(categoryId, 10)) {
+        return {
+          ...category,
+          likecount: !category.likecount ? 1 : category.likecount + 1
+        };
+      } else {
+        return category;
+      }
+    });
+    this.setState({
+      ...this.state,
+      productCategories: newCategoriesList
+    });
+  };
+
+  decreaseLikeCount = e => {
+    const categoryId = e.target.closest("tr").dataset.id;
+    const newCategoriesList = this.state.productCategories.map(category => {
+      if (category.id === parseInt(categoryId, 10)) {
+        return {
+          ...category,
+          likecount: !category.likecount ? -1 : category.likecount - 1
+        };
+      } else {
+        return category;
+      }
+    });
+    this.setState({
+      ...this.state,
+      productCategories: newCategoriesList
+    });
+  };
+
   render() {
     const {
       currentAccountLoading,
-      productCategories,
-      productCategoriesLoading,
+      // productCategories,
+      // productCategoriesLoading,
       selectedProductCategoryLoading,
       updateProductCategoryLoading,
       deleteProductCategoryLoading
@@ -157,7 +200,7 @@ class ProductCategories extends Component {
 
     if (
       currentAccountLoading ||
-      productCategoriesLoading ||
+      // productCategoriesLoading ||
       selectedProductCategoryLoading ||
       updateProductCategoryLoading ||
       deleteProductCategoryLoading
@@ -166,25 +209,50 @@ class ProductCategories extends Component {
     }
 
     let productCategoriesTableRows;
-    if (!productCategories.length) {
+    if (!this.state.productCategories.length) {
       productCategoriesTableRows = (
         <Table.Row colSpan={2}>
           <Table.Cell>Create new product category</Table.Cell>
         </Table.Row>
       );
     } else {
-      productCategoriesTableRows = productCategories.map(category => {
-        return (
-          <Table.Row key={category.id} data-id={category.id}>
-            <Table.Cell onClick={this.handleTableCellClick}>
-              {category.name}
-            </Table.Cell>
-            <Table.Cell onClick={this.handleTableCellClick}>
-              {category.active ? "active" : "inactive"}
-            </Table.Cell>
-          </Table.Row>
-        );
-      });
+      productCategoriesTableRows = this.state.productCategories.map(
+        category => {
+          return (
+            <Table.Row key={category.id} data-id={category.id}>
+              <Table.Cell onClick={this.handleTableCellClick}>
+                {category.name}
+              </Table.Cell>
+              <Table.Cell onClick={this.handleTableCellClick}>
+                {category.active ? "active" : "inactive"}
+              </Table.Cell>
+              <Table.Cell>
+                {!!category.likecount ? category.likecount : 0}
+              </Table.Cell>
+              <Table.Cell>
+                <Button
+                  basic
+                  color="teal"
+                  icon
+                  size="tiny"
+                  onClick={this.increaseLikeCount}
+                >
+                  <Icon name="thumbs up outline" />
+                </Button>
+                <Button
+                  basic
+                  color="teal"
+                  icon
+                  size="tiny"
+                  onClick={this.decreaseLikeCount}
+                >
+                  <Icon name="thumbs down outline" />
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          );
+        }
+      );
     }
 
     return (
@@ -225,6 +293,9 @@ class ProductCategories extends Component {
                       <Table.Row>
                         <Table.HeaderCell>Name</Table.HeaderCell>
                         <Table.HeaderCell>Status</Table.HeaderCell>
+                        <Table.HeaderCell>Like Count</Table.HeaderCell>
+                        <Table.HeaderCell />
+                        <Table.HeaderCell />
                       </Table.Row>
                     </Table.Header>
 
