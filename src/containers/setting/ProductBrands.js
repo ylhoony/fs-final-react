@@ -15,10 +15,7 @@ import {
 } from "semantic-ui-react";
 
 import { actions } from "../../actions/index";
-import { authToken } from "../../helpers/auth";
-
 import BreadcrumbDisplay from "../../components/BreadcrumbDisplay";
-// import Loading from "../../components/Loading";
 
 class ProductBrands extends Component {
   constructor(props) {
@@ -101,30 +98,25 @@ class ProductBrands extends Component {
     } else {
       await this.props.actions.createProductBrand(this.state, params);
     }
-    await this.props.actions.getProductBrands(params);
     this.handleSidebarHide();
   };
 
   handleTableCellClick = e => {
     const brandId = e.target.parentNode.dataset.id;
-
     const params = {
       current_account_id: this.props.currentAccount.id
     };
+    const selectedBrand = this.props.productBrands.find(
+      brand => brand.id === parseInt(brandId, 10)
+    );
 
-    this.props.actions.getProductBrand(brandId, params)
-      .then(res => {
-        const brand = res.payload;
-        this.setState({
-          ...this.state,
-          product_brand: {
-            id: brand.id,
-            name: brand.name,
-            active: brand.active
-          }
-        });
-        this.handleSidebarShow();
-      });
+    this.setState(
+      {
+        ...this.state,
+        product_brand: selectedBrand
+      },
+      () => this.handleSidebarShow()
+    );
   };
 
   handleDelete = async e => {
@@ -134,14 +126,13 @@ class ProductBrands extends Component {
     };
     const brandId = this.state.product_brand.id;
     await this.props.actions.deleteProductBrand(brandId, params);
-    this.props.actions.getProductBrands(params);
     this.handleSidebarHide();
   };
 
   render() {
-    const {
-      productBrands,
-    } = this.props;
+    const productBrands = this.props.productBrands.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
 
     let productBrandsTableRows;
     if (!productBrands.length) {
@@ -279,12 +270,10 @@ const mapStateToProps = ({ productBrands, user }) => {
     productBrandsLoading: productBrands.productBrandsLoading,
     productBrandsError: productBrands.productBrandsError,
 
-    updateProductBrandLoading:
-      productBrands.updateProductBrandLoading,
+    updateProductBrandLoading: productBrands.updateProductBrandLoading,
     updateProductBrandError: productBrands.updateProductBrandError,
 
-    deleteProductBrandLoading:
-      productBrands.deleteProductBrandLoading,
+    deleteProductBrandLoading: productBrands.deleteProductBrandLoading,
     deleteProductBrandError: productBrands.deleteProductBrandError
   };
 };
