@@ -1,5 +1,3 @@
-// import types from '../actions/types';
-
 const initialState = {
   accountAddresses: [],
   accountAddressesLoading: true,
@@ -17,7 +15,6 @@ const initialState = {
 };
 
 export const accountAddressesReducer = (state = initialState, action) => {
-  // console.log(action);
   switch (action.type) {
     // Get Account Addresses List
     case "GET_ACCOUNT_ADDRESSES_BEGIN":
@@ -50,6 +47,7 @@ export const accountAddressesReducer = (state = initialState, action) => {
     case "CREATE_ACCOUNT_ADDRESS_SUCCESS":
       return {
         ...state,
+        accountAddresses: state.accountAddresses.concat(action.payload),
         createAccountAddressLoading: false
       };
 
@@ -88,6 +86,9 @@ export const accountAddressesReducer = (state = initialState, action) => {
     case "UPDATE_ACCOUNT_ADDRESS_SUCCESS":
       return {
         ...state,
+        accountAddresses: state.accountAddresses
+          .filter(address => address.id !== action.payload.id)
+          .concat(action.payload),
         updateAccountAddressLoading: false
       };
 

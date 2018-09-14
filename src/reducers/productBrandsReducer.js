@@ -1,5 +1,3 @@
-// import types from '../actions/types';
-
 const initialState = {
   productBrands: [],
   productBrandsLoading: true,

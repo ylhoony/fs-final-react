@@ -90,36 +90,18 @@ class AccountAddresses extends Component {
 
   handleClickTableCell = async e => {
     const accountAddressId = e.target.parentElement.dataset.id;
+    
+    const selectedAccountAddress = this.props.accountAddresses.find(
+      address => address.id === parseInt(accountAddressId, 10)
+    );
 
-    const params = {
-      current_account_id: this.props.currentAccount.id
-    };
-
-    this.props.actions.getAccountAddress(accountAddressId, params)
-      .then(res => {
-        const selectedAccountAddress = res.payload;
-
-        this.setState({
-          ...this.state,
-          address: Object.assign({}, this.state.address, {
-            id: selectedAccountAddress.id,
-            company_name: selectedAccountAddress.company_name || "",
-            contact: selectedAccountAddress.contact || "",
-            street1: selectedAccountAddress.street1 || "",
-            street2: selectedAccountAddress.street2 || "",
-            city: selectedAccountAddress.city || "",
-            state: selectedAccountAddress.state || "",
-            country_id: selectedAccountAddress.country_id,
-            postal_code: selectedAccountAddress.postal_code || "",
-            email: selectedAccountAddress.email || "",
-            phone: selectedAccountAddress.phone || "",
-            fax: selectedAccountAddress.fax || "",
-            active: true,
-            country: selectedAccountAddress.country
-          })
-        });
-        this.openModal();
-      });
+    this.setState(
+      {
+        ...this.state,
+        address: selectedAccountAddress
+      },
+      () => this.openModal()
+    );
   };
 
   handleFormInputChange = (e, { value }) => {
@@ -160,8 +142,6 @@ class AccountAddresses extends Component {
       await this.props.actions.createAccountAddress(this.state, params);
     }
     this.closeModal();
-    await this.props.actions.getAccountAddresses(params);
-    this.props.history.push("/account-addresses");
   };
 
   render() {
@@ -226,7 +206,11 @@ class AccountAddresses extends Component {
         </main>
 
         {/* Modal Start */}
-        <Modal size="tiny" open={this.state.displayModal} onClose={this.closeModal}>
+        <Modal
+          size="tiny"
+          open={this.state.displayModal}
+          onClose={this.closeModal}
+        >
           <Modal.Header>New Account Address</Modal.Header>
           <Modal.Content>
             <Form size="tiny" onSubmit={this.handleFormSubmit}>
