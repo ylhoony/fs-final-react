@@ -5,7 +5,10 @@ import { Table } from "semantic-ui-react";
 
 class AccountAddressesList extends Component {
   render() {
-    const { accountAddresses, countries } = this.props;
+    const accountAddresses = this.props.accountAddresses.sort((a, b) =>
+      a.company_name.localeCompare(b.company_name)
+    );
+    const { countries } = this.props;
 
     let accountAddressesRows;
     if (!accountAddresses.length) {
