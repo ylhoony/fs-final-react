@@ -16,13 +16,12 @@ const initialState = {
   selectedProductBrandError: null,
 
   deleteProductBrandLoading: false,
-  deleteProductBrandError: true,
+  deleteProductBrandError: true
 };
 
 export const productBrandsReducer = (state = initialState, action) => {
-  // console.log(action);
   switch (action.type) {
-    // Get Account Addresses List
+    // Get Product Brands List
     case "GET_PRODUCT_BRANDS_BEGIN":
       return {
         ...state,
@@ -43,7 +42,7 @@ export const productBrandsReducer = (state = initialState, action) => {
         productBrandsLoading: false,
         productBrandsError: true
       };
-    // Create Account Address
+    // Create Product Brands
     case "CREATE_PRODUCT_BRAND_BEGIN":
       return {
         ...state,
@@ -53,6 +52,7 @@ export const productBrandsReducer = (state = initialState, action) => {
     case "CREATE_PRODUCT_BRAND_SUCCESS":
       return {
         ...state,
+        productBrands: state.productBrands.concat(action.payload),
         createProductBrandLoading: false
       };
 
@@ -61,7 +61,7 @@ export const productBrandsReducer = (state = initialState, action) => {
         ...state,
         createProductBrandError: true
       };
-    // Get One Account Address
+    // Get One Product Brands
     case "GET_PRODUCT_BRAND_BEGIN":
       return {
         ...state,
@@ -81,7 +81,7 @@ export const productBrandsReducer = (state = initialState, action) => {
         selectedProductBrandLoading: false,
         selectedProductBrandError: true
       };
-    // Update Account Address
+    // Update Product Brands
     case "UPDATE_PRODUCT_BRAND_BEGIN":
       return {
         ...state,
@@ -91,6 +91,9 @@ export const productBrandsReducer = (state = initialState, action) => {
     case "UPDATE_PRODUCT_BRAND_SUCCESS":
       return {
         ...state,
+        productBrands: state.productBrands
+          .filter(brand => brand.id !== action.payload.id)
+          .concat(action.payload),
         updateProductBrandLoading: false
       };
 
@@ -110,7 +113,9 @@ export const productBrandsReducer = (state = initialState, action) => {
     case "DELETE_PRODUCT_BRAND_SUCCESS":
       return {
         ...state,
-        // selectedProductBrand: action.payload,
+        productBrands: state.productBrands.filter(
+          brand => brand.id !== action.payload.id
+        ),
         deleteProductBrandLoading: false
       };
 
