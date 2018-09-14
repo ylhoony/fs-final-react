@@ -16,13 +16,12 @@ const initialState = {
   selectedProductCategoryError: null,
 
   deleteProductCategoryLoading: false,
-  deleteProductCategoryError: null,
+  deleteProductCategoryError: null
 };
 
 export const productCategoriesReducer = (state = initialState, action) => {
-  // console.log(action);
   switch (action.type) {
-    // Get Account Addresses List
+    // Get Product Categories List
     case "GET_PRODUCT_CATEGORIES_BEGIN":
       return {
         ...state,
@@ -43,7 +42,7 @@ export const productCategoriesReducer = (state = initialState, action) => {
         productCategoriesLoading: false,
         productCategoriesError: true
       };
-    // Create Account Address
+    // Create Product Category
     case "CREATE_PRODUCT_CATEGORY_BEGIN":
       return {
         ...state,
@@ -53,6 +52,7 @@ export const productCategoriesReducer = (state = initialState, action) => {
     case "CREATE_PRODUCT_CATEGORY_SUCCESS":
       return {
         ...state,
+        productCategories: state.productCategories.concat(action.payload),
         createProductCategoryLoading: false
       };
 
@@ -61,7 +61,7 @@ export const productCategoriesReducer = (state = initialState, action) => {
         ...state,
         createProductCategoryError: true
       };
-    // Get One Account Address
+    // Get One Product Category
     case "GET_PRODUCT_CATEGORY_BEGIN":
       return {
         ...state,
@@ -81,7 +81,7 @@ export const productCategoriesReducer = (state = initialState, action) => {
         selectedProductCategoryLoading: false,
         selectedProductCategoryError: true
       };
-    // Update Account Address
+    // Update Product Category
     case "UPDATE_PRODUCT_CATEGORY_BEGIN":
       return {
         ...state,
@@ -91,6 +91,9 @@ export const productCategoriesReducer = (state = initialState, action) => {
     case "UPDATE_PRODUCT_CATEGORY_SUCCESS":
       return {
         ...state,
+        productCategories: state.productCategories
+          .filter(category => category.id !== action.payload.id)
+          .concat(action.payload),
         updateProductCategoryLoading: false
       };
 
@@ -110,7 +113,9 @@ export const productCategoriesReducer = (state = initialState, action) => {
     case "DELETE_PRODUCT_CATEGORY_SUCCESS":
       return {
         ...state,
-        // selectedProductCategory: action.payload,
+        productCategories: state.productCategories.filter(
+          category => category.id !== action.payload.id
+        ),
         deleteProductCategoryLoading: false
       };
 

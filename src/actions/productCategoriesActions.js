@@ -1,5 +1,5 @@
 import axios from "axios";
-import { authToken } from "../helpers/auth";
+// import { authToken } from "../helpers/auth";
 
 export const getProductCategories = params => dispatch => {
   dispatch({ type: "GET_PRODUCT_CATEGORIES_BEGIN" });
