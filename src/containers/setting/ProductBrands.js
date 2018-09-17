@@ -101,19 +101,17 @@ class ProductBrands extends Component {
     this.handleSidebarHide();
   };
 
-  handleTableCellClick = e => {
+  handleTableCellClick = async e => {
     const brandId = e.target.parentNode.dataset.id;
     const params = {
       current_account_id: this.props.currentAccount.id
     };
-    const selectedBrand = this.props.productBrands.find(
-      brand => brand.id === parseInt(brandId, 10)
-    );
+    await this.props.actions.getProductBrand(brandId, params)
 
     this.setState(
       {
         ...this.state,
-        product_brand: selectedBrand
+        product_brand: this.props.selectedProductBrand
       },
       () => this.handleSidebarShow()
     );
@@ -269,6 +267,8 @@ const mapStateToProps = ({ productBrands, user }) => {
     productBrands: productBrands.productBrands,
     productBrandsLoading: productBrands.productBrandsLoading,
     productBrandsError: productBrands.productBrandsError,
+
+    selectedProductBrand: productBrands.selectedProductBrand,
 
     updateProductBrandLoading: productBrands.updateProductBrandLoading,
     updateProductBrandError: productBrands.updateProductBrandError,
