@@ -90,15 +90,15 @@ class AccountAddresses extends Component {
 
   handleClickTableCell = async e => {
     const accountAddressId = e.target.parentElement.dataset.id;
-    
-    const selectedAccountAddress = this.props.accountAddresses.find(
-      address => address.id === parseInt(accountAddressId, 10)
-    );
+    const params = {
+      current_account_id: this.props.currentAccount.id
+    };
+    await this.props.actions.getAccountAddress(accountAddressId, params)
 
     this.setState(
       {
         ...this.state,
-        address: selectedAccountAddress
+        address: this.props.selectedAccountAddress
       },
       () => this.openModal()
     );
@@ -348,6 +348,8 @@ const mapStateToProps = ({ accountAddresses, countries, user }) => {
     accountAddresses: accountAddresses.accountAddresses,
     accountAddressesLoading: accountAddresses.accountAddressesLoading,
     accountAddressesError: accountAddresses.accountAddressesError,
+
+    selectedAccountAddress: accountAddresses.selectedAccountAddress,
 
     createAccountAddressLoading: accountAddresses.createAccountAddressLoading,
     updateAccountAddressLoading: accountAddresses.updateAccountAddressLoading
