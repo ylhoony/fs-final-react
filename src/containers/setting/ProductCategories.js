@@ -103,16 +103,18 @@ class ProductCategories extends Component {
     this.handleSidebarHide();
   };
 
-  handleTableCellClick = e => {
+  handleTableCellClick = async e => {
     const categoryId = e.target.parentNode.dataset.id;
-    const selectedCategory = this.props.productCategories.find(
-      category => category.id === parseInt(categoryId, 10)
-    );
+    const params = {
+      current_account_id: this.props.currentAccount.id
+    };
+
+    await this.props.actions.getProductCategory(categoryId, params);
 
     this.setState(
       {
         ...this.state,
-        product_category: selectedCategory
+        product_category: this.props.selectedProductCategory
       },
       () => this.handleSidebarShow()
     );
